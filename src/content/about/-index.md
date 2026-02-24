@@ -6,9 +6,9 @@ image: "/images/profile/yk-2025.jpg"
 draft: false
 ---
 
-I'm Ying-Kai Liao (YK) — a builder and developer based in Taipei, Taiwan.
+I'm Ying-Kai Liao (Kai) — a developer and startup builder based in Sydney, Australia.
 
-I studied at National Taiwan University of Science and Technology (NTUST), and I've been building things across the full stack ever since — from web apps and iOS apps to AI tools and data science pipelines.
+I'm currently studying Master of Data Science and Innovation (MDSI) at UTS, and previously studied at NTUST in Taiwan. I've been building things across the full stack — from web apps and iOS apps to AI tools and data science pipelines.
 
 ### What I Do
 

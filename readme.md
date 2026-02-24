@@ -62,7 +62,7 @@ Create `src/content/blog/my-post.md`:
 title: "My Post Title"
 description: "A short description"
 date: 2026-02-25
-author: "YK Liao"
+author: "Kai Liao"
 categories: ["Technology"]
 tags: ["astro", "webdev"]
 image: "/images/my-post-cover.jpg"

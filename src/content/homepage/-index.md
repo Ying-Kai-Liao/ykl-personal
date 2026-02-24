@@ -1,8 +1,8 @@
 ---
 # Banner
 banner:
-  title: "Hey, I'm YK."
-  content: "Builder & developer based in Taipei. I build AI tools, ship apps, and explore the intersection of tech and healthcare."
+  title: "Hey, I'm Kai."
+  content: "Developer and startup builder based in Sydney. Currently studying MDSI at UTS while actively building AI-powered products."
   image: "/images/profile/yk-2025.jpg"
   button:
     enable: true

@@ -1,5 +1,5 @@
 ---
-title: "YK Liao"
+title: "Kai Liao"
 meta_title: ""
 description: ""
 image: "/images/profile/avatar-yk.png"
@@ -16,4 +16,4 @@ social:
 draft: false
 ---
 
-Builder & developer based in Taipei. I build AI tools, ship apps, and explore the intersection of tech and healthcare.
+Developer and startup builder based in Sydney. Currently studying MDSI at UTS while actively building AI-powered products.

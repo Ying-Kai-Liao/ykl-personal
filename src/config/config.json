@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "YK Liao - Personal Site",
+    "title": "Kai Liao - Personal Site",
     "base_url": "https://ykliao.com",
     "base_path": "/",
     "trailing_slash": false,
@@ -9,7 +9,7 @@
     "logo_darkmode": "/images/profile/avatar-yk.png",
     "logo_width": "40",
     "logo_height": "40",
-    "logo_text": "YK Liao"
+    "logo_text": "Kai Liao"
   },
 
   "settings": {

@@ -15,8 +15,8 @@
       "home.view_project": "View Project",
       "home.latest_posts": "Latest Posts",
       "home.all_posts": "All Posts",
-      "home.banner_title": "Hey, I'm YK.",
-      "home.banner_content": "Builder & developer based in Taipei. I build AI tools, ship apps, and explore the intersection of tech and healthcare.",
+      "home.banner_title": "Hey, I'm Kai.",
+      "home.banner_content": "Developer and startup builder based in Sydney. Currently studying MDSI at UTS while actively building AI-powered products.",
       "home.see_my_work": "See my work",
       "home.project_hotseat_title": "hot-seat",
       "home.project_hotseat_desc": "Put your product idea in the hot seat. AI advisors grill it from every angle. No sugar-coating.",
@@ -25,8 +25,8 @@
       "home.project_touchstone_title": "TouchStone",
       "home.project_touchstone_desc": "iOS app for strategic planning with AI-powered project decomposition. Built with Swift and Claude Agent SDK.",
       "about.title": "About Me",
-      "about.intro": "I'm Ying-Kai Liao (YK) — a builder and developer based in Taipei, Taiwan.",
-      "about.education": "I studied at National Taiwan University of Science and Technology (NTUST), and I've been building things across the full stack ever since — from web apps and iOS apps to AI tools and data science pipelines.",
+      "about.intro": "I'm Ying-Kai Liao (Kai) — a developer and startup builder based in Sydney, Australia.",
+      "about.education": "I'm currently studying Master of Data Science and Innovation (MDSI) at UTS, and previously studied at NTUST in Taiwan. I've been building things across the full stack — from web apps and iOS apps to AI tools and data science pipelines.",
       "about.what_i_do": "What I Do",
       "about.what_i_do_intro": "I'm drawn to the intersection of <strong>AI and real-world applications</strong>. Some highlights:",
       "about.highlight_hotseat": "Built <strong>hot-seat</strong>, a Claude Code skill that puts product ideas through rigorous AI-powered critique",
@@ -51,8 +51,8 @@
       "home.view_project": "查看專案",
       "home.latest_posts": "最新文章",
       "home.all_posts": "所有文章",
-      "home.banner_title": "嗨，我是 YK。",
-      "home.banner_content": "來自台北的開發者。我打造 AI 工具、開發應用程式，探索科技與醫療的交會點。",
+      "home.banner_title": "嗨，我是 Kai。",
+      "home.banner_content": "現居雪梨的開發者與創業者。目前就讀 UTS 資料科學與創新碩士（MDSI），同時積極打造 AI 驅動的產品。",
       "home.see_my_work": "看看我的作品",
       "home.project_hotseat_title": "hot-seat",
       "home.project_hotseat_desc": "把你的產品點子放上熱座。AI 顧問從各個角度嚴格檢視，不加修飾。",
@@ -61,8 +61,8 @@
       "home.project_touchstone_title": "TouchStone",
       "home.project_touchstone_desc": "使用 Swift 與 Claude Agent SDK 打造的 iOS 應用程式，透過 AI 驅動的專案拆解進行策略規劃。",
       "about.title": "關於我",
-      "about.intro": "我是廖穎凱（YK）—— 一位來自台灣台北的開發者。",
-      "about.education": "我畢業於國立臺灣科技大學（NTUST），從那時起一直在全端領域打造各種產品 —— 從網頁應用、iOS 應用到 AI 工具和資料科學。",
+      "about.intro": "我是廖英凱（Kai）—— 現居澳洲雪梨的開發者與創業者。",
+      "about.education": "目前就讀雪梨科技大學（UTS）資料科學與創新碩士（MDSI），之前畢業於臺灣科技大學（NTUST）。一路以來持續在全端領域打造各種產品 —— 從網頁應用、iOS 應用到 AI 工具和資料科學。",
       "about.what_i_do": "我做的事",
       "about.what_i_do_intro": "我熱衷於<strong>AI 與實際應用的交集</strong>。一些亮點：",
       "about.highlight_hotseat": "打造了 <strong>hot-seat</strong>，一個透過 AI 嚴格審視產品點子的 Claude Code 技能",
@@ -76,7 +76,7 @@
       "about.beyond_code_content": "不寫程式的時候，我喜歡探索新點子、鑽研各種 side project，或是思考科技如何能產生有意義的影響 —— 尤其是在醫療領域。",
       "about.outro": "歡迎透過社群平台聯繫我 —— 我隨時歡迎有趣的對話與合作。",
       "blog.read_more": "閱讀更多",
-      "footer.copyright": "© 廖穎凱 版權所有"
+      "footer.copyright": "© 廖英凱 版權所有"
     }
   }
 }

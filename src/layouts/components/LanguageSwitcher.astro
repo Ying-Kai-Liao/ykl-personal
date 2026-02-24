@@ -1,0 +1,75 @@
+---
+import i18n from "@/config/i18n.json";
+
+const { className }: { className?: string } = Astro.props;
+const { labels } = i18n;
+---
+
+<div class={`language-switcher ${className}`}>
+  <button
+    data-lang-switcher
+    class="text-sm font-medium text-text-dark hover:text-primary dark:text-white dark:hover:text-darkmode-primary"
+    aria-label="Switch language"
+  >
+    <span data-lang-label>{labels[i18n.defaultLocale as keyof typeof labels]}</span>
+  </button>
+</div>
+
+<script>
+  import i18n from "@/config/i18n.json";
+
+  const { defaultLocale, locales, labels, translations } = i18n;
+
+  function getCurrentLocale(): string {
+    return localStorage.getItem("locale") || defaultLocale;
+  }
+
+  function setLocale(locale: string) {
+    localStorage.setItem("locale", locale);
+    applyTranslations(locale);
+    updateSwitcherLabels(locale);
+    document.documentElement.lang = locale === "zh-TW" ? "zh-Hant" : locale;
+  }
+
+  function applyTranslations(locale: string) {
+    const trans = translations[locale as keyof typeof translations];
+    if (!trans) return;
+
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (key && trans[key as keyof typeof trans]) {
+        el.innerHTML = trans[key as keyof typeof trans];
+      }
+    });
+  }
+
+  function updateSwitcherLabels(locale: string) {
+    const nextLocale = locales.find((l) => l !== locale) || defaultLocale;
+    const nextLabel = labels[nextLocale as keyof typeof labels];
+    document.querySelectorAll("[data-lang-label]").forEach((el) => {
+      el.textContent = nextLabel;
+    });
+  }
+
+  function toggleLocale() {
+    const current = getCurrentLocale();
+    const next = locales.find((l) => l !== current) || defaultLocale;
+    setLocale(next);
+  }
+
+  function initLanguageSwitcher() {
+    const locale = getCurrentLocale();
+    applyTranslations(locale);
+    updateSwitcherLabels(locale);
+    document.documentElement.lang = locale === "zh-TW" ? "zh-Hant" : locale;
+
+    document.querySelectorAll("[data-lang-switcher]").forEach((btn) => {
+      btn.addEventListener("click", toggleLocale);
+    });
+  }
+
+  // Runs on initial navigation
+  initLanguageSwitcher();
+  // Runs on view transitions navigation
+  document.addEventListener("astro:after-swap", initLanguageSwitcher);
+</script>

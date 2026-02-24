@@ -1,0 +1,58 @@
+{
+  "site": {
+    "title": "YK Liao - Personal Site",
+    "base_url": "https://ykliao.com",
+    "base_path": "/",
+    "trailing_slash": false,
+    "favicon": "/images/meta/favicon.png",
+    "logo": "/images/profile/avatar-yk.png",
+    "logo_darkmode": "/images/profile/avatar-yk.png",
+    "logo_width": "40",
+    "logo_height": "40",
+    "logo_text": "YK Liao"
+  },
+
+  "settings": {
+    "search": true,
+    "sticky_header": true,
+    "theme_switcher": true,
+    "default_theme": "system",
+    "pagination": 2,
+    "summary_length": 200,
+    "blog_folder": "blog"
+  },
+
+  "announcement": {
+    "enable": false,
+    "content": "",
+    "expire_days": 7
+  },
+
+  "params": {
+    "contact_form_action": "#",
+    "copyright": "© Ying-Kai Liao. All rights reserved."
+  },
+
+  "navigation_button": {
+    "enable": true,
+    "label": "Github",
+    "link": "https://github.com/Ying-Kai-Liao"
+  },
+
+  "google_tag_manager": {
+    "enable": false,
+    "gtm_id": "GTM-XXXXXX"
+  },
+
+  "disqus": {
+    "enable": false,
+    "shortname": "",
+    "settings": {}
+  },
+
+  "metadata": {
+    "meta_author": "Ying-Kai Liao",
+    "meta_image": "/images/meta/og-image.png",
+    "meta_description": "Personal site and blog of Ying-Kai Liao"
+  }
+}

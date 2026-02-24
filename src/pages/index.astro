@@ -1,0 +1,137 @@
+---
+import ImageMod from "@/components/ImageMod.astro";
+import Base from "@/layouts/Base.astro";
+import Social from "@/components/Social.astro";
+import BlogCard from "@/components/BlogCard.astro";
+import { getListPage, getSinglePage } from "@/lib/contentParser.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import { sortByDate } from "@/lib/utils/sortFunctions";
+import social from "@/config/social.json";
+
+const homepage = await getListPage("homepage", "-index");
+const { banner, projects } = homepage.data;
+
+const posts = await getSinglePage("blog");
+const sortedPosts = sortByDate(posts).slice(0, 3);
+
+const projectI18nKeys = [
+  { title: "home.project_hotseat_title", desc: "home.project_hotseat_desc" },
+  { title: "home.project_skin_title", desc: "home.project_skin_desc" },
+  { title: "home.project_touchstone_title", desc: "home.project_touchstone_desc" },
+];
+---
+
+<Base>
+  <!-- Intro -->
+  <section class="section pt-14">
+    <div class="container">
+      <div class="row justify-center items-center">
+        {
+          banner.image && (
+            <div class="md:col-4 lg:col-3 mb-8 md:mb-0 flex justify-center">
+              <ImageMod
+                src={banner.image}
+                height={280}
+                width={280}
+                alt="YK Liao"
+                class="rounded-full object-cover w-48 h-48 md:w-56 md:h-56"
+                format="webp"
+              />
+            </div>
+          )
+        }
+        <div class={`${banner.image ? "md:col-7 lg:col-6" : "lg:col-7 md:col-9"} mb-8 text-center md:text-left`}>
+          <h1
+            class="mb-4 text-h3 lg:text-h1"
+            data-i18n="home.banner_title"
+            set:html={markdownify(banner.title)}
+          />
+          <p
+            class="mb-6 text-lg"
+            data-i18n="home.banner_content"
+            set:html={markdownify(banner.content)}
+          />
+          <Social
+            source={social.main}
+            className="social-icons-simple flex justify-center md:justify-start gap-4 text-2xl"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /Intro -->
+
+  <!-- Projects -->
+  <section id="projects" class="section-sm bg-gradient">
+    <div class="container">
+      <h2 class="mb-8 text-center" data-i18n="home.projects_title">{projects.title}</h2>
+      <div class="row g-4 justify-center">
+        {
+          projects.items.map((project, index) => (
+            <div class="md:col-6 lg:col-4 mb-8">
+              <div class="rounded-xl border border-border p-6 h-full flex flex-col bg-body dark:bg-darkmode-body">
+                <h4
+                  class="mb-3"
+                  {...(projectI18nKeys[index] ? {"data-i18n": projectI18nKeys[index].title} : {})}
+                >
+                  {project.title}
+                </h4>
+                <p
+                  class="mb-4 flex-grow"
+                  {...(projectI18nKeys[index] ? {"data-i18n": projectI18nKeys[index].desc} : {})}
+                >
+                  {project.description}
+                </p>
+                {project.tags && (
+                  <div class="mb-4 flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span class="rounded-lg bg-theme-light px-3 py-1 text-sm dark:bg-darkmode-theme-light">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-outline-primary btn-sm w-fit"
+                    data-i18n="home.view_project"
+                  >
+                    View Project
+                  </a>
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+  <!-- /Projects -->
+
+  <!-- Recent Posts -->
+  {
+    sortedPosts.length > 0 && (
+      <section class="section-sm">
+        <div class="container">
+          <h2 class="mb-8 text-center" data-i18n="home.latest_posts">Latest Posts</h2>
+          <div class="row g-4 justify-center">
+            {sortedPosts.map((post) => (
+              <div class="md:col-6 lg:col-4 mb-8">
+                <BlogCard data={post} />
+              </div>
+            ))}
+          </div>
+          <div class="text-center mt-4">
+            <a href="/blog" class="btn btn-outline-primary" data-i18n="home.all_posts">
+              All Posts
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+  <!-- /Recent Posts -->
+</Base>

@@ -1,0 +1,31 @@
+{
+  "main": [
+    {
+      "name": "Home",
+      "url": "/",
+      "i18nKey": "nav.home"
+    },
+    {
+      "name": "Blog",
+      "url": "/blog",
+      "i18nKey": "nav.blog"
+    },
+    {
+      "name": "About",
+      "url": "/about",
+      "i18nKey": "nav.about"
+    }
+  ],
+  "footer": [
+    {
+      "name": "Blog",
+      "url": "/blog",
+      "i18nKey": "nav.blog"
+    },
+    {
+      "name": "About",
+      "url": "/about",
+      "i18nKey": "nav.about"
+    }
+  ]
+}

@@ -22,18 +22,18 @@ projects:
       link: "https://github.com/Ying-Kai-Liao/hot-seat"
 
     - title: "Multimodal Skin Cancer System"
-      description: "A multimodal report and recommendation system for skin cancer diagnosis, built on the HAM10000 dataset."
+      description: "A multimodal report system for skin cancer diagnosis, built on the HAM10000 dataset."
       tags:
         - "Data Science"
         - "ML"
         - "Healthcare"
       link: ""
 
-    - title: "TouchStone"
-      description: "iOS app for strategic planning with AI-powered project decomposition. Built with Swift and Claude Agent SDK."
+    - title: "H&M Fashion Recommender"
+      description: "A fashion recommendation system built on H&M transaction data with collaborative filtering and content-based approaches."
       tags:
-        - "Swift"
-        - "iOS"
-        - "Claude Agent SDK"
-      link: "https://github.com/Ying-Kai-Liao/TouchStone"
+        - "Data Science"
+        - "ML"
+        - "Recommendation"
+      link: ""
 ---

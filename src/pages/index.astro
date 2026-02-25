@@ -7,7 +7,6 @@ import { getListPage, getSinglePage } from "@/lib/contentParser.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import { sortByDate } from "@/lib/utils/sortFunctions";
 import social from "@/config/social.json";
-import Youtube from "@/shortcodes/Youtube";
 
 const homepage = await getListPage("homepage", "-index");
 const { banner, projects } = homepage.data;
@@ -18,7 +17,7 @@ const sortedPosts = sortByDate(posts).slice(0, 3);
 const projectI18nKeys = [
   { title: "home.project_hotseat_title", desc: "home.project_hotseat_desc" },
   { title: "home.project_skin_title", desc: "home.project_skin_desc" },
-  { title: "home.project_touchstone_title", desc: "home.project_touchstone_desc" },
+  { title: "home.project_hm_title", desc: "home.project_hm_desc" },
 ];
 ---
 
@@ -61,6 +60,370 @@ const projectI18nKeys = [
     </div>
   </section>
   <!-- /Intro -->
+
+  <!-- Ideas -->
+  <section id="ideas" class="section-sm">
+    <div class="container">
+      <h2 class="mb-3 text-center animate-fade-in-up">Ideas</h2>
+      <p class="mb-8 text-center text-text-light dark:text-darkmode-text-light animate-fade-in-up">A peek into what I'm thinking about and building.</p>
+      <div class="row g-4 justify-center">
+        <!-- Storm AI TV -->
+        <div class="md:col-6 mb-8 animate-fade-in-up animate-delay-100">
+          <div class="tv-cabinet" data-tv>
+            <div class="tv-body">
+              <div class="tv-screen-frame">
+                <div class="tv-screen">
+                  <iframe
+                    data-tv-iframe
+                    src="https://www.youtube.com/embed/8ajpWhkT7jg?autoplay=1&mute=1&loop=1&playlist=8ajpWhkT7jg&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=*"
+                    title="Storm AI"
+                    allow="autoplay; encrypted-media"
+                    loading="lazy"
+                    frameborder="0"
+                  ></iframe>
+                  <div class="tv-scanlines"></div>
+                  <div class="tv-glare"></div>
+                  <!-- Power off overlay -->
+                  <div class="tv-off-screen" data-tv-off></div>
+                </div>
+              </div>
+              <div class="tv-controls">
+                <button class="tv-led" data-tv-power aria-label="Power" title="Power on/off"></button>
+                <button class="tv-knob tv-knob-vol" data-tv-vol aria-label="Volume" title="Unmute">
+                  <svg class="tv-knob-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="1" y1="1" x2="23" y2="23" class="tv-mute-line" />
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  </svg>
+                </button>
+                <a class="tv-knob tv-knob-link" href="https://youtu.be/8ajpWhkT7jg" target="_blank" rel="noopener noreferrer" aria-label="Open on YouTube" title="Watch on YouTube">
+                  <svg class="tv-knob-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="tv-label">
+              <h4 class="mb-1">Storm AI</h4>
+              <p class="text-sm text-text-light dark:text-darkmode-text-light">AI-powered brainstorming and idea exploration.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Hot Seat TV -->
+        <div class="md:col-6 mb-8 animate-fade-in-up animate-delay-200">
+          <div class="tv-cabinet" data-tv>
+            <div class="tv-body">
+              <div class="tv-screen-frame">
+                <div class="tv-screen">
+                  <iframe
+                    data-tv-iframe
+                    src="https://www.youtube.com/embed/Bvd0tfCKFDI?autoplay=1&mute=1&loop=1&playlist=Bvd0tfCKFDI&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=*"
+                    title="Hot Seat"
+                    allow="autoplay; encrypted-media"
+                    loading="lazy"
+                    frameborder="0"
+                  ></iframe>
+                  <div class="tv-scanlines"></div>
+                  <div class="tv-glare"></div>
+                  <div class="tv-off-screen" data-tv-off></div>
+                </div>
+              </div>
+              <div class="tv-controls">
+                <button class="tv-led" data-tv-power aria-label="Power" title="Power on/off"></button>
+                <button class="tv-knob tv-knob-vol" data-tv-vol aria-label="Volume" title="Unmute">
+                  <svg class="tv-knob-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="1" y1="1" x2="23" y2="23" class="tv-mute-line" />
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  </svg>
+                </button>
+                <a class="tv-knob tv-knob-link" href="https://youtu.be/Bvd0tfCKFDI" target="_blank" rel="noopener noreferrer" aria-label="Open on YouTube" title="Watch on YouTube">
+                  <svg class="tv-knob-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="tv-label">
+              <h4 class="mb-1">Hot Seat</h4>
+              <p class="text-sm text-text-light dark:text-darkmode-text-light">Put your product ideas through rigorous AI-powered critique.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /Ideas -->
+
+  <style>
+    .tv-cabinet {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tv-body {
+      position: relative;
+      background: linear-gradient(145deg, #2a2a2e, #1a1a1e);
+      border-radius: 20px;
+      padding: 20px 20px 12px 20px;
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 2px 0 #111;
+      width: 100%;
+    }
+
+    .dark .tv-body {
+      background: linear-gradient(145deg, #333338, #222226);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04),
+        0 2px 0 #0a0a0a;
+    }
+
+    .tv-screen-frame {
+      background: #0a0a0a;
+      border-radius: 12px;
+      padding: 4px;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .tv-screen {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .tv-screen iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Faint scanline overlay */
+    .tv-scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+      );
+      pointer-events: none;
+      border-radius: 8px;
+    }
+
+    /* Subtle screen glare */
+    .tv-glare {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.07) 0%,
+        transparent 40%,
+        transparent 100%
+      );
+      pointer-events: none;
+      border-radius: 8px;
+    }
+
+    /* Power off overlay */
+    .tv-off-screen {
+      position: absolute;
+      inset: 0;
+      background: #0a0a0a;
+      border-radius: 8px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .tv-off-screen.is-off {
+      opacity: 1;
+    }
+
+    /* CRT power-off animation */
+    .tv-off-screen.is-off::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-50%);
+      animation: crt-off 0.3s ease-out forwards;
+    }
+
+    @keyframes crt-off {
+      0% { left: 0; right: 0; height: 2px; opacity: 1; }
+      100% { left: 45%; right: 45%; height: 1px; opacity: 0; }
+    }
+
+    /* Bottom controls strip */
+    .tv-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 10px 4px 2px 4px;
+    }
+
+    .tv-led {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 6px #4ade80, 0 0 12px rgba(74, 222, 128, 0.3);
+      margin-right: auto;
+      animation: led-pulse 3s ease-in-out infinite;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .tv-led:hover {
+      transform: scale(1.3);
+    }
+
+    .tv-led.is-off {
+      background: #ef4444;
+      box-shadow: 0 0 6px #ef4444, 0 0 12px rgba(239, 68, 68, 0.3);
+      animation: none;
+    }
+
+    @keyframes led-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .tv-knob {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #444, #333);
+      border: 1.5px solid #555;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease, border-color 0.2s;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    .tv-knob:hover {
+      transform: scale(1.1);
+      border-color: #777;
+    }
+
+    .tv-knob:active {
+      transform: scale(0.95);
+    }
+
+    .tv-knob-icon {
+      width: 12px;
+      height: 12px;
+      color: #999;
+    }
+
+    /* Mute line hidden when unmuted */
+    .tv-mute-line {
+      transition: opacity 0.2s;
+    }
+
+    .tv-knob-vol.is-unmuted .tv-mute-line {
+      opacity: 0;
+    }
+
+    .tv-knob-vol.is-unmuted {
+      border-color: #3B82F6;
+    }
+
+    .tv-knob-vol.is-unmuted .tv-knob-icon {
+      color: #3B82F6;
+    }
+
+    .tv-label {
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tv-led {
+        animation: none;
+      }
+      .tv-off-screen.is-off::after {
+        animation: none;
+      }
+    }
+  </style>
+
+  <script>
+    function sendYTCommand(iframe: HTMLIFrameElement, func: string) {
+      iframe.contentWindow?.postMessage(JSON.stringify({
+        event: 'command', func, args: ''
+      }), '*');
+    }
+
+    document.addEventListener('astro:page-load', () => {
+      document.querySelectorAll('[data-tv]').forEach(tv => {
+        const iframe = tv.querySelector('[data-tv-iframe]') as HTMLIFrameElement;
+        const powerBtn = tv.querySelector('[data-tv-power]') as HTMLElement;
+        const volBtn = tv.querySelector('[data-tv-vol]') as HTMLElement;
+        const offScreen = tv.querySelector('[data-tv-off]') as HTMLElement;
+        if (!iframe || !powerBtn || !volBtn || !offScreen) return;
+
+        let isOn = true;
+        let isMuted = true;
+
+        powerBtn.addEventListener('click', () => {
+          isOn = !isOn;
+          if (isOn) {
+            sendYTCommand(iframe, 'playVideo');
+            offScreen.classList.remove('is-off');
+            powerBtn.classList.remove('is-off');
+          } else {
+            sendYTCommand(iframe, 'pauseVideo');
+            offScreen.classList.add('is-off');
+            powerBtn.classList.add('is-off');
+            // Also mute when powering off
+            if (!isMuted) {
+              isMuted = true;
+              sendYTCommand(iframe, 'mute');
+              volBtn.classList.remove('is-unmuted');
+              volBtn.title = 'Unmute';
+            }
+          }
+        });
+
+        volBtn.addEventListener('click', () => {
+          if (!isOn) return;
+          isMuted = !isMuted;
+          if (isMuted) {
+            sendYTCommand(iframe, 'mute');
+            volBtn.classList.remove('is-unmuted');
+            volBtn.title = 'Unmute';
+          } else {
+            sendYTCommand(iframe, 'unMute');
+            volBtn.classList.add('is-unmuted');
+            volBtn.title = 'Mute';
+          }
+        });
+      });
+    });
+  </script>
 
   <!-- Projects -->
   <section id="projects" class="section-sm bg-gradient">
@@ -111,35 +474,6 @@ const projectI18nKeys = [
     </div>
   </section>
   <!-- /Projects -->
-
-  <!-- Ideas -->
-  <section id="ideas" class="section-sm">
-    <div class="container">
-      <h2 class="mb-3 text-center animate-fade-in-up">Ideas</h2>
-      <p class="mb-8 text-center text-text-light dark:text-darkmode-text-light animate-fade-in-up">A peek into what I'm thinking about and building.</p>
-      <div class="row g-4 justify-center">
-        <div class="md:col-6 mb-8 animate-fade-in-up animate-delay-100">
-          <div class="rounded-2xl border border-border dark:border-darkmode-border bg-white dark:bg-darkmode-light shadow-sm overflow-hidden">
-            <Youtube client:visible id="8ajpWhkT7jg" title="Storm AI" />
-            <div class="p-5">
-              <h4 class="mb-1">Storm AI</h4>
-              <p class="text-sm text-text-light dark:text-darkmode-text-light">AI-powered brainstorming and idea exploration.</p>
-            </div>
-          </div>
-        </div>
-        <div class="md:col-6 mb-8 animate-fade-in-up animate-delay-200">
-          <div class="rounded-2xl border border-border dark:border-darkmode-border bg-white dark:bg-darkmode-light shadow-sm overflow-hidden">
-            <Youtube client:visible id="Bvd0tfCKFDI" title="Hot Seat" />
-            <div class="p-5">
-              <h4 class="mb-1">Hot Seat</h4>
-              <p class="text-sm text-text-light dark:text-darkmode-text-light">Put your product ideas through rigorous AI-powered critique.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /Ideas -->
 
   <!-- Recent Posts -->
   {

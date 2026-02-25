@@ -1,0 +1,94 @@
+---
+import Base from "@/layouts/Base.astro";
+import ImageMod from "@/components/ImageMod.astro";
+import DynamicIcon from "@/helpers/DynamicIcon";
+import config from "@/config/config.json";
+
+const links = [
+  {
+    name: "GitHub",
+    description: "Open source projects & contributions",
+    icon: "FaGithub",
+    url: "https://github.com/Ying-Kai-Liao",
+    span: "large",
+  },
+  {
+    name: "LinkedIn",
+    description: "Professional network",
+    icon: "FaLinkedin",
+    url: "https://www.linkedin.com/in/ying-kai-liao",
+    span: "small",
+  },
+  {
+    name: "X / Twitter",
+    description: "Thoughts & updates",
+    icon: "FaXTwitter",
+    url: "https://x.com/yinn__nkai",
+    span: "small",
+  },
+  {
+    name: "Threads",
+    description: "Casual posts",
+    icon: "FaThreads",
+    url: "https://www.threads.com/@yinn__nkai",
+    span: "small",
+  },
+  {
+    name: "Instagram",
+    description: "Photos & stories",
+    icon: "FaInstagram",
+    url: "https://www.instagram.com/yinn__nkai",
+    span: "small",
+  },
+  {
+    name: "Blog",
+    description: "AI, dev, data science & startup lessons",
+    icon: "FaPenNib",
+    url: "/blog",
+    span: "large",
+    internal: true,
+  },
+];
+---
+
+<Base title="Links" meta_title="Links — Kai Liao" description="All my links in one place.">
+  <section class="section pt-14">
+    <div class="container max-w-2xl">
+      <!-- Profile header -->
+      <div class="text-center mb-10 animate-fade-in-up">
+        <ImageMod
+          src={config.site.logo}
+          height={96}
+          width={96}
+          alt="Kai Liao"
+          class="rounded-full object-cover w-20 h-20 mx-auto mb-4 shadow-md ring-4 ring-light dark:ring-darkmode-light"
+          format="webp"
+        />
+        <h1 class="text-h3 mb-1">Kai Liao</h1>
+        <p class="text-text-light dark:text-darkmode-text-light">Developer & Startup Builder</p>
+      </div>
+
+      <!-- Bento grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up animate-delay-100">
+        {links.map((link) => (
+          <a
+            href={link.url}
+            target={link.internal ? "_self" : "_blank"}
+            rel={link.internal ? "" : "noopener noreferrer"}
+            class:list={[
+              "group rounded-2xl border border-border dark:border-darkmode-border bg-white dark:bg-darkmode-light p-6 flex flex-col items-center justify-center text-center shadow-sm transition-all duration-200 cursor-pointer hover:-translate-y-1 hover:shadow-lg",
+              link.span === "large" ? "col-span-2" : "col-span-1",
+            ]}
+          >
+            <DynamicIcon
+              icon={link.icon}
+              className="text-3xl mb-3 text-text-dark dark:text-darkmode-text-dark group-hover:text-primary dark:group-hover:text-darkmode-primary transition-colors duration-200"
+            />
+            <span class="font-semibold text-text-dark dark:text-darkmode-text-dark text-sm">{link.name}</span>
+            <span class="text-xs text-text-light dark:text-darkmode-text-light mt-1">{link.description}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

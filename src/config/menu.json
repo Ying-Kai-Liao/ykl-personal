@@ -11,6 +11,11 @@
       "i18nKey": "nav.blog"
     },
     {
+      "name": "Links",
+      "url": "/links",
+      "i18nKey": "nav.links"
+    },
+    {
       "name": "About",
       "url": "/about",
       "i18nKey": "nav.about"

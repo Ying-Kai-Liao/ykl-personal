@@ -52,7 +52,17 @@ const links = [
 ---
 
 <Base title="Links" meta_title="Links — Kai Liao" description="All my links in one place.">
-  <section class="section pt-14">
+  <section class="section pt-14 relative overflow-hidden">
+    <!-- Background image -->
+    <div class="absolute inset-0 -z-10">
+      <img
+        src="/images/profile/sydney-lightrail.jpg"
+        alt=""
+        class="w-full h-full object-cover"
+        fetchpriority="high"
+      />
+      <div class="absolute inset-0 bg-body/50 dark:bg-darkmode-body/60"></div>
+    </div>
     <div class="container max-w-2xl">
       <!-- Profile header -->
       <div class="text-center mb-10 animate-fade-in-up">
@@ -86,7 +96,35 @@ const links = [
           </div>
         </button>
         <h1 class="text-h3 mb-1">Kai Liao</h1>
-        <p class="text-text-light dark:text-darkmode-text-light">Developer & Startup Builder</p>
+        <p class="text-text-light dark:text-darkmode-text-light mb-4">Developer & Startup Builder</p>
+        <!-- QR Code toggle -->
+        <button
+          id="qr-toggle"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border dark:border-darkmode-border text-sm text-text-light dark:text-darkmode-text-light hover:text-primary dark:hover:text-darkmode-primary hover:border-primary dark:hover:border-darkmode-primary transition-all duration-200 cursor-pointer"
+          aria-label="Show QR code"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="8" height="8" rx="1" />
+            <rect x="14" y="2" width="8" height="8" rx="1" />
+            <rect x="2" y="14" width="8" height="8" rx="1" />
+            <rect x="14" y="14" width="4" height="4" />
+            <rect x="20" y="14" width="2" height="2" />
+            <rect x="14" y="20" width="2" height="2" />
+            <rect x="20" y="20" width="2" height="2" />
+          </svg>
+          <span id="qr-label">Share QR</span>
+        </button>
+        <!-- QR overlay -->
+        <div id="qr-overlay" class="hidden mt-4">
+          <div class="inline-block bg-white p-4 rounded-2xl shadow-lg">
+            <img
+              id="qr-img"
+              alt="QR code for this page"
+              class="w-48 h-48"
+            />
+          </div>
+          <p class="text-xs text-text-light dark:text-darkmode-text-light mt-2">Scan to open this page</p>
+        </div>
       </div>
 
       <!-- Preload real photo -->
@@ -113,6 +151,25 @@ const links = [
 
           // Auto-flip every 5 seconds
           let timer = setInterval(flip, 5000);
+        });
+
+        // QR code toggle
+        document.addEventListener('astro:page-load', () => {
+          const btn = document.getElementById('qr-toggle');
+          const overlay = document.getElementById('qr-overlay');
+          const img = document.getElementById('qr-img') as HTMLImageElement;
+          const label = document.getElementById('qr-label');
+          if (!btn || !overlay || !img || !label) return;
+
+          let visible = false;
+          const url = 'https://ykliao.netlify.app/links';
+          img.src = `https://api.qrserver.com/v1/create-qr-code/?size=192x192&data=${encodeURIComponent(url)}&margin=8`;
+
+          btn.addEventListener('click', () => {
+            visible = !visible;
+            overlay.classList.toggle('hidden', !visible);
+            label.textContent = visible ? 'Hide QR' : 'Share QR';
+          });
         });
       </script>
 

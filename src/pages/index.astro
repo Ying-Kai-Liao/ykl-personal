@@ -28,26 +28,26 @@ const projectI18nKeys = [
       <div class="row justify-center items-center">
         {
           banner.image && (
-            <div class="md:col-4 lg:col-3 mb-8 md:mb-0 flex justify-center">
+            <div class="md:col-4 lg:col-3 mb-8 md:mb-0 flex justify-center animate-fade-in-up">
               <ImageMod
                 src={banner.image}
                 height={280}
                 width={280}
                 alt="Kai Liao"
-                class="rounded-full object-cover w-48 h-48 md:w-56 md:h-56"
+                class="rounded-full object-cover w-48 h-48 md:w-56 md:h-56 shadow-lg ring-4 ring-light dark:ring-darkmode-light"
                 format="webp"
               />
             </div>
           )
         }
-        <div class={`${banner.image ? "md:col-7 lg:col-6" : "lg:col-7 md:col-9"} mb-8 text-center md:text-left`}>
+        <div class={`${banner.image ? "md:col-7 lg:col-6" : "lg:col-7 md:col-9"} mb-8 text-center md:text-left animate-fade-in-up animate-delay-100`}>
           <h1
             class="mb-4 text-h3 lg:text-h1"
             data-i18n="home.banner_title"
             set:html={markdownify(banner.title)}
           />
           <p
-            class="mb-6 text-lg"
+            class="mb-6 text-lg text-text-light dark:text-darkmode-text-light"
             data-i18n="home.banner_content"
             set:html={markdownify(banner.content)}
           />
@@ -64,12 +64,12 @@ const projectI18nKeys = [
   <!-- Projects -->
   <section id="projects" class="section-sm bg-gradient">
     <div class="container">
-      <h2 class="mb-8 text-center" data-i18n="home.projects_title">{projects.title}</h2>
+      <h2 class="mb-8 text-center animate-fade-in-up" data-i18n="home.projects_title">{projects.title}</h2>
       <div class="row g-4 justify-center">
         {
           projects.items.map((project, index) => (
-            <div class="md:col-6 lg:col-4 mb-8">
-              <div class="rounded-xl border border-border p-6 h-full flex flex-col bg-body dark:bg-darkmode-body">
+            <div class={`md:col-6 lg:col-4 mb-8 animate-fade-in-up animate-delay-${(index + 1) * 100}`}>
+              <div class="rounded-2xl border border-border p-6 h-full flex flex-col bg-white dark:bg-darkmode-light shadow-sm card-hover">
                 <h4
                   class="mb-3"
                   {...(projectI18nKeys[index] ? {"data-i18n": projectI18nKeys[index].title} : {})}
@@ -77,7 +77,7 @@ const projectI18nKeys = [
                   {project.title}
                 </h4>
                 <p
-                  class="mb-4 flex-grow"
+                  class="mb-4 flex-grow text-text-light dark:text-darkmode-text-light"
                   {...(projectI18nKeys[index] ? {"data-i18n": projectI18nKeys[index].desc} : {})}
                 >
                   {project.description}
@@ -85,7 +85,7 @@ const projectI18nKeys = [
                 {project.tags && (
                   <div class="mb-4 flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
-                      <span class="rounded-lg bg-theme-light px-3 py-1 text-sm dark:bg-darkmode-theme-light">
+                      <span class="rounded-lg bg-light px-3 py-1 text-sm text-text-light dark:bg-darkmode-body dark:text-darkmode-text-light">
                         {tag}
                       </span>
                     ))}
@@ -116,15 +116,15 @@ const projectI18nKeys = [
     sortedPosts.length > 0 && (
       <section class="section-sm">
         <div class="container">
-          <h2 class="mb-8 text-center" data-i18n="home.latest_posts">Latest Posts</h2>
+          <h2 class="mb-8 text-center animate-fade-in-up" data-i18n="home.latest_posts">Latest Posts</h2>
           <div class="row g-4 justify-center">
-            {sortedPosts.map((post) => (
-              <div class="md:col-6 lg:col-4 mb-8">
+            {sortedPosts.map((post, index) => (
+              <div class={`md:col-6 lg:col-4 mb-8 animate-fade-in-up animate-delay-${(index + 1) * 100}`}>
                 <BlogCard data={post} />
               </div>
             ))}
           </div>
-          <div class="text-center mt-4">
+          <div class="text-center mt-4 animate-fade-in-up">
             <a href="/blog" class="btn btn-outline-primary" data-i18n="home.all_posts">
               All Posts
             </a>

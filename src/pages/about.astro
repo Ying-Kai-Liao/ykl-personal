@@ -23,18 +23,20 @@ if (aboutIndex.data.draft) {
         <div class="md:col-10 lg:col-8">
           {
             image && (
-              <ImageMod
-                class="mx-auto mb-6 rounded"
-                src={image}
-                width={1200}
-                height={600}
-                alt={title}
-                format="webp"
-              />
+              <div class="animate-fade-in-up">
+                <ImageMod
+                  class="mx-auto mb-6 rounded-2xl max-w-md shadow-lg"
+                  src={image}
+                  width={480}
+                  height={480}
+                  alt={title}
+                  format="webp"
+                />
+              </div>
             )
           }
-          <h2 class="h3 mb-6" data-i18n="about.title">{title}</h2>
-          <div class="content">
+          <h2 class="h3 mb-6 animate-fade-in-up animate-delay-100" data-i18n="about.title">{title}</h2>
+          <div class="content animate-fade-in-up animate-delay-200">
             <p data-i18n="about.intro">I'm Ying-Kai Liao (Kai) — a developer and startup builder based in Sydney, Australia.</p>
 
             <p data-i18n="about.education">I'm currently studying Master of Data Science and Innovation (MDSI) at UTS, and previously studied at NTUST in Taiwan. I've been building things across the full stack — from web apps and iOS apps to AI tools and data science pipelines.</p>
@@ -50,7 +52,7 @@ if (aboutIndex.data.draft) {
               <li data-i18n="about.highlight_pemochart">Previously founded <strong>攀木科技 (PemoChart)</strong>, a startup awarded at U-start Plan 16th</li>
             </ul>
 
-            <img src="/images/profile/ustart-speaking.jpg" alt="Presenting at U-start Plan 16th" class="rounded my-4" />
+            <img src="/images/profile/ustart-speaking.jpg" alt="Presenting at U-start Plan 16th" class="rounded-2xl my-4 max-w-md shadow-md" />
             <p class="text-sm text-text-light italic" data-i18n="about.ustart_caption">Presenting 攀木科技 at the U-start Plan 16th startup accelerator demo day.</p>
 
             <h3 data-i18n="about.my_stack">My Stack</h3>

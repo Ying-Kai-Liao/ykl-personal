@@ -20,15 +20,23 @@
   @apply inline-block;
 }
 .social-icons li a {
-  @apply flex h-9 w-9 items-center justify-center rounded-sm bg-primary text-center leading-9 text-white dark:bg-darkmode-primary dark:text-text-dark;
+  @apply flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-center leading-9 text-white transition-all duration-200 dark:bg-darkmode-primary dark:text-darkmode-body;
+}
+.social-icons li a:hover {
+  @apply opacity-80 shadow-md;
 }
 .social-icons li a svg {
   @apply h-5 w-5;
 }
 
+/* simple social icons (no bg) */
+.social-icons-simple a {
+  @apply text-text-light hover:text-primary dark:text-darkmode-text-light dark:hover:text-darkmode-primary transition-colors duration-200;
+}
+
 /* notice */
 .notice {
-  @apply mb-6 rounded-lg border px-8 py-6;
+  @apply mb-6 rounded-2xl border px-8 py-6;
 }
 
 .notice-head {
@@ -52,7 +60,7 @@
 }
 
 .notice.note {
-  @apply text-[#1B83E2];
+  @apply text-[#3B82F6];
   @apply border-current;
 }
 
@@ -73,7 +81,7 @@
 
 /* tab */
 .tab {
-  @apply overflow-hidden rounded-lg border border-border dark:border-darkmode-border;
+  @apply overflow-hidden rounded-2xl border border-border dark:border-darkmode-border;
 }
 
 .tab-nav {
@@ -85,7 +93,7 @@
 }
 
 .tab-nav-item.active {
-  @apply border-b-[3px] border-dark opacity-100 dark:border-darkmode-primary;
+  @apply border-b-[3px] border-primary opacity-100 dark:border-darkmode-primary;
 }
 
 .tab-content {
@@ -106,7 +114,7 @@
 
 /* accordion */
 .accordion {
-  @apply mb-6 overflow-hidden rounded-lg border border-border bg-light dark:border-darkmode-border dark:bg-darkmode-light;
+  @apply mb-6 overflow-hidden rounded-2xl border border-border bg-light dark:border-darkmode-border dark:bg-darkmode-light;
 }
 
 .accordion-header {
@@ -135,11 +143,11 @@
 }
 
 .modal-overlay {
-  @apply fixed inset-0 z-40 hidden h-full w-full bg-black/40;
+  @apply fixed inset-0 z-40 hidden h-full w-full bg-black/40 backdrop-blur-sm;
 }
 
 .modal-content {
-  @apply relative top-1/2 z-50 mx-auto max-w-[90%] -translate-y-1/2 rounded-lg bg-body p-8 dark:bg-darkmode-body;
+  @apply relative top-1/2 z-50 mx-auto max-w-[90%] -translate-y-1/2 rounded-2xl bg-body p-8 shadow-xl dark:bg-darkmode-body;
 }
 
 .modal-close {
@@ -154,17 +162,59 @@
   @apply prose-h2:text-h2-sm md:prose-h2:text-h2;
   @apply prose-h3:text-h3-sm md:prose-h3:text-h3;
   @apply prose-p:text-base prose-p:text-text dark:prose-p:text-darkmode-text;
-  @apply prose-a:text-text prose-a:[&.btn]:no-underline  dark:prose-a:text-darkmode-text;
-  @apply prose-img:max-w-full prose-img:rounded;
+  @apply prose-a:text-primary prose-a:[&.btn]:no-underline dark:prose-a:text-darkmode-primary;
+  @apply prose-img:max-w-full prose-img:rounded-2xl;
   @apply prose-strong:text-text-dark dark:prose-strong:text-darkmode-text;
   @apply prose-hr:border-border dark:prose-hr:border-darkmode-border;
-  @apply prose-pre:rounded-lg prose-pre:bg-light dark:prose-pre:bg-darkmode-light;
+  @apply prose-pre:rounded-2xl prose-pre:bg-light dark:prose-pre:bg-darkmode-light;
   @apply prose-code:text-darkmode-text-dark;
   @apply prose-li:text-text dark:prose-li:text-darkmode-text;
-  @apply prose-blockquote:rounded-lg prose-blockquote:border prose-blockquote:border-l-[10px] prose-blockquote:border-primary prose-blockquote:bg-light prose-blockquote:px-8 prose-blockquote:py-10 prose-blockquote:font-secondary prose-blockquote:text-2xl prose-blockquote:not-italic prose-blockquote:text-text-dark dark:prose-blockquote:border-darkmode-primary dark:prose-blockquote:bg-darkmode-light dark:prose-blockquote:text-darkmode-text-light;
-  @apply prose-table:relative prose-table:overflow-hidden prose-table:rounded-lg prose-table:before:absolute prose-table:before:left-0 prose-table:before:top-0 prose-table:before:h-full prose-table:before:w-full prose-table:before:rounded-[inherit] prose-table:before:border prose-table:before:border-border prose-table:before:content-[""] dark:prose-table:before:border-darkmode-border;
+  @apply prose-blockquote:rounded-2xl prose-blockquote:border prose-blockquote:border-l-[10px] prose-blockquote:border-primary prose-blockquote:bg-light prose-blockquote:px-8 prose-blockquote:py-10 prose-blockquote:font-secondary prose-blockquote:text-2xl prose-blockquote:not-italic prose-blockquote:text-text-dark dark:prose-blockquote:border-darkmode-primary dark:prose-blockquote:bg-darkmode-light dark:prose-blockquote:text-darkmode-text-light;
+  @apply prose-table:relative prose-table:overflow-hidden prose-table:rounded-2xl prose-table:before:absolute prose-table:before:left-0 prose-table:before:top-0 prose-table:before:h-full prose-table:before:w-full prose-table:before:rounded-[inherit] prose-table:before:border prose-table:before:border-border prose-table:before:content-[""] dark:prose-table:before:border-darkmode-border;
   @apply prose-thead:border-border prose-thead:bg-light dark:prose-thead:border-darkmode-border dark:prose-thead:bg-darkmode-light;
   @apply prose-th:relative prose-th:z-10 prose-th:px-4 prose-th:py-[18px] prose-th:text-text-dark dark:prose-th:text-darkmode-text;
   @apply prose-tr:border-border dark:prose-tr:border-darkmode-border;
   @apply prose-td:relative prose-td:z-10 prose-td:px-3 prose-td:py-[18px] dark:prose-td:text-darkmode-text;
+}
+
+/* card hover effect */
+.card-hover {
+  @apply transition-all duration-200 cursor-pointer;
+}
+.card-hover:hover {
+  @apply -translate-y-1 shadow-lg;
+}
+
+/* fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-delay-100 {
+  animation-delay: 100ms;
+}
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
+.animate-delay-300 {
+  animation-delay: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up {
+    animation: none;
+    opacity: 1;
+  }
 }

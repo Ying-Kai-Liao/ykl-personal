@@ -187,18 +187,123 @@ const links = [
             target={link.internal ? "_self" : "_blank"}
             rel={link.internal ? "" : "noopener noreferrer"}
             class:list={[
-              "group rounded-2xl border border-border dark:border-darkmode-border bg-white dark:bg-darkmode-light p-6 flex flex-col items-center justify-center text-center shadow-sm transition-all duration-200 cursor-pointer hover:-translate-y-1 hover:shadow-lg",
+              "fluid-glass group relative rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer overflow-hidden",
               link.span === "large" ? "col-span-2" : "col-span-1",
             ]}
           >
             <DynamicIcon
               icon={link.icon}
-              className="text-3xl mb-3 text-text-dark dark:text-darkmode-text-dark group-hover:text-primary dark:group-hover:text-darkmode-primary transition-colors duration-200"
+              className="text-3xl mb-3 text-text-dark dark:text-darkmode-text-dark group-hover:text-white transition-colors duration-300 relative z-[2]"
             />
-            <span class="font-semibold text-text-dark dark:text-darkmode-text-dark text-sm">{link.name}</span>
+            <span class="font-semibold text-text-dark dark:text-darkmode-text-dark group-hover:text-white text-sm relative z-[2] transition-colors duration-300">{link.name}</span>
           </a>
         ))}
       </div>
     </div>
   </section>
 </Base>
+
+<style>
+  .fluid-glass {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow:
+      0 4px 24px -1px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                background 0.35s ease;
+  }
+
+  :global(.dark) .fluid-glass {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 4px 24px -1px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* Prismatic refraction sheen */
+  .fluid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 40%,
+      rgba(200, 220, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0) 60%
+    );
+    background-size: 250% 250%;
+    background-position: 100% 100%;
+    transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .fluid-glass:hover::before {
+    background-position: 0% 0%;
+  }
+
+  /* Chromatic edge glow on hover */
+  .fluid-glass::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from 0deg,
+      rgba(59, 130, 246, 0.5),
+      rgba(168, 85, 247, 0.4),
+      rgba(236, 72, 153, 0.3),
+      rgba(59, 130, 246, 0.5)
+    );
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    padding: 1.5px;
+  }
+
+  .fluid-glass:hover::after {
+    opacity: 1;
+    animation: glass-border-spin 3s linear infinite;
+  }
+
+  .fluid-glass:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow:
+      0 12px 40px -4px rgba(59, 130, 246, 0.15),
+      0 4px 12px -2px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  :global(.dark) .fluid-glass:hover {
+    background: rgba(255, 255, 255, 0.14);
+    box-shadow:
+      0 12px 40px -4px rgba(59, 130, 246, 0.2),
+      0 4px 12px -2px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  @keyframes glass-border-spin {
+    to { filter: hue-rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fluid-glass,
+    .fluid-glass::before,
+    .fluid-glass::after {
+      transition: none;
+      animation: none;
+    }
+  }
+</style>

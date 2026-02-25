@@ -23,7 +23,7 @@ const links = [
     name: "X / Twitter",
     description: "Thoughts & updates",
     icon: "FaXTwitter",
-    url: "https://x.com/yinn__nkai",
+    url: "https://x.com/YingKaiLiao1",
     span: "small",
   },
   {
@@ -56,17 +56,51 @@ const links = [
     <div class="container max-w-2xl">
       <!-- Profile header -->
       <div class="text-center mb-10 animate-fade-in-up">
-        <ImageMod
-          src={config.site.logo}
-          height={96}
-          width={96}
-          alt="Kai Liao"
-          class="rounded-full object-cover w-20 h-20 mx-auto mb-4 shadow-md ring-4 ring-light dark:ring-darkmode-light"
-          format="webp"
-        />
+        <button
+          id="profile-toggle"
+          class="relative w-20 h-20 mx-auto mb-4 rounded-full cursor-pointer focus:outline-none group"
+          style="perspective: 600px;"
+          aria-label="Toggle profile picture"
+        >
+          <div id="profile-flipper" class="relative w-full h-full transition-transform duration-500" style="transform-style: preserve-3d;">
+            <!-- Icon (front) -->
+            <div class="absolute inset-0" style="backface-visibility: hidden;">
+              <ImageMod
+                src="/images/profile/avatar-yk.png"
+                height={96}
+                width={96}
+                alt="Kai Liao avatar"
+                class="rounded-full object-cover w-20 h-20 shadow-md ring-4 ring-light dark:ring-darkmode-light group-hover:ring-primary/30 dark:group-hover:ring-darkmode-primary/30 transition-all duration-200"
+                format="webp"
+              />
+            </div>
+            <!-- Real photo (back) -->
+            <div class="absolute inset-0" style="backface-visibility: hidden; transform: rotateY(180deg);">
+              <img
+                src="/images/profile/yk-2025.jpg"
+                alt="Kai Liao photo"
+                class="rounded-full object-cover w-20 h-20 shadow-md ring-4 ring-light dark:ring-darkmode-light group-hover:ring-primary/30 dark:group-hover:ring-darkmode-primary/30 transition-all duration-200"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </button>
         <h1 class="text-h3 mb-1">Kai Liao</h1>
         <p class="text-text-light dark:text-darkmode-text-light">Developer & Startup Builder</p>
       </div>
+
+      <script>
+        document.addEventListener('astro:page-load', () => {
+          const toggle = document.getElementById('profile-toggle');
+          const flipper = document.getElementById('profile-flipper');
+          if (!toggle || !flipper) return;
+          let flipped = false;
+          toggle.addEventListener('click', () => {
+            flipped = !flipped;
+            flipper.style.transform = flipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+          });
+        });
+      </script>
 
       <!-- Bento grid -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up animate-delay-100">

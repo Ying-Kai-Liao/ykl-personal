@@ -80,7 +80,7 @@ const links = [
                 src="/images/profile/yk-2025.jpg"
                 alt="Kai Liao photo"
                 class="rounded-full object-cover w-20 h-20 shadow-md ring-4 ring-light dark:ring-darkmode-light group-hover:ring-primary/30 dark:group-hover:ring-darkmode-primary/30 transition-all duration-200"
-                loading="lazy"
+                fetchpriority="high"
               />
             </div>
           </div>
@@ -89,16 +89,30 @@ const links = [
         <p class="text-text-light dark:text-darkmode-text-light">Developer & Startup Builder</p>
       </div>
 
+      <!-- Preload real photo -->
+      <link rel="preload" href="/images/profile/yk-2025.jpg" as="image" />
+
       <script>
         document.addEventListener('astro:page-load', () => {
           const toggle = document.getElementById('profile-toggle');
           const flipper = document.getElementById('profile-flipper');
           if (!toggle || !flipper) return;
+
           let flipped = false;
-          toggle.addEventListener('click', () => {
+          const flip = () => {
             flipped = !flipped;
             flipper.style.transform = flipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+          };
+
+          // Click to flip manually (resets timer)
+          toggle.addEventListener('click', () => {
+            flip();
+            clearInterval(timer);
+            timer = setInterval(flip, 5000);
           });
+
+          // Auto-flip every 5 seconds
+          let timer = setInterval(flip, 5000);
         });
       </script>
 

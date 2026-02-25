@@ -7,6 +7,7 @@ import { getListPage, getSinglePage } from "@/lib/contentParser.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import { sortByDate } from "@/lib/utils/sortFunctions";
 import social from "@/config/social.json";
+import Youtube from "@/shortcodes/Youtube";
 
 const homepage = await getListPage("homepage", "-index");
 const { banner, projects } = homepage.data;
@@ -110,6 +111,35 @@ const projectI18nKeys = [
     </div>
   </section>
   <!-- /Projects -->
+
+  <!-- Ideas -->
+  <section id="ideas" class="section-sm">
+    <div class="container">
+      <h2 class="mb-3 text-center animate-fade-in-up">Ideas</h2>
+      <p class="mb-8 text-center text-text-light dark:text-darkmode-text-light animate-fade-in-up">A peek into what I'm thinking about and building.</p>
+      <div class="row g-4 justify-center">
+        <div class="md:col-6 mb-8 animate-fade-in-up animate-delay-100">
+          <div class="rounded-2xl border border-border dark:border-darkmode-border bg-white dark:bg-darkmode-light shadow-sm overflow-hidden">
+            <Youtube client:visible id="8ajpWhkT7jg" title="Storm AI" />
+            <div class="p-5">
+              <h4 class="mb-1">Storm AI</h4>
+              <p class="text-sm text-text-light dark:text-darkmode-text-light">AI-powered brainstorming and idea exploration.</p>
+            </div>
+          </div>
+        </div>
+        <div class="md:col-6 mb-8 animate-fade-in-up animate-delay-200">
+          <div class="rounded-2xl border border-border dark:border-darkmode-border bg-white dark:bg-darkmode-light shadow-sm overflow-hidden">
+            <Youtube client:visible id="Bvd0tfCKFDI" title="Hot Seat" />
+            <div class="p-5">
+              <h4 class="mb-1">Hot Seat</h4>
+              <p class="text-sm text-text-light dark:text-darkmode-text-light">Put your product ideas through rigorous AI-powered critique.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /Ideas -->
 
   <!-- Recent Posts -->
   {

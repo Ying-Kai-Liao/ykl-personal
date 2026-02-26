@@ -3,7 +3,7 @@ import Base from "@/layouts/Base.astro";
 import ImageMod from "@/components/ImageMod.astro";
 import DynamicIcon from "@/helpers/DynamicIcon";
 import config from "@/config/config.json";
-import Grainient from "@/components/Grainient";
+import GrainientBg from "@/components/GrainientBg";
 
 const links = [
   {
@@ -56,11 +56,8 @@ const links = [
   <section class="section pt-14 relative overflow-hidden">
     <!-- Grainient background -->
     <div class="absolute inset-0 -z-10">
-      <Grainient
+      <GrainientBg
         client:load
-        color1="#c4d4e8"
-        color2="#a8b8d0"
-        color3="#dde4ed"
         timeSpeed={0.15}
         grainAmount={0.12}
         grainScale={2.0}

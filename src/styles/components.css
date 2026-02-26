@@ -60,7 +60,7 @@
 }
 
 .notice.note {
-  @apply text-[#3B82F6];
+  @apply text-[#4A9E6F];
   @apply border-current;
 }
 

@@ -696,6 +696,58 @@ void main(){
     }
   }
 
+  /* ---------- whisk sound: synthesised, driven by the whisk's own motion ---------- */
+  // Bamboo tines through foam = band-passed noise whose level and brightness follow whisk speed,
+  // so the zig-zag gives the fast "shaka-shaka" and a slow stir gives a soft hush. Starts on the first tap.
+  const snd = (() => {
+    let ac = null, swish = null, slosh = null, bp = null, out = null, idleTimer = 0, popAcc = 0;
+    function build() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return false;
+      ac = new AC();
+      const len = ac.sampleRate * 2, buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+      // pinkish noise: brighter than brown, softer than white
+      let b0 = 0, b1 = 0, b2 = 0;
+      for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; b0 = .99765 * b0 + w * .099; b1 = .963 * b1 + w * .2965; b2 = .57 * b2 + w * 1.0527; d[i] = (b0 + b1 + b2 + w * .1848) * .2; }
+      const src = ac.createBufferSource(); src.buffer = buf; src.loop = true;
+      out = ac.createGain(); out.gain.value = .45; out.connect(ac.destination);
+      bp = ac.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 2600; bp.Q.value = .8;
+      const hs = ac.createBiquadFilter(); hs.type = "highshelf"; hs.frequency.value = 5000; hs.gain.value = -6;
+      swish = ac.createGain(); swish.gain.value = 0;
+      src.connect(bp); bp.connect(hs); hs.connect(swish); swish.connect(out);
+      const lp = ac.createBiquadFilter(); lp.type = "bandpass"; lp.frequency.value = 520; lp.Q.value = 1.4;
+      slosh = ac.createGain(); slosh.gain.value = 0;
+      src.connect(lp); lp.connect(slosh); slosh.connect(out);
+      src.start();
+      return true;
+    }
+    function pop(t, level) {
+      const o = ac.createOscillator(), g = ac.createGain(), f = 900 + Math.random() * 2200;
+      o.type = "sine"; o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(f * 1.8, t + .03);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.05 * level, t + .003); g.gain.exponentialRampToValueAtTime(.0001, t + .05);
+      o.connect(g); g.connect(out); o.start(t); o.stop(t + .06);
+    }
+    function silence() { if (!ac) return; const t = ac.currentTime; swish.gain.setTargetAtTime(0, t, .05); slosh.gain.setTargetAtTime(0, t, .08); }
+    document.addEventListener("visibilitychange", () => { if (!ac) return; if (document.hidden) { silence(); ac.suspend(); } });
+    return {
+      unlock() {
+        try { if (!ac && !build()) return; if (ac.state !== "running") ac.resume(); } catch (_) { /* no audio */ }
+      },
+      update(dt) {
+        if (!ac || ac.state !== "running" || !G) return;
+        const sp = Math.hypot(wk.vx, wk.vy) / G.Rl, live = Math.min(1, sp / 6), d = wk.dip;
+        const amp = d > .05 ? d * Math.pow(live, .8) : 0, t = ac.currentTime;
+        swish.gain.setTargetAtTime(amp * .9, t, .012);
+        bp.frequency.setTargetAtTime(1700 + live * 2600, t, .02);
+        slosh.gain.setTargetAtTime(d * (.12 + live * .35), t, .06);
+        popAcc += dt * amp * 18;
+        while (popAcc > 1) { popAcc -= 1 + Math.random(); pop(t + Math.random() * .02, .4 + amp * .6); }
+        // if the render loop stops (offscreen, settled), fade out instead of hanging on the last level
+        clearTimeout(idleTimer); idleTimer = setTimeout(silence, 120);
+      },
+    };
+  })();
+
   /* ---------- whisk choreography ---------- */
   const wk = { x: 0, y: 0, ang: 0, sx: 1, h: 0, dip: 0, mode: "rest", t: 0, px: 0, py: 0, vx: 0, vy: 0 };
   const drag = { x: 0, y: 0 };
@@ -728,6 +780,7 @@ void main(){
     wk.ang += (ta - wk.ang) * as; wk.sx += (ts - wk.sx) * as;
     wk.h += (th - wk.h) * (1 - Math.exp(-dt * kh)); wk.dip += (td - wk.dip) * (1 - Math.exp(-dt * 14));
     wk.vx = (wk.x - ox) / dt; wk.vy = (wk.y - oy) / dt;
+    snd.update(dt);
   }
   function clickBowl(x, y) {
     [x, y] = bowlClamp(x, y, .6);
@@ -866,6 +919,7 @@ void main(){
   let press = null;
   bowlEl.addEventListener("pointerdown", (e) => {
     if (e.button > 0 || !G) return;
+    snd.unlock();
     e.preventDefault();
     try { bowlEl.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
     const p = loc(e); press = { id: e.pointerId, x: p.x, y: p.y, moved: false, lx: p.x, ly: p.y }; drag.x = p.x; drag.y = p.y;
@@ -886,6 +940,7 @@ void main(){
   });
   const endPress = (e, cancel) => {
     if (!press || e.pointerId !== press.id) return;
+    if (!cancel) snd.unlock();
     if (!press.moved && !cancel) clickBowl(press.x, press.y);
     else if (wk.mode === "drag") { wk.mode = "lift"; wk.t = 0; }
     press = null; bowlEl.classList.remove("drag"); kick();
@@ -894,6 +949,7 @@ void main(){
   bowlEl.addEventListener("pointercancel", (e) => endPress(e, true));
   hero.addEventListener("click", (e) => {
     if (e.target === bowlEl || !G) return;
+    snd.unlock();
     const p = loc(e);
     if (Math.hypot(p.x - G.cx, p.y - G.cy) < G.Ro) clickBowl(p.x, p.y); else puff(p.x, p.y);
     kick();

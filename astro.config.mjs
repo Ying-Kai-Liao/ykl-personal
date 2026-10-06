@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://ykliao.com",
+  site: "https://ykliao.netlify.app",
   trailingSlash: "never",
   // emit /projects.html rather than /projects/index.html so Netlify serves /projects without a slash redirect
   build: { format: "file" },

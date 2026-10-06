@@ -467,7 +467,7 @@ try { const t = new URLSearchParams(location.search).get("theme"); if (t === "li
         if (R() < 0.85) drops.push(mkDrop(d.x + rr(-0.25, 0.25) * d.r, d.y - d.r * rr(1.35, 1.7), d.r * rr(0.14, 0.3), true));
         d.r -= 0.06;
       }
-      clearFog(d.x, d.y - d.r * 0.3, d.r * 0.6, 0.72);
+      clearFog(d.x, d.y - d.r * 0.3, d.r * 0.55, 0.38);
       for (const e of drops) {
         if (e === d || e.dead || (e.moving && e.r > d.r)) continue;
         const ddx = e.x - d.x, ddy = e.y - d.y, rs = d.r + e.r * 0.7;
@@ -577,7 +577,7 @@ void main(){
   vec4 m=texture2D(uMicro,uv); float ma=smoothstep(.3,.7,m.a)*fog; vec2 mn=(m.rg-.5)*2.;
   vec3 sh=texture2D(uSharp,wob(uv,1.)).rgb;
   vec3 bl=texture2D(uBlur,wob(uv+mn*.004*ma,.5)).rgb;
-  vec3 clear=sh*1.08+bl*.1;
+  vec3 clear=sh*1.05+bl*.16+vec3(.055,.065,.085);
   float bl_l=dot(bl,vec3(.3,.5,.2));
   vec3 fogged=bl*.9+vec3(.095,.115,.155)*(1.+bl_l*3.2)+vec3(.02,.016,.012)*(1.-uv.y);
   vec3 col=mix(clear,fogged,fog);

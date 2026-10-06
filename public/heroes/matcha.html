@@ -34,6 +34,8 @@ body { font-family: var(--f-sans); -webkit-font-smoothing: antialiased; }
 #hero canvas { position: absolute; display: block; pointer-events: none; }
 #hero .mt-bg, #hero .mt-fx { left: 0; top: 0; width: 100%; height: 100%; }
 #hero .mt-bowl { position: absolute; border-radius: 50%; touch-action: none; cursor: pointer; }
+/* on phones a vertical swipe must still scroll the page; taps whisk and sideways drags stir */
+@media (pointer: coarse) { #hero .mt-bowl { touch-action: pan-y; } }
 #hero .mt-bowl.drag { cursor: grabbing; }
 #hero .mt-vig { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(ellipse 72% 70% at 50% 50%, rgba(15,15,15,.1) 45%, rgba(15,15,15,.62) 100%); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #hero .mt-vig { opacity: 1; } }
@@ -168,9 +170,9 @@ try { const t = new URLSearchParams(location.search).get("theme"); if (t === "li
         const ri = Math.floor(yy / tp), ci = Math.floor(xx / tp), fy = yy / tp - ri, fxx = xx / tp - ci;
         const over = ((ri + ci) & 1) === 0;
         let tex;
-        if (over) tex = (1 + (ih(ri, 7) - .5) * .07 + (vn(X * .022 + ri * 7.3, ri * .37) - .5) * .42) * (.86 + .14 * Math.sqrt(Math.sin(Math.PI * fy)));
+        if (over) tex = (1 + (ih(ri, 7) - .5) * .07 + (vn(X * .022 + ri * 7.3, ri * .37) - .5) * .2) * (.86 + .14 * Math.sqrt(Math.sin(Math.PI * fy)));
         else tex = (1 + (ih(ci, 13) - .5) * .06 + (vn(Y * .02 + ci * 3.1, ci * .41) - .5) * .16) * (.86 + .14 * Math.sqrt(Math.sin(Math.PI * fxx)));
-        tex = 1 + (tex - .93) * .3 + (vn(X * .012, Y * .9) - .5) * .05;
+        tex = 1 + (tex - .93) * .2 + (vn(X * .012, Y * .9) - .5) * .018;
         const fl = ih(x * 7 + 3, y * 13 + 1); if (fl > .9993) tex *= .82; else if (fl < .0006) tex *= 1.05;
         // light: window falloff, lattice shadow, undulation
         const gxw = X / gs, gyw = Y / gs, gi = gxw | 0, gj = gyw | 0, gfx = gxw - gi, gfy = gyw - gj, gk = gj * gw + gi;

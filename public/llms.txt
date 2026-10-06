@@ -17,5 +17,5 @@ Contact: lykevin890919@gmail.com · https://www.linkedin.com/in/ying-kai-liao ·
 - Skin cancer report system; H&M fashion recommender; hot-seat (AI advisors critique product ideas).
 
 ## More
-- Writing: https://ykliao.com/blog (RSS: https://ykliao.com/rss.xml)
-- Projects: https://ykliao.com/projects
+- Writing: https://ykliao.netlify.app/blog (RSS: https://ykliao.netlify.app/rss.xml)
+- Projects: https://ykliao.netlify.app/projects

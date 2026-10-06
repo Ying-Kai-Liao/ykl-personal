@@ -1,4 +1,4 @@
-# ykliao.com
+# ykliao.netlify.app
 
 Personal site and blog of Kai Liao. Plain [Astro](https://astro.build), no CSS framework; deployed on Netlify.
 

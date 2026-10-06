@@ -11,7 +11,7 @@ interface Props {
 const SITE = "Kai Liao";
 const {
   title,
-  description = "Kai Liao is an agent engineer in Sydney. Open to agent engineering roles, especially at early-stage teams.",
+  description = "Kai Liao is an agent engineer in Sydney who builds AI agents that do real work and know when to stop and ask. Open to work.",
   image = "/images/meta/og-image.png",
   type = "website",
 } = Astro.props;
@@ -55,7 +55,7 @@ const section = path === "/" ? "home" : path.startsWith("/projects") ? "projects
   <slot />
 
   <footer class="foot col">
-    <span>unpushed work doesn't exist</span>
+    <span>Kai Liao, Sydney</span>
     <time id="clock" title="Sydney time">--:--:--</time>
   </footer>
 

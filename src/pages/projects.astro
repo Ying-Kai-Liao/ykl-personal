@@ -1,0 +1,42 @@
+---
+import Base from "../layouts/Base.astro";
+import { projects, earlier } from "../data/projects";
+---
+<Base title="Projects" description="What Kai Liao is building: AI agents, the tools that run them, and products people use.">
+  <main class="col page">
+    <h1 class="section-title">Projects</h1>
+    <p class="lede">Agents, the setup that runs them, and a few products people use. The numbers are on <a class="ink-link" href="https://github.com/Ying-Kai-Liao">GitHub</a>.</p>
+
+    {projects.map((p) => (
+      <article class="proj" id={p.slug}>
+        <h2><span class="k">{p.name}</span> <span class="mono">{p.status}</span></h2>
+        {p.story.map((s) => <p>{s}</p>)}
+        {p.links.length > 0 && (
+          <p class="proj-links">{p.links.map((l) => <a class="ink-link" href={l.href}>{l.label} ↗</a>)}</p>
+        )}
+      </article>
+    ))}
+
+    <section class="earlier" aria-labelledby="earlier-title">
+      <h2 class="section-title" id="earlier-title">Earlier</h2>
+      <ul>
+        {earlier.map((e) => (
+          <li>{e.href ? <a class="ink-link" href={e.href}>{e.name}</a> : <span class="k">{e.name}</span>}<span>{e.line}</span></li>
+        ))}
+      </ul>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .page { padding-top: 40px; }
+  .lede { margin: 0 0 40px; }
+  .proj { padding: 22px 0; border-top: 1px solid var(--rule); scroll-margin-top: 90px; }
+  .proj h2 { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 0 0 8px; font-size: 14.5px; font-weight: 400; }
+  .proj p { margin: 0 0 10px; }
+  .proj-links { display: flex; gap: 16px; }
+  .proj:target .k { background: linear-gradient(transparent 60%, color-mix(in srgb, var(--focus) 22%, transparent) 0); }
+  .earlier { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--rule); }
+  .earlier ul { list-style: none; margin: 0; padding: 0; }
+  .earlier li { display: grid; gap: 0; padding: 6px 0; }
+</style>

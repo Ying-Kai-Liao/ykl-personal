@@ -1,0 +1,281 @@
+---
+// Imported from yk-site/objects/crew by scripts/import-object.py; edit there and re-import.
+---
+<button class="obj-crew" type="button" aria-label="A night-shift ticket rail. Finished tasks from a crew of coding agents hang on the rail as paper tickets and slide one by one to a single merge box, where each is stamped shipped and dropped in. Tap to add a ticket.">
+      <span class="oc-plate" aria-hidden="true">
+        <span class="oc-rivet r1"></span><span class="oc-rivet r2"></span><span class="oc-rivet r3"></span><span class="oc-rivet r4"></span>
+        <span class="oc-engrave">night shift</span>
+        <span class="oc-crew"><span class="oc-led"></span><span class="oc-led"></span><span class="oc-led"></span><span class="oc-crew-label">crew</span></span>
+        <span class="oc-rail"></span><span class="oc-cap l"></span><span class="oc-cap r"></span>
+        <span class="oc-box"><span class="oc-slot"></span><span class="oc-lamp"></span><span class="oc-count"><span>000</span></span><span class="oc-box-label">shipped</span></span>
+        <span class="oc-stamp"><span class="oc-knob"></span><span class="oc-neck"></span><span class="oc-block"></span><span class="oc-rubber"></span></span>
+        <span class="oc-dial"><span class="oc-face"><span class="oc-ticks"></span><span class="oc-moon"></span><span class="oc-hand h"></span><span class="oc-hand m"></span><span class="oc-pin"></span></span><span class="oc-glass"></span></span>
+      </span>
+    </button>
+
+<style is:inline>
+.obj-crew { -webkit-appearance: none; appearance: none; border: 0; padding: 0; margin: 0; background: none; font: inherit; color: inherit; cursor: pointer; position: relative; display: block; width: min(252px, 78%); aspect-ratio: 100 / 96; container-type: inline-size; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+.obj-crew:focus-visible { outline: 2px solid var(--ink-3); outline-offset: 8px; border-radius: 22px; }
+.obj-crew span { display: block; }
+.obj-crew .oc-plate { position: absolute; inset: 0; border-radius: 7cqw; isolation: isolate; transition: transform .25s var(--ease-out);
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 1px, transparent 1px 2.5px),
+    radial-gradient(120% 85% at 28% 0%, #2f374a 0%, #1b202c 58%, #13161f 100%);
+  box-shadow: inset 0 .3cqw 0 rgba(255,255,255,.13), inset 0 -.5cqw .5cqw rgba(0,0,0,.35), inset 0 0 0 .25cqw rgba(255,255,255,.035),
+    0 .3cqw .4cqw rgba(0,0,0,.22), 0 1.2cqw 1.8cqw -.6cqw rgba(0,0,0,.28), 0 4cqw 6cqw -2cqw rgba(0,0,0,.42); }
+.obj-crew .oc-plate::before { content: ""; position: absolute; inset: 1.3cqw; border-radius: 5.9cqw; box-shadow: inset 0 0 0 .2cqw rgba(0,0,0,.28), 0 .2cqw 0 rgba(255,255,255,.045); pointer-events: none; }
+.obj-crew:active .oc-plate { transform: scale(.992); }
+.obj-crew .oc-rivet { position: absolute; width: 2.4cqw; height: 2.4cqw; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #f4f5f7 0 12%, #a9aeb6 40%, #535861 85%); box-shadow: 0 .25cqw .35cqw rgba(0,0,0,.55); }
+.obj-crew .oc-rivet.r1 { left: 3.3cqw; top: 3.3cqw; } .obj-crew .oc-rivet.r2 { right: 3.3cqw; top: 3.3cqw; }
+.obj-crew .oc-rivet.r3 { left: 3.3cqw; bottom: 3.3cqw; } .obj-crew .oc-rivet.r4 { right: 3.3cqw; bottom: 3.3cqw; }
+.obj-crew .oc-engrave { position: absolute; left: 8cqw; top: 6.6cqw; font: 500 2.3cqw/1 var(--f-mono); letter-spacing: .24em; text-transform: uppercase; color: rgba(255,255,255,.36); text-shadow: 0 -.15cqw 0 rgba(0,0,0,.7); }
+.obj-crew .oc-crew { position: absolute; left: 8cqw; top: 11.6cqw; display: flex; align-items: center; gap: 2.1cqw; }
+.obj-crew .oc-led { position: relative; width: 2.6cqw; height: 2.6cqw; border-radius: 50%; background: radial-gradient(circle at 38% 32%, #c99550 0 10%, #6a4214 45%, #331f08 90%); box-shadow: 0 0 0 .45cqw rgba(0,0,0,.4), 0 .5cqw .3cqw -.2cqw rgba(255,255,255,.06); }
+.obj-crew .oc-led::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 38% 32%, #fff5dc 0 12%, #ffbb55 40%, #e07a12 92%); box-shadow: 0 0 1.6cqw .3cqw rgba(255,170,60,.55); opacity: .12; animation: obj-crew-work 2.7s steps(1, end) infinite; transition: opacity .15s; }
+.obj-crew .oc-led:nth-child(2)::after { animation-duration: 3.6s; animation-delay: -1.2s; }
+.obj-crew .oc-led:nth-child(3)::after { animation-duration: 2.1s; animation-delay: -.5s; }
+.obj-crew .oc-led.is-flash::after { animation: none; opacity: 1; }
+.obj-crew .oc-crew-label { margin-left: .4cqw; font: 500 2.1cqw/1 var(--f-mono); letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.28); text-shadow: 0 -.15cqw 0 rgba(0,0,0,.7); }
+@keyframes obj-crew-work { 0% { opacity: .12; } 38% { opacity: .9; } 42% { opacity: .2; } 47% { opacity: .75; } 55% { opacity: .12; } 81% { opacity: .5; } 84% { opacity: .12; } }
+
+.obj-crew .oc-rail { position: absolute; left: 3.5cqw; right: 3.5cqw; top: 26cqw; height: 5.6cqw; border-radius: 1.4cqw; z-index: 20;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.14) 0 1px, rgba(0,0,0,.05) 1px 2px, transparent 2px 4px),
+    linear-gradient(180deg, #fbfbfc 0%, #d9dce0 20%, #a3a8b0 46%, #666b73 54%, #b6bac1 72%, #eceef0 88%, #8f949b 100%);
+  box-shadow: inset 0 .15cqw 0 rgba(255,255,255,.95), 0 .2cqw .2cqw rgba(0,0,0,.4), 0 1cqw 1.4cqw -.3cqw rgba(0,0,0,.55); }
+.obj-crew .oc-rail::after { content: ""; position: absolute; left: 3cqw; right: 3cqw; top: calc(50% - .5cqw); height: 1cqw; border-radius: 1cqw; background: linear-gradient(#202328, #4e5259); box-shadow: inset 0 .25cqw .3cqw rgba(0,0,0,.7), 0 .15cqw 0 rgba(255,255,255,.55); }
+.obj-crew .oc-cap { position: absolute; top: 24.8cqw; width: 4.6cqw; height: 8cqw; border-radius: 1.2cqw; z-index: 21; background: linear-gradient(90deg, #6c717a, #c9cdd3 35%, #eef0f2 50%, #9ca1a9 75%, #5c6168); box-shadow: inset 0 .15cqw 0 rgba(255,255,255,.8), 0 .8cqw 1.2cqw -.3cqw rgba(0,0,0,.6); }
+.obj-crew .oc-cap::after { content: ""; position: absolute; left: 50%; top: 50%; width: 2cqw; height: 2cqw; margin: -1cqw 0 0 -1cqw; border-radius: 50%; background: linear-gradient(135deg, transparent 44%, rgba(0,0,0,.55) 44% 56%, transparent 56%), radial-gradient(circle at 35% 30%, #fafbfc, #9aa0a8 60%, #5d626a); box-shadow: 0 .1cqw .2cqw rgba(0,0,0,.5); }
+.obj-crew .oc-cap.l { left: 2.2cqw; } .obj-crew .oc-cap.r { right: 2.2cqw; }
+.obj-crew .oc-ball { position: absolute; left: 0; top: 27.3cqw; width: 3cqw; height: 3cqw; border-radius: 50%; z-index: 22; background: radial-gradient(circle at 34% 28%, #fff 0 9%, #e3e6ea 22%, #8f959d 56%, #3a3f46 88%); box-shadow: 0 .35cqw .4cqw rgba(0,0,0,.55); transition: transform .95s cubic-bezier(.55,0,.25,1), opacity .3s; }
+.obj-crew .oc-ball.is-new, .obj-crew .oc-ball.is-gone { opacity: 0; }
+.obj-crew .oc-ball.is-new { transition: none; }
+
+.obj-crew .oc-t { position: absolute; left: 0; top: 31cqw; width: 17cqw; height: 29cqw; transition: transform .95s cubic-bezier(.55,0,.25,1), opacity .35s ease; }
+.obj-crew .oc-t.is-new { opacity: 0; transition: none; }
+.obj-crew .oc-t.is-drop { opacity: 0; transition: transform .5s cubic-bezier(.5,0,.85,.35), opacity .16s linear .34s; }
+.obj-crew .oc-t-swing { position: absolute; inset: 0; transform-origin: 50% 0; transform: rotate(var(--tilt)); }
+.obj-crew .oc-t-swing.is-swing { animation: obj-crew-swing 1.15s cubic-bezier(.3,.6,.4,1); }
+@keyframes obj-crew-swing { 0% { transform: rotate(calc(var(--tilt) + var(--sw) * 4.5deg)); } 28% { transform: rotate(calc(var(--tilt) - var(--sw) * 2.4deg)); } 54% { transform: rotate(calc(var(--tilt) + var(--sw) * 1.1deg)); } 78% { transform: rotate(calc(var(--tilt) - var(--sw) * .4deg)); } 100% { transform: rotate(var(--tilt)); } }
+.obj-crew .oc-t-paper { position: absolute; inset: 0; overflow: hidden; padding: 4.2cqw 1.8cqw 0; border-radius: .4cqw .4cqw .9cqw .7cqw; font-family: var(--f-mono); color: #3a352c;
+  background:
+    linear-gradient(to top, rgba(110,88,50,.17), rgba(110,88,50,0) 15%),
+    linear-gradient(to bottom, rgba(0,0,0,.22), rgba(0,0,0,0) 3.2cqw),
+    linear-gradient(98deg, rgba(255,255,255,.55), rgba(255,255,255,0) 45%, rgba(120,100,60,.06)),
+    repeating-linear-gradient(0deg, rgba(120,100,60,.03) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #fcf9f0, #f0e9d8);
+  box-shadow: 0 .25cqw .35cqw rgba(0,0,0,.3), 0 1.8cqw 2cqw -.9cqw rgba(0,0,0,.55), inset 0 0 0 .1cqw rgba(120,100,60,.12); }
+.obj-crew .oc-t-paper::after { content: ""; position: absolute; right: 0; bottom: 0; width: 4cqw; height: 3.4cqw; border-radius: 0 0 .7cqw 0; background: linear-gradient(140deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.55) 70%, rgba(150,125,85,.25)); }
+.obj-crew .oc-t-head { display: flex; justify-content: space-between; font-size: 2.05cqw; line-height: 1; color: #8c8372; letter-spacing: .04em; }
+.obj-crew .oc-t-perf { height: 0; margin: 1.3cqw -1.8cqw 1.7cqw; border-top: .28cqw dotted rgba(90,78,58,.35); }
+.obj-crew .oc-t-title { font-size: 2.3cqw; line-height: 1.15; font-weight: 500; color: #2b2720; white-space: nowrap; }
+.obj-crew .oc-t-line { height: .5cqw; margin-top: 1.5cqw; border-radius: 1cqw; background: rgba(70,62,50,.26); }
+.obj-crew .oc-t-by { position: absolute; left: 1.8cqw; bottom: 2.1cqw; font-size: 1.9cqw; line-height: 1; letter-spacing: .06em; color: #a19784; }
+.obj-crew .oc-t-ink { position: absolute; left: 50%; top: 13cqw; padding: .6cqw 1cqw .5cqw; border: .32cqw solid currentColor; border-radius: .7cqw; color: rgba(30,128,80,.88); font: 600 2.1cqw/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; mix-blend-mode: multiply; opacity: 0; transform: translate(-50%, -50%) rotate(-11deg) scale(1.2);
+  -webkit-mask-image: repeating-radial-gradient(circle at 28% 36%, #000 0 .55cqw, rgba(0,0,0,.62) .7cqw .85cqw, #000 1cqw); mask-image: repeating-radial-gradient(circle at 28% 36%, #000 0 .55cqw, rgba(0,0,0,.62) .7cqw .85cqw, #000 1cqw); }
+.obj-crew .is-stamped .oc-t-ink { opacity: 1; transform: translate(-50%, -50%) rotate(-11deg) scale(1); }
+
+.obj-crew .oc-box { position: absolute; left: 63cqw; top: 65cqw; width: 30cqw; height: 24cqw; z-index: 30; border-radius: 2cqw 2cqw 2.6cqw 2.6cqw;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 1px, rgba(0,0,0,.035) 1px 2px, transparent 2px 3px),
+    linear-gradient(180deg, #eef0f2 0%, #c9cdd2 40%, #a7acb3 100%);
+  box-shadow: inset 0 .2cqw 0 rgba(255,255,255,.95), inset 0 -.5cqw .7cqw rgba(0,0,0,.16), 0 .3cqw .4cqw rgba(0,0,0,.38), 0 2cqw 2.6cqw -.9cqw rgba(0,0,0,.6); }
+.obj-crew .oc-box.is-bump { animation: obj-crew-bump .32s var(--ease-out); }
+@keyframes obj-crew-bump { 30% { transform: translateY(.5cqw); } }
+.obj-crew .oc-slot { position: absolute; left: 3cqw; right: 3cqw; top: 1.4cqw; height: 2.8cqw; border-radius: 2cqw; background: linear-gradient(#08090b, #2b2e33); box-shadow: inset 0 .5cqw .5cqw rgba(0,0,0,.9), 0 .22cqw 0 rgba(255,255,255,.75); }
+.obj-crew .oc-lamp { position: absolute; left: 4cqw; top: 9.6cqw; width: 5.4cqw; height: 5.4cqw; border-radius: 50%; transition: background .2s, box-shadow .25s;
+  background: radial-gradient(circle at 37% 30%, rgba(255,255,255,.55) 0 11%, #33503e 32%, #13221a 85%);
+  box-shadow: 0 0 0 .75cqw #8d929a, 0 0 0 .95cqw rgba(0,0,0,.25), inset 0 -.4cqw .6cqw rgba(0,0,0,.5); }
+.obj-crew .oc-lamp.is-lit { background: radial-gradient(circle at 37% 30%, #fff 0 10%, #c4ffd8 22%, #46d985 50%, #13894a 92%); box-shadow: 0 0 0 .75cqw #8d929a, 0 0 0 .95cqw rgba(0,0,0,.25), 0 0 3cqw .8cqw rgba(70,225,135,.55); }
+.obj-crew .oc-count { position: absolute; right: 3.2cqw; top: 9cqw; padding: .9cqw 1.1cqw .8cqw 1.4cqw; border-radius: .8cqw; background: linear-gradient(#111316, #22252a); box-shadow: inset 0 .35cqw .45cqw rgba(0,0,0,.8), 0 .2cqw 0 rgba(255,255,255,.7); font: 500 3.1cqw/1 var(--f-mono); letter-spacing: .16em; color: #efe5cc; overflow: hidden; }
+.obj-crew .oc-count span { transition: transform .3s var(--ease-out); }
+.obj-crew .oc-count.is-tick span { transform: translateY(-30%); transition: none; }
+.obj-crew .oc-box-label { position: absolute; right: 3.2cqw; top: 16.2cqw; font: 500 1.9cqw/1 var(--f-mono); letter-spacing: .2em; text-transform: uppercase; color: #6a7079; text-shadow: 0 .15cqw 0 rgba(255,255,255,.65); }
+
+.obj-crew .oc-stamp { position: absolute; left: 71.5cqw; top: 3.4cqw; width: 13cqw; height: 16cqw; z-index: 40; filter: drop-shadow(0 .9cqw .8cqw rgba(0,0,0,.5)); transition: transform .4s var(--ease-out); }
+.obj-crew .oc-knob { position: absolute; left: 3cqw; top: 0; width: 7cqw; height: 6cqw; border-radius: 50%; background: radial-gradient(circle at 36% 28%, #c58f62 0 8%, #7b5235 30%, #3b2618 72%, #24160d); }
+.obj-crew .oc-neck { position: absolute; left: 5cqw; top: 4.8cqw; width: 3cqw; height: 4.2cqw; background: linear-gradient(90deg, #26180e, #75523a 40%, #2a1b11); }
+.obj-crew .oc-block { position: absolute; left: 0; top: 8.6cqw; width: 13cqw; height: 5.6cqw; border-radius: .9cqw .9cqw .4cqw .4cqw;
+  background: linear-gradient(90deg, rgba(0,0,0,.28), rgba(255,255,255,.14) 30%, rgba(0,0,0,.22)), repeating-linear-gradient(90deg, rgba(60,30,10,.16) 0 .3cqw, transparent .3cqw 1.2cqw), linear-gradient(#b67f4f, #84552f); box-shadow: inset 0 .15cqw 0 rgba(255,230,200,.4); }
+.obj-crew .oc-block::after { content: ""; position: absolute; left: 0; right: 0; top: 3.6cqw; height: 1.1cqw; background: linear-gradient(#f6dfa6, #bb8f45 55%, #7a5822); }
+.obj-crew .oc-rubber { position: absolute; left: .6cqw; top: 14.2cqw; width: 11.8cqw; height: 1.6cqw; border-radius: 0 0 .5cqw .5cqw; background: linear-gradient(#2a2a2a, #1d5d3d); }
+@media (hover: hover) { .obj-crew:hover .oc-stamp { transform: translateY(-.9cqw); } }
+.obj-crew.is-press .oc-stamp { transform: translateY(25.6cqw); transition: transform .2s cubic-bezier(.6,0,.9,.5); }
+
+.obj-crew .oc-dial { position: absolute; left: 6.5cqw; top: 66cqw; width: 23cqw; height: 23cqw; border-radius: 50%;
+  background: conic-gradient(from 210deg, #f8e4ad, #b3843a, #f1d48e, #84601f, #e7c77d, #f8e4ad);
+  box-shadow: inset 0 0 0 .2cqw rgba(255,255,255,.3), 0 .35cqw .5cqw rgba(0,0,0,.5), 0 1.6cqw 2.2cqw -.8cqw rgba(0,0,0,.55); }
+.obj-crew .oc-face { position: absolute; inset: 1.7cqw; border-radius: 50%; overflow: hidden;
+  background:
+    radial-gradient(circle at 72% 70%, rgba(255,250,235,.9) 0 .14cqw, transparent .32cqw),
+    radial-gradient(circle at 30% 68%, rgba(255,250,235,.7) 0 .12cqw, transparent .28cqw),
+    radial-gradient(circle at 80% 32%, rgba(255,250,235,.8) 0 .13cqw, transparent .3cqw),
+    radial-gradient(circle at 58% 18%, rgba(255,250,235,.6) 0 .1cqw, transparent .26cqw),
+    radial-gradient(circle at 50% 38%, #26324d, #0d1220 78%);
+  box-shadow: inset 0 .6cqw 1.1cqw rgba(0,0,0,.75); }
+.obj-crew .oc-ticks { position: absolute; inset: 0; border-radius: 50%; background: repeating-conic-gradient(rgba(240,226,192,.6) 0 1.6deg, transparent 1.6deg 30deg);
+  -webkit-mask-image: radial-gradient(circle, transparent 0 74%, #000 75% 88%, transparent 89%); mask-image: radial-gradient(circle, transparent 0 74%, #000 75% 88%, transparent 89%); }
+.obj-crew .oc-moon { position: absolute; left: 16%; top: 17%; width: 5.4cqw; height: 5.4cqw; border-radius: 50%; box-shadow: inset -1.5cqw .6cqw 0 0 #f1e3ba; filter: drop-shadow(0 0 .9cqw rgba(241,227,186,.45)); transform: rotate(-20deg); }
+.obj-crew .oc-hand { position: absolute; left: 50%; bottom: 50%; border-radius: 1cqw; transform-origin: 50% 100%; background: #f1e6c9; box-shadow: 0 .25cqw .3cqw rgba(0,0,0,.6); transition: transform 1.2s var(--ease-out); }
+.obj-crew .oc-hand.h { width: .9cqw; height: 5cqw; margin-left: -.45cqw; }
+.obj-crew .oc-hand.m { width: .6cqw; height: 7.4cqw; margin-left: -.3cqw; }
+.obj-crew .oc-pin { position: absolute; left: 50%; top: 50%; width: 1.7cqw; height: 1.7cqw; margin: -.85cqw 0 0 -.85cqw; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fbe9b6, #a77a33); }
+.obj-crew .oc-glass { position: absolute; inset: 1.7cqw; border-radius: 50%; background: linear-gradient(145deg, rgba(255,255,255,.24), rgba(255,255,255,0) 42%), radial-gradient(circle at 50% 120%, rgba(255,255,255,.08), transparent 60%); }
+
+.obj-crew.is-init .oc-t, .obj-crew.is-init .oc-ball, .obj-crew.is-init .oc-hand { transition: none; }
+.obj-crew.is-paused .oc-led::after { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .obj-crew .oc-t, .obj-crew .oc-ball, .obj-crew .oc-stamp, .obj-crew .oc-hand, .obj-crew .oc-lamp, .obj-crew .oc-plate { transition: none !important; }
+  .obj-crew .oc-led::after { animation: none; opacity: .35; }
+  .obj-crew .oc-t-swing.is-swing, .obj-crew .oc-box.is-bump { animation: none; }
+}
+</style>
+
+<script is:inline>
+(function () {
+  var roots = document.querySelectorAll('.obj-crew');
+  if (!roots.length) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var TASKS = ['fix login', 'add tests', 'dark mode', 'speed up', 'tidy css', 'new docs', 'search', 'fix typo', 'menu bug', 'sign-up', 'retry', 'tidy logs'];
+  var W = 17, MERGE_X = 69.5, FRONT_X = 40, BACK_X = 5, STEP = 17.5, MAX = 7;
+  Array.prototype.forEach.call(roots, init);
+
+  function init(root) {
+    var plate = root.querySelector('.oc-plate');
+    var leds = root.querySelectorAll('.oc-led');
+    var lamp = root.querySelector('.oc-lamp');
+    var box = root.querySelector('.oc-box');
+    var count = root.querySelector('.oc-count');
+    var hH = root.querySelector('.oc-hand.h'), hM = root.querySelector('.oc-hand.m');
+    if (!plate || !lamp || !box) return;
+    var queue = [], merge = null, num = 16, shipped = 17, minutes = 2 * 60 + 14;
+    var running = false, visible = false, timer = 0;
+
+    function pad(n) { return String(n).padStart(3, '0'); }
+    function clockText() { var h = Math.floor(minutes / 60) % 12 || 12, m = minutes % 60; return h + ':' + String(m).padStart(2, '0'); }
+    function renderClock() {
+      hH.style.transform = 'rotate(' + (minutes * 0.5) + 'deg)';
+      hM.style.transform = 'rotate(' + (minutes * 6) + 'deg)';
+    }
+    function renderCount(tick) {
+      count.firstChild.textContent = pad(shipped);
+      if (tick && !reduce.matches) { count.classList.add('is-tick'); void count.offsetWidth; count.classList.remove('is-tick'); }
+    }
+    function make() {
+      num++;
+      var crew = 1 + Math.floor(Math.random() * 3);
+      var tilt = (Math.random() * 3 - 1.5).toFixed(2);
+      var w = function () { return 45 + Math.round(Math.random() * 50); };
+      var el = document.createElement('span');
+      el.className = 'oc-t is-new';
+      el.innerHTML = '<span class="oc-t-swing" style="--tilt:' + tilt + 'deg;--sw:1"><span class="oc-t-paper">' +
+        '<span class="oc-t-head"><span>#' + pad(num) + '</span><span>' + clockText() + '</span></span>' +
+        '<span class="oc-t-perf"></span><span class="oc-t-title">' + TASKS[(num * 5) % TASKS.length] + '</span>' +
+        '<span class="oc-t-line" style="width:' + w() + '%"></span><span class="oc-t-line" style="width:' + w() + '%"></span><span class="oc-t-line" style="width:' + w() + '%"></span>' +
+        '<span class="oc-t-by">crew ' + crew + '</span><span class="oc-t-ink">shipped</span></span></span>';
+      var ball = document.createElement('span');
+      ball.className = 'oc-ball is-new';
+      plate.insertBefore(el, plate.querySelector('.oc-rail'));
+      plate.insertBefore(ball, plate.querySelector('.oc-box'));
+      return { el: el, ball: ball, x: null, crew: crew };
+    }
+    function place(t, x, y) {
+      t.x = x;
+      t.el.style.transform = 'translate(' + x + 'cqw,' + (y || 0) + 'cqw)';
+      t.ball.style.transform = 'translate(' + (x + W / 2 - 1.5) + 'cqw,0)';
+    }
+    function swing(t, sign, delay) {
+      if (reduce.matches) return;
+      setTimeout(function () {
+        var s = t.el.firstChild;
+        s.style.setProperty('--sw', sign);
+        s.classList.remove('is-swing'); void s.offsetWidth; s.classList.add('is-swing');
+      }, delay || 0);
+    }
+    function flash(i) {
+      var led = leds[i]; if (!led) return;
+      led.classList.add('is-flash');
+      setTimeout(function () { led.classList.remove('is-flash'); }, 450);
+    }
+    function layout() {
+      var n = queue.length, step = n > 1 ? Math.min(STEP, (FRONT_X - BACK_X) / (n - 1)) : 0;
+      queue.forEach(function (t, i) {
+        var x = FRONT_X - i * step;
+        t.el.style.zIndex = 10 - i;
+        if (t.x === null) {
+          place(t, x, 6); void t.el.offsetWidth;
+          t.el.classList.remove('is-new'); t.ball.classList.remove('is-new');
+          place(t, x, 0); swing(t, 1, 300);
+        } else if (Math.abs(x - t.x) > 0.1) {
+          place(t, x, 0); swing(t, -1, 780);
+        }
+      });
+    }
+    function add() {
+      if (queue.length >= MAX) { flash(Math.floor(Math.random() * 3)); return; }
+      var t = make(); queue.push(t); layout(); flash(t.crew - 1);
+    }
+    function advance() {
+      var t = merge = queue.shift();
+      t.el.style.zIndex = 10;
+      place(t, MERGE_X, 0); swing(t, -1, 800);
+      layout();
+    }
+    function ship() {
+      var t = merge;
+      root.classList.add('is-press');
+      setTimeout(function () {
+        t.el.querySelector('.oc-t-paper').classList.add('is-stamped');
+        lamp.classList.add('is-lit'); swing(t, 1, 0);
+      }, 200);
+      setTimeout(function () { root.classList.remove('is-press'); }, 330);
+      setTimeout(function () {
+        t.el.classList.add('is-drop'); t.ball.classList.add('is-gone'); place(t, t.x, 36);
+      }, 1050);
+      setTimeout(function () {
+        t.el.remove(); t.ball.remove(); if (merge === t) merge = null;
+        shipped++; renderCount(true); minutes += 3; renderClock();
+        box.classList.remove('is-bump'); void box.offsetWidth; box.classList.add('is-bump');
+      }, 1500);
+      setTimeout(function () { lamp.classList.remove('is-lit'); }, 1750);
+    }
+    function step() {
+      if (!running) return;
+      var wait = 900;
+      if (merge) { ship(); wait = 1950; }
+      else if (queue.length) { advance(); wait = 1350; }
+      if (queue.length < 2 || (queue.length < 3 && Math.random() < 0.4)) setTimeout(function () { if (running) add(); }, 650);
+      timer = setTimeout(step, wait);
+    }
+    function instant() {
+      if (merge) { merge.el.remove(); merge.ball.remove(); merge = null; shipped++; minutes += 3; }
+      add();
+      merge = queue.shift(); place(merge, MERGE_X, 0); merge.el.style.zIndex = 10;
+      merge.el.querySelector('.oc-t-paper').classList.add('is-stamped');
+      layout(); lamp.classList.add('is-lit'); renderCount(false); renderClock();
+    }
+    function start() { if (running) return; running = true; root.classList.remove('is-paused'); timer = setTimeout(step, 700); }
+    function stop() { running = false; clearTimeout(timer); root.classList.add('is-paused'); }
+    function update() { if (visible && !document.hidden && !reduce.matches) start(); else stop(); }
+
+    // initial state: three waiting, one at the merge box
+    root.classList.add('is-init');
+    for (var i = 0; i < 4; i++) { var t = make(); queue.push(t); }
+    layout();
+    advance();
+    queue.forEach(function (t) { t.el.firstChild.classList.remove('is-swing'); });
+    if (reduce.matches) { merge.el.querySelector('.oc-t-paper').classList.add('is-stamped'); lamp.classList.add('is-lit'); }
+    renderCount(false); renderClock();
+    void plate.offsetWidth;
+    requestAnimationFrame(function () { root.classList.remove('is-init'); });
+
+    root.addEventListener('click', function () { if (reduce.matches) instant(); else add(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; update(); }, { threshold: 0.15 }).observe(root);
+    } else { visible = true; }
+    document.addEventListener('visibilitychange', update);
+    if (reduce.addEventListener) reduce.addEventListener('change', update);
+    update();
+  }
+})();
+</script>

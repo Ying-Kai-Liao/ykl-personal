@@ -1,0 +1,65 @@
+---
+import { projects } from "../data/projects";
+
+// Each project's crafted object lives in src/components/objects/<slug>.astro; a quiet placeholder stands in until it exists.
+const modules = import.meta.glob("./objects/*.astro", { eager: true }) as Record<string, { default: any }>;
+const objectFor = (slug: string) => modules[`./objects/${slug}.astro`]?.default;
+---
+<section class="carousel" aria-label="Projects">
+  <div class="car-track" id="car-track">
+    {projects.map((p) => {
+      const Obj = objectFor(p.slug);
+      return (
+        <figure class="car-card">
+          <div class="car-stage">
+            {Obj ? <Obj /> : <span class="car-placeholder" aria-hidden="true">{p.name}</span>}
+          </div>
+          <figcaption class="car-label">
+            <a href={`/projects#${p.slug}`} class="car-name">{p.name}</a>
+            <span>{p.line}</span>
+          </figcaption>
+        </figure>
+      );
+    })}
+  </div>
+  <div class="col car-ctl">
+    <button type="button" class="car-arrow" data-dir="-1" aria-label="Previous project" disabled><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="car-arrow" data-dir="1" aria-label="Next project"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</section>
+
+<style is:global>
+/* the track starts on the text column and bleeds off the right edge */
+.carousel { --gutter: max(16px, calc((100vw - var(--col)) / 2)); margin-top: 24px; }
+.car-track { display: flex; gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding: 4px var(--gutter) 6px; scrollbar-width: none; }
+.car-track::-webkit-scrollbar { display: none; }
+.car-card { flex: none; width: min(340px, 82vw); margin: 0; scroll-snap-align: start; }
+.car-stage { position: relative; aspect-ratio: 340 / 380; border-radius: 24px; background: var(--card); overflow: hidden; display: grid; place-items: center; }
+.car-placeholder { font-size: 13px; color: var(--ink-3); }
+.car-label { padding: 12px 2px 0; font-size: 13.5px; line-height: 1.55; }
+.car-name { display: block; width: fit-content; color: var(--ink); font-weight: 500; text-decoration: none; }
+@media (hover: hover) and (pointer: fine) { .car-name:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-3); } }
+.car-ctl { display: flex; gap: 8px; margin-top: 14px; }
+.car-arrow { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 9px; background: var(--chip); color: var(--ink-2); cursor: pointer; transition: color 150ms ease, opacity 150ms ease, transform 160ms var(--ease-out); }
+.car-arrow:disabled { opacity: .45; cursor: default; }
+@media (hover: hover) and (pointer: fine) { .car-arrow:not(:disabled):hover { color: var(--ink); } }
+.car-arrow:not(:disabled):active { transform: scale(.92); }
+</style>
+
+<script is:inline>
+(() => {
+  const track = document.getElementById("car-track");
+  if (!track) return;
+  const [prev, next] = document.querySelectorAll(".car-arrow");
+  const step = () => (track.querySelector(".car-card")?.offsetWidth || 340) + 16;
+  const update = () => {
+    prev.disabled = track.scrollLeft < 4;
+    next.disabled = track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
+  };
+  prev.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
+  next.addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
+  track.addEventListener("scroll", update, { passive: true });
+  addEventListener("resize", update);
+  update();
+})();
+</script>

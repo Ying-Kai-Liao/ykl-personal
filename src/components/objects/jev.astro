@@ -1,0 +1,362 @@
+---
+// Imported from yk-site/objects/jev by scripts/import-object.py; edit there and re-import.
+---
+<div class="obj-jev" role="group" aria-label="A small browser device. An agent cursor adds a mug to the cart and fills in the address, then stops before Place order and asks you first.">
+      <div class="obj-jev__scale">
+        <div class="obj-jev__device">
+          <div class="obj-jev__bezel">
+            <div class="obj-jev__screen">
+              <div class="obj-jev__chrome" aria-hidden="true">
+                <div class="obj-jev__dots"><i></i><i></i><i></i></div>
+                <div class="obj-jev__url"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7"/></svg>shop</div>
+                <div class="obj-jev__cart"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 3.5h2l1.8 9h9l1.7-6.5H5.6"/><circle cx="7.5" cy="16" r="1.1"/><circle cx="14" cy="16" r="1.1"/></svg><b class="obj-jev__badge">1</b></div>
+              </div>
+              <div class="obj-jev__page">
+                <div class="obj-jev__item" aria-hidden="true">
+                  <div class="obj-jev__thumb"><div class="obj-jev__mug"></div></div>
+                  <div class="obj-jev__meta"><div class="obj-jev__name">Mug</div><div class="obj-jev__price">$24</div></div>
+                  <div class="obj-jev__add" data-t="add"><span class="a">Add</span><span class="b">Added</span></div>
+                </div>
+                <div class="obj-jev__field" aria-hidden="true">
+                  <div class="obj-jev__lbl">Deliver to</div>
+                  <div class="obj-jev__input" data-t="field"><span class="obj-jev__text"></span><i class="obj-jev__caret"></i></div>
+                </div>
+                <div class="obj-jev__foot">
+                  <div class="obj-jev__ask" role="dialog" aria-label="Can't undo this. Place the order?">
+                    <div class="obj-jev__askin">
+                      <div class="obj-jev__q"><i></i>Can't undo. Go?</div>
+                      <div class="obj-jev__btns">
+                        <button type="button" class="obj-jev__btn" data-a="no" tabindex="-1">Not yet</button>
+                        <button type="button" class="obj-jev__btn obj-jev__btn--go" data-a="yes" tabindex="-1">Place it</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="obj-jev__place" data-t="place" aria-hidden="true">
+                    <span class="a">Place order</span>
+                    <span class="b"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>Ordered</span>
+                    <span class="c">Okay, left it</span>
+                  </div>
+                </div>
+              </div>
+              <div class="obj-jev__ring" aria-hidden="true"></div>
+              <div class="obj-jev__cursor" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3.2l13.2 7.6-5.9 1.5-2.9 5.6z" fill="#2f5bea" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
+          <div class="obj-jev__chin" aria-hidden="true">
+            <div class="obj-jev__grille"><i></i><i></i><i></i></div>
+            <span class="obj-jev__mark">JEV</span>
+            <span class="obj-jev__led"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<style is:inline>
+.obj-jev { container-type: inline-size; width: 100%; height: 100%; display: grid; place-items: center; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+.obj-jev .obj-jev__scale { font-size: calc(100cqw / 34); display: grid; place-items: center; }
+.obj-jev .obj-jev__device { position: relative; width: 22.4em; padding: 0.95em 0.95em 0; border-radius: 2.5em; cursor: pointer;
+  background:
+    radial-gradient(120% 70% at 30% 0%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%),
+    linear-gradient(180deg, #f3f1ec 0%, #e6e3dc 55%, #d9d5cc 100%);
+  box-shadow:
+    inset 0 0.08em 0 rgba(255,255,255,.95),
+    inset 0 -0.18em 0.3em rgba(120,110,95,.22),
+    inset 0 0 0 0.06em rgba(255,255,255,.5),
+    0 0 0 0.06em rgba(0,0,0,.08),
+    0 0.26em 0 -0.03em #cdc8bd,
+    0 0.3em 0 -0.02em rgba(0,0,0,.12),
+    0 0.15em 0.3em rgba(0,0,0,.10),
+    0 1.2em 2.2em -0.6em rgba(0,0,0,.30),
+    0 2.6em 3.4em -1.6em rgba(0,0,0,.28);
+  transition: transform .5s var(--ease-out); }
+.obj-jev .obj-jev__device:active { transform: scale(.985); }
+.obj-jev .obj-jev__device.is-bump { animation: obj-jev-bump .6s var(--ease-out); }
+@keyframes obj-jev-bump { 0% { transform: scale(1); } 30% { transform: scale(1.025) translateY(-0.15em); } 100% { transform: scale(1); } }
+
+/* recessed bezel + screen */
+.obj-jev .obj-jev__bezel { padding: 0.32em; border-radius: 1.65em; background: linear-gradient(180deg, #2a2a2c, #3b3a3c); box-shadow: inset 0 0.1em 0.25em rgba(0,0,0,.6), 0 0.07em 0 rgba(255,255,255,.85), 0 -0.05em 0 rgba(0,0,0,.08); }
+.obj-jev .obj-jev__screen { position: relative; height: 14.45em; border-radius: 1.35em; overflow: hidden; background: #fbfaf8; font-family: var(--f-sans); color: #1d1d1f; isolation: isolate; }
+.obj-jev .obj-jev__screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 9; border-radius: inherit;
+  background: linear-gradient(118deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.12) 26%, rgba(255,255,255,0) 27%, rgba(255,255,255,0) 100%);
+  box-shadow: inset 0 0 0.5em rgba(0,0,0,.12); mix-blend-mode: screen; opacity: .7; }
+
+/* browser chrome */
+.obj-jev .obj-jev__chrome { height: 2.1em; display: flex; align-items: center; gap: 0.5em; padding: 0 0.85em; background: linear-gradient(#f1efeb, #e9e6e0); border-bottom: 0.06em solid rgba(0,0,0,.07); }
+.obj-jev .obj-jev__dots { display: flex; gap: 0.28em; }
+.obj-jev .obj-jev__dots i { width: 0.46em; height: 0.46em; border-radius: 50%; background: #d4d0c8; box-shadow: inset 0 0.04em 0.06em rgba(0,0,0,.15); }
+.obj-jev .obj-jev__url { flex: 1; height: 1.2em; border-radius: 0.6em; background: #fff; box-shadow: inset 0 0 0 0.05em rgba(0,0,0,.06); display: flex; align-items: center; justify-content: center; gap: 0.3em; font: 0.64em/1 var(--f-mono); color: #8a877f; letter-spacing: .01em; }
+.obj-jev .obj-jev__url svg { width: 0.85em; height: 0.85em; }
+.obj-jev .obj-jev__cart { position: relative; width: 1.3em; height: 1.3em; color: #6f6c66; }
+.obj-jev .obj-jev__cart svg { width: 100%; height: 100%; display: block; }
+.obj-jev .obj-jev__badge { position: absolute; top: -0.32em; right: -0.42em; min-width: 0.95em; height: 0.95em; border-radius: 0.5em; background: #2f5bea; color: #fff; font: 600 0.6em/1.6em var(--f-sans); text-align: center; transform: scale(0); transition: transform .45s cubic-bezier(.34,1.56,.64,1); }
+.obj-jev .is-added .obj-jev__badge { transform: scale(1); }
+
+/* page */
+.obj-jev .obj-jev__page { padding: 0.85em 0.95em 0; display: flex; flex-direction: column; gap: 0.75em; }
+.obj-jev .obj-jev__item { display: flex; align-items: center; gap: 0.7em; }
+.obj-jev .obj-jev__thumb { position: relative; width: 3.2em; height: 3.2em; border-radius: 0.75em; background: radial-gradient(90% 90% at 30% 25%, #fbe7d3, #f1cfae); box-shadow: inset 0 0 0 0.05em rgba(0,0,0,.05); overflow: hidden; }
+.obj-jev .obj-jev__mug { position: absolute; left: 0.85em; top: 0.95em; width: 1.25em; height: 1.4em; border-radius: 0.15em 0.15em 0.45em 0.45em; background: linear-gradient(90deg, #f7f4ef, #fff 40%, #e2ddd5); box-shadow: 0 0.18em 0.2em -0.05em rgba(120,70,30,.35); }
+.obj-jev .obj-jev__mug::after { content: ""; position: absolute; right: -0.42em; top: 0.3em; width: 0.42em; height: 0.6em; border: 0.14em solid #ece7df; border-left: 0; border-radius: 0 0.35em 0.35em 0; }
+.obj-jev .obj-jev__mug::before { content: ""; position: absolute; left: 0.08em; right: 0.08em; top: 0.06em; height: 0.18em; border-radius: 50%; background: #d8cfc3; }
+.obj-jev .obj-jev__meta { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.2em; }
+.obj-jev .obj-jev__name { font: 600 0.82em/1.1 var(--f-sans); color: #1d1d1f; }
+.obj-jev .obj-jev__price { font: 0.7em/1 var(--f-mono); color: #8a877f; }
+.obj-jev .obj-jev__add { position: relative; height: 1.75em; padding: 0 0.8em; border-radius: 0.9em; display: grid; place-items: center; background: #fff; box-shadow: inset 0 0 0 0.06em rgba(0,0,0,.12), 0 0.06em 0.12em rgba(0,0,0,.06); font: 600 0.68em/1 var(--f-sans); color: #1d1d1f; transition: transform .2s var(--ease-out), background .3s, color .3s, box-shadow .3s; }
+.obj-jev .obj-jev__add span { grid-area: 1 / 1; transition: opacity .25s, transform .35s var(--ease-out); }
+.obj-jev .obj-jev__add .b { opacity: 0; transform: translateY(0.6em); }
+.obj-jev .is-added .obj-jev__add { background: #eaf0ff; color: #2f5bea; box-shadow: inset 0 0 0 0.06em rgba(47,91,234,.25); }
+.obj-jev .is-added .obj-jev__add .a { opacity: 0; transform: translateY(-0.6em); }
+.obj-jev .is-added .obj-jev__add .b { opacity: 1; transform: none; }
+
+.obj-jev .obj-jev__lbl { font: 500 0.58em/1 var(--f-sans); color: #9b978f; letter-spacing: .02em; margin: 0 0 0.45em 0.2em; }
+.obj-jev .obj-jev__input { height: 2em; border-radius: 0.6em; background: #fff; box-shadow: inset 0 0 0 0.06em rgba(0,0,0,.11), inset 0 0.08em 0.15em rgba(0,0,0,.04); display: flex; align-items: center; padding: 0 0.7em; transition: box-shadow .3s; }
+.obj-jev .is-focus .obj-jev__input { box-shadow: inset 0 0 0 0.08em rgba(47,91,234,.55), 0 0 0 0.22em rgba(47,91,234,.12); }
+.obj-jev .obj-jev__text { font: 0.72em/1 var(--f-sans); color: #1d1d1f; white-space: nowrap; }
+.obj-jev .obj-jev__caret { width: 0.07em; height: 0.95em; margin-left: 0.06em; background: #2f5bea; opacity: 0; }
+.obj-jev .is-focus .obj-jev__caret { opacity: 1; animation: obj-jev-blink 1s steps(1) infinite; }
+@keyframes obj-jev-blink { 50% { opacity: 0; } }
+
+.obj-jev .obj-jev__foot { position: relative; margin-top: 0.1em; }
+.obj-jev .obj-jev__place { position: relative; height: 2.25em; border-radius: 0.75em; display: grid; place-items: center; overflow: hidden;
+  background: linear-gradient(180deg, #2b2b2e, #18181a); color: #fff; box-shadow: inset 0 0.06em 0 rgba(255,255,255,.14), 0 0.12em 0.25em rgba(0,0,0,.22);
+  transition: transform .2s var(--ease-out), background .4s, box-shadow .4s; }
+.obj-jev .obj-jev__place span { grid-area: 1 / 1; display: flex; align-items: center; gap: 0.4em; font: 600 0.74em/1 var(--f-sans); letter-spacing: .01em; transition: opacity .3s, transform .45s var(--ease-out); }
+.obj-jev .obj-jev__place svg { width: 1em; height: 1em; }
+.obj-jev .obj-jev__place .b, .obj-jev .obj-jev__place .c { opacity: 0; transform: translateY(1.2em); }
+.obj-jev .obj-jev__place .c { color: #6f6c66; font-weight: 500; }
+.obj-jev .is-held .obj-jev__place { background: linear-gradient(180deg, #f1efea, #e8e5df); box-shadow: inset 0 0 0 0.06em rgba(0,0,0,.08); }
+.obj-jev .is-held .obj-jev__place .a { opacity: 0; transform: translateY(-1.2em); }
+.obj-jev .is-held .obj-jev__place .c { opacity: 1; transform: none; }
+.obj-jev .is-ask .obj-jev__place { box-shadow: inset 0 0.06em 0 rgba(255,255,255,.14), 0 0 0 0.2em rgba(240,160,40,.35), 0 0.12em 0.25em rgba(0,0,0,.22); }
+.obj-jev .is-done .obj-jev__place { background: linear-gradient(180deg, #2fa866, #238a52); }
+.obj-jev .is-done .obj-jev__place .a { opacity: 0; transform: translateY(-1.2em); }
+.obj-jev .is-done .obj-jev__place .b { opacity: 1; transform: none; }
+.obj-jev .is-press { transform: scale(.94); }
+
+/* the ask popover */
+.obj-jev .obj-jev__ask { position: absolute; z-index: 5; right: 0.2em; bottom: calc(100% + 0.55em); width: 10.6em; padding: 0.6em 0.6em 0.6em; border-radius: 0.95em;
+  background: rgba(255,255,255,.92); -webkit-backdrop-filter: blur(6px) saturate(1.4); backdrop-filter: blur(6px) saturate(1.4);
+  box-shadow: 0 0 0 0.06em rgba(0,0,0,.08), 0 0.4em 1em -0.2em rgba(0,0,0,.28), 0 0.1em 0.2em rgba(0,0,0,.08);
+  transform-origin: 78% 115%; opacity: 0; transform: translateY(0.6em) scale(.86); pointer-events: none;
+  transition: opacity .22s ease-out, transform .45s cubic-bezier(.34,1.45,.64,1); }
+.obj-jev .obj-jev__ask::after { content: ""; position: absolute; right: 1.6em; bottom: -0.32em; width: 0.65em; height: 0.65em; background: inherit; transform: rotate(45deg); border-radius: 0.12em; box-shadow: 0.06em 0.06em 0 rgba(0,0,0,.06); }
+.obj-jev .is-ask .obj-jev__ask { opacity: 1; transform: none; pointer-events: auto; }
+.obj-jev .is-ask .obj-jev__askin { animation: obj-jev-float 3s ease-in-out infinite; }
+@keyframes obj-jev-float { 50% { transform: translateY(-0.12em); } }
+.obj-jev .obj-jev__q { display: flex; align-items: center; gap: 0.4em; margin: 0 0.1em 0.5em; font: 600 0.7em/1.2 var(--f-sans); color: #1d1d1f; }
+.obj-jev .obj-jev__q i { flex: none; width: 0.6em; height: 0.6em; border-radius: 50%; background: #f0a028; box-shadow: 0 0 0 0.22em rgba(240,160,40,.2); }
+.obj-jev .obj-jev__q small { font: 400 1em/1 var(--f-sans); color: #8a877f; margin-left: auto; }
+.obj-jev .obj-jev__btns { display: flex; gap: 0.35em; }
+.obj-jev .obj-jev__btn { flex: 1; appearance: none; border: 0; margin: 0; padding: 0; cursor: pointer; font: 600 0.66em/1 var(--f-sans); height: 2.65em; border-radius: 0.9em;
+  background: #f0eee9; color: #4a4843; box-shadow: inset 0 0 0 0.08em rgba(0,0,0,.06); transition: transform .18s var(--ease-out), background .2s; }
+.obj-jev .obj-jev__btn--go { background: #1d1d1f; color: #fff; box-shadow: inset 0 0.08em 0 rgba(255,255,255,.15); }
+.obj-jev .obj-jev__btn:active { transform: scale(.94); }
+.obj-jev .obj-jev__btn:focus-visible { outline: 0.2em solid #2f5bea; outline-offset: 0.12em; }
+@media (hover: hover) { .obj-jev .obj-jev__btn:hover { background: #e6e3dc; } .obj-jev .obj-jev__btn--go:hover { background: #000; } }
+
+/* the agent's cursor */
+.obj-jev .obj-jev__cursor { position: absolute; z-index: 6; left: 0; top: 0; width: 1.5em; height: 1.5em; pointer-events: none; will-change: transform; filter: drop-shadow(0 0.1em 0.12em rgba(0,0,0,.3)); }
+.obj-jev .obj-jev__cursor svg { display: block; width: 100%; height: 100%; transform-origin: 12% 8%; }
+.obj-jev .obj-jev__ring { position: absolute; z-index: 5; left: 0; top: 0; width: 1.6em; height: 1.6em; margin: -0.8em 0 0 -0.8em; border-radius: 50%; border: 0.12em solid rgba(47,91,234,.6); opacity: 0; pointer-events: none; }
+
+/* chin */
+.obj-jev .obj-jev__chin { height: 2.35em; display: flex; align-items: center; justify-content: center; gap: 0.55em; }
+.obj-jev .obj-jev__led { width: 0.42em; height: 0.42em; border-radius: 50%; background: #c9c4ba; box-shadow: inset 0 0.05em 0.08em rgba(0,0,0,.25), 0 0.05em 0 rgba(255,255,255,.8); transition: background .4s, box-shadow .4s; }
+.obj-jev .is-ask .obj-jev__led { background: #f3a531; box-shadow: 0 0 0.35em rgba(243,165,49,.8), inset 0 0.03em 0.05em rgba(255,255,255,.6); animation: obj-jev-glow 1.6s ease-in-out infinite; }
+.obj-jev .is-done .obj-jev__led { background: #34b06c; box-shadow: 0 0 0.35em rgba(52,176,108,.8), inset 0 0.03em 0.05em rgba(255,255,255,.6); }
+@keyframes obj-jev-glow { 50% { box-shadow: 0 0 0.12em rgba(243,165,49,.5), inset 0 0.03em 0.05em rgba(255,255,255,.6); } }
+.obj-jev .obj-jev__mark { font: 600 0.62em/1 var(--f-mono); letter-spacing: .18em; color: #b3ada2; text-shadow: 0 0.06em 0 rgba(255,255,255,.85), 0 -0.04em 0 rgba(0,0,0,.08); }
+.obj-jev .obj-jev__grille { display: flex; gap: 0.18em; }
+.obj-jev .obj-jev__grille i { width: 0.18em; height: 0.18em; border-radius: 50%; background: #c6c0b5; box-shadow: inset 0 0.04em 0.04em rgba(0,0,0,.25), 0 0.04em 0 rgba(255,255,255,.8); }
+
+.obj-jev.is-paused *, .obj-jev.is-paused *::before, .obj-jev.is-paused *::after { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  .obj-jev *, .obj-jev *::before, .obj-jev *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<script is:inline>
+(function () {
+  var roots = document.querySelectorAll('.obj-jev');
+  if (!roots.length) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ADDRESS = '12 Harbour St';
+
+  Array.prototype.forEach.call(roots, function (root) {
+    var dev = root.querySelector('.obj-jev__device');
+    var screen = root.querySelector('.obj-jev__screen');
+    var cursor = root.querySelector('.obj-jev__cursor');
+    var arrow = cursor.querySelector('svg');
+    var ring = root.querySelector('.obj-jev__ring');
+    var text = root.querySelector('.obj-jev__text');
+    var addBtn = root.querySelector('[data-t="add"]');
+    var field = root.querySelector('[data-t="field"]');
+    var place = root.querySelector('[data-t="place"]');
+    var btns = root.querySelectorAll('.obj-jev__btn');
+    if (!dev || !screen) return;
+
+    /* a clock that only runs while the object is on screen and the tab is visible */
+    var clock = 0, last = 0, raf = 0, active = false, inView = false;
+    var timers = [], tweens = [];
+    function frame(ts) {
+      var dt = last ? Math.min(50, ts - last) : 0;
+      last = ts; clock += dt;
+      var i, t;
+      for (i = tweens.length - 1; i >= 0; i--) {
+        t = tweens[i];
+        var p = Math.min(1, (clock - t.s) / t.d);
+        t.fn(p);
+        if (p >= 1) { tweens.splice(i, 1); t.res(); }
+      }
+      for (i = timers.length - 1; i >= 0; i--) {
+        if (timers[i].t <= clock) { t = timers.splice(i, 1)[0]; t.res(); }
+      }
+      raf = requestAnimationFrame(frame);
+    }
+    function setActive() {
+      var a = inView && !document.hidden;
+      if (a === active) return;
+      active = a;
+      root.classList.toggle('is-paused', !a);
+      if (reduce) return;
+      if (a) { last = 0; raf = requestAnimationFrame(frame); if (!started) { started = true; cycle(); } }
+      else cancelAnimationFrame(raf);
+    }
+    function sleep(ms) { return new Promise(function (res) { timers.push({ t: clock + ms, res: res }); }); }
+    function tween(ms, fn) { return new Promise(function (res) { tweens.push({ s: clock, d: ms, fn: fn, res: res }); }); }
+    function ease(p) { return p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; }
+
+    /* cursor position, in fractions of the screen so it survives resizing */
+    var cx = 0.82, cy = 1.15;
+    function put(x, y) {
+      cx = x; cy = y;
+      cursor.style.transform = 'translate(' + (x * screen.clientWidth) + 'px,' + (y * screen.clientHeight) + 'px)';
+    }
+    function spot(el, fx, fy) {
+      var s = screen.getBoundingClientRect(), r = el.getBoundingClientRect();
+      return [(r.left - s.left + r.width * fx) / s.width, (r.top - s.top + r.height * fy) / s.height];
+    }
+    function move(to, ms, arc) {
+      var x0 = cx, y0 = cy, dx = to[0] - x0, dy = to[1] - y0;
+      var bow = arc == null ? 0.06 : arc;
+      return tween(ms, function (p) {
+        var e = ease(p), b = Math.sin(Math.PI * e) * bow;
+        put(x0 + dx * e - dy * b, y0 + dy * e + dx * b);
+      });
+    }
+    function tap(el) {
+      ring.style.left = (cx * 100) + '%'; ring.style.top = (cy * 100) + '%';
+      if (el) el.classList.add('is-press');
+      return tween(320, function (p) {
+        var k = p < .35 ? p / .35 : 1 - (p - .35) / .65;
+        arrow.style.transform = 'scale(' + (1 - .16 * k) + ')';
+        ring.style.opacity = p < .1 ? 0 : (1 - p) * .9;
+        ring.style.transform = 'scale(' + (.4 + p * 1.1) + ')';
+        if (p > .45 && el) el.classList.remove('is-press');
+      });
+    }
+
+    var gen = 0, state = 'run', started = false;
+    function setState(s) {
+      state = s;
+      dev.classList.toggle('is-ask', s === 'ask');
+      Array.prototype.forEach.call(btns, function (b) { b.tabIndex = s === 'ask' ? 0 : -1; });
+    }
+    function clearPage() {
+      dev.classList.remove('is-added', 'is-focus', 'is-done', 'is-held');
+      text.textContent = '';
+      setState('run');
+    }
+    function askPose() {
+      dev.classList.add('is-added');
+      dev.classList.remove('is-focus', 'is-done', 'is-held');
+      text.textContent = ADDRESS;
+      var p = spot(place, 0.3, 0.1);
+      put(p[0] - 0.03, p[1] - 0.075);
+      setState('ask');
+    }
+
+    async function cycle() {
+      var g = ++gen;
+      function ok() { return g === gen; }
+      clearPage();
+      cursor.style.opacity = 1;
+      put(0.86, 1.08);
+      await sleep(600); if (!ok()) return;
+      await move(spot(addBtn, 0.45, 0.6), 850); if (!ok()) return;
+      await sleep(180); if (!ok()) return;
+      await tap(addBtn); if (!ok()) return;
+      dev.classList.add('is-added');
+      await sleep(450); if (!ok()) return;
+      await move(spot(field, 0.18, 0.6), 850, -0.08); if (!ok()) return;
+      await tap(field); if (!ok()) return;
+      dev.classList.add('is-focus');
+      await sleep(250); if (!ok()) return;
+      for (var i = 1; i <= ADDRESS.length; i++) {
+        text.textContent = ADDRESS.slice(0, i);
+        await sleep(ADDRESS[i - 1] === ' ' ? 120 : 45 + Math.random() * 45); if (!ok()) return;
+      }
+      await sleep(300); if (!ok()) return;
+      dev.classList.remove('is-focus');
+      /* heads for the button... and stops short */
+      var tgt = spot(place, 0.3, 0.1);
+      await move([tgt[0], tgt[1]], 800, 0.04); if (!ok()) return;
+      await move([tgt[0] - 0.03, tgt[1] - 0.075], 460, 0); if (!ok()) return;
+      setState('ask');
+    }
+
+    async function approve() {
+      var g = ++gen;
+      function ok() { return g === gen; }
+      setState('run');
+      if (reduce) { askPose(); setState('run'); dev.classList.add('is-done'); return; }
+      await sleep(160); if (!ok()) return;
+      await move(spot(place, 0.5, 0.5), 320, 0); if (!ok()) return;
+      await tap(place); if (!ok()) return;
+      dev.classList.add('is-done');
+      dev.classList.remove('is-bump'); void dev.offsetWidth; dev.classList.add('is-bump');
+      await sleep(400); if (!ok()) return;
+      await move([0.9, 1.1], 900, 0.05); if (!ok()) return;
+      await sleep(1800); if (!ok()) return;
+      cycle();
+    }
+    async function decline() {
+      var g = ++gen;
+      function ok() { return g === gen; }
+      setState('run');
+      dev.classList.add('is-held');
+      if (reduce) return;
+      await move([cx + 0.1, cy - 0.32], 600, -0.1); if (!ok()) return;
+      await sleep(1600); if (!ok()) return;
+      dev.classList.remove('is-held');
+      await sleep(300); if (!ok()) return;
+      await move([0.9, 1.1], 700, 0.05); if (!ok()) return;
+      await sleep(500); if (!ok()) return;
+      cycle();
+    }
+
+    Array.prototype.forEach.call(btns, function (b) {
+      b.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (state !== 'ask') return;
+        if (b.getAttribute('data-a') === 'yes') approve(); else decline();
+      });
+    });
+    dev.addEventListener('click', function () {
+      if (state === 'ask') { approve(); return; }
+      if (reduce) { askPose(); return; }
+      /* tapping while it works: skip ahead to the question */
+      if (!dev.classList.contains('is-done') && !dev.classList.contains('is-held')) { gen++; askPose(); }
+    });
+
+    window.addEventListener('resize', function () { put(cx, cy); });
+    put(cx, cy);
+
+    if (reduce) { askPose(); return; }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; setActive(); }, { threshold: 0.15 }).observe(root);
+    } else { inView = true; setActive(); }
+    document.addEventListener('visibilitychange', setActive);
+  });
+})();
+</script>

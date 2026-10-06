@@ -1,0 +1,20 @@
+# Kai Liao
+
+> Agent engineer in Sydney, Australia. Founded a startup in Taiwan; now doing a Master's in Data Science (MDSI) at UTS. Open to agent engineering roles, especially at early-stage teams.
+
+Contact: lykevin890919@gmail.com · https://www.linkedin.com/in/ying-kai-liao · https://github.com/Ying-Kai-Liao
+
+## Projects
+- jev-browser (open source): a browser agent that does the clicking and asks before anything it can't undo. https://github.com/Ying-Kai-Liao/jev-browser
+- orca-flow (open source): runs a crew of coding agents on one codebase, each in its own copy, with one queue that merges and ships. https://github.com/Ying-Kai-Liao/orca-flow
+- Behalve (in progress): an AI staff member for small service businesses across WhatsApp, LINE, Instagram, SMS, email and voice.
+- Storm (live product): AI chat as a mind map; conversations branch instead of scrolling. https://www.stormai.dev
+- Outer Convoy (research pilot): helps people who moved to Australia after 60 find verified community groups that want their skills.
+
+## Earlier
+- PemoChart (攀木科技): startup founded in Taiwan, awarded at the U-start Plan accelerator.
+- Skin cancer report system; H&M fashion recommender; hot-seat (AI advisors critique product ideas).
+
+## More
+- Writing: https://ykliao.com/blog (RSS: https://ykliao.com/rss.xml)
+- Projects: https://ykliao.com/projects

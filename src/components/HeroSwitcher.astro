@@ -1,0 +1,67 @@
+---
+// Each hero is a standalone page in /public/heroes, loaded into a frame so switching fully tears the old one down.
+const heroes = [
+  { id: "matcha", label: "Matcha", hint: "tap the tea to whisk it" },
+  { id: "galton", label: "Galton board", hint: "click to drop a ball, hold to pour" },
+  { id: "window", label: "Sydney window", hint: "drag to wipe the glass, tap for rain" },
+];
+---
+<section class="hero-wrap" aria-label="Interactive scene">
+  <div class="hero-frame" id="hero-frame" data-heroes={JSON.stringify(heroes)}>
+    <noscript><iframe src={`/heroes/${heroes[0].id}.html`} title={heroes[0].label}></iframe></noscript>
+  </div>
+  <div class="hero-ctl">
+    <button type="button" class="hero-arrow" data-dir="-1" aria-label="Previous scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <p class="hero-name" aria-live="polite"><span class="hero-label">{heroes[0].label}</span><span class="hero-hint"> · {heroes[0].hint}</span></p>
+    <button type="button" class="hero-arrow" data-dir="1" aria-label="Next scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</section>
+
+<style is:global>
+.hero-wrap { display: flex; flex-direction: column; align-items: center; padding: 24px 16px 0; }
+/* keep name, role and availability on the first screen: the hero gives up height on short viewports */
+.hero-frame { position: relative; width: min(560px, 100%, max(270px, (100svh - 560px) * 1.5)); aspect-ratio: 3 / 2; }
+.hero-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: transparent; transition: opacity 380ms ease; }
+.hero-frame iframe.is-entering { opacity: 0; }
+.hero-ctl { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; min-height: 28px; }
+.hero-name { margin: 0; min-width: 0; font-size: 12.5px; color: var(--ink-3); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hero-label { color: var(--ink-2); }
+.hero-arrow { display: grid; place-items: center; width: 28px; height: 28px; flex: none; padding: 0; border: 0; border-radius: 8px; background: none; color: var(--ink-3); cursor: pointer; transition: color 150ms ease, background-color 150ms ease, transform 160ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .hero-arrow:hover { color: var(--ink); background: var(--chip); } }
+.hero-arrow:active { transform: scale(.92); }
+@media (max-width: 420px) { .hero-hint { display: none; } }
+@media (max-height: 760px) and (min-width: 600px) { .hero-wrap { padding-top: 8px; } }
+</style>
+
+<script is:inline>
+(() => {
+  const frame = document.getElementById("hero-frame");
+  if (!frame) return;
+  const heroes = JSON.parse(frame.dataset.heroes);
+  const label = document.querySelector(".hero-label"), hint = document.querySelector(".hero-hint");
+  const KEY = "ykl-hero";
+  let idx = 0;
+  try { const saved = heroes.findIndex(h => h.id === localStorage.getItem(KEY)); if (saved > -1) idx = saved; } catch (e) {}
+
+  function show(i) {
+    idx = (i + heroes.length) % heroes.length;
+    const h = heroes[idx];
+    label.textContent = h.label;
+    hint.textContent = " · " + h.hint;
+    try { localStorage.setItem(KEY, h.id); } catch (e) {}
+    const theme = document.documentElement.dataset.theme;
+    const next = document.createElement("iframe");
+    next.src = `/heroes/${h.id}.html${theme ? `?theme=${theme}` : ""}`;
+    next.title = `${h.label}, an interactive scene: ${h.hint}`;
+    next.className = "is-entering";
+    const old = [...frame.querySelectorAll("iframe")];
+    next.addEventListener("load", () => {
+      requestAnimationFrame(() => next.classList.remove("is-entering"));
+      setTimeout(() => old.forEach(o => o.remove()), 400);
+    }, { once: true });
+    frame.appendChild(next);
+  }
+  document.querySelectorAll(".hero-arrow").forEach(b => b.addEventListener("click", () => show(idx + Number(b.dataset.dir))));
+  show(idx);
+})();
+</script>

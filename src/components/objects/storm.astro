@@ -1,0 +1,315 @@
+---
+// Imported from yk-site/objects/storm by scripts/import-object.py; edit there and re-import.
+---
+<div class="obj-storm">
+      <button class="st-device" type="button" aria-label="A small paper tablet showing a chat as a map of speech bubbles. Tap a bubble to branch a new reply off it.">
+        <span class="st-cam" aria-hidden="true"></span>
+        <span class="st-screen" aria-hidden="true">
+          <svg class="st-threads" viewBox="0 0 100 110" preserveAspectRatio="xMidYMid meet">
+            <g class="st-g-shadow"></g><g class="st-g-line"></g><g class="st-g-pin"></g>
+            <circle class="st-spark" r="1.1" cx="0" cy="0"></circle>
+          </svg>
+          <span class="st-nodes"></span>
+          <span class="st-glass"></span>
+        </span>
+        <span class="st-chin" aria-hidden="true"><span class="st-grip"><i></i><i></i><i></i></span><span class="st-mark">storm</span><span class="st-led"></span></span>
+      </button>
+    </div>
+
+<style is:inline>
+.obj-storm { width: 100%; container-type: inline-size; display: grid; place-items: center; -webkit-tap-highlight-color: transparent; }
+.obj-storm .st-device {
+  --thread: rgba(60, 58, 54, .42);
+  --thread-on: #3d4fd1;
+  position: relative; width: 74cqw; padding: 4.6cqw 4.6cqw 7.4cqw; margin: 0; border: 0; cursor: pointer;
+  border-radius: 7.5cqw; font: inherit; color: inherit; text-align: left;
+  background:
+    radial-gradient(120% 70% at 30% 0%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%),
+    linear-gradient(168deg, #f7f5f0 0%, #ebe8e1 55%, #dfdbd2 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -1.2cqw 1.6cqw rgba(120,110,95,.14),
+    inset 0 0 0 1px rgba(110,100,85,.16),
+    0 0.4cqw 0.6cqw rgba(0,0,0,.10),
+    0 2.4cqw 4cqw -0.6cqw rgba(0,0,0,.22),
+    0 7cqw 10cqw -3cqw rgba(0,0,0,.26);
+  transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out);
+  touch-action: manipulation;
+}
+.obj-storm .st-device:active { transform: scale(.985); }
+.obj-storm .st-device:focus-visible { outline: 2px solid var(--ink-3); outline-offset: 4px; }
+/* bottom chin details */
+.obj-storm .st-chin { position: absolute; left: 0; right: 0; bottom: 0; height: 7.4cqw; display: flex; align-items: center; justify-content: space-between; padding: 0 6.4cqw; pointer-events: none; }
+.obj-storm .st-mark { font: 500 2.1cqw/1 var(--f-mono); letter-spacing: .32em; text-transform: lowercase; color: rgba(90, 82, 70, .55); text-shadow: 0 1px 0 rgba(255,255,255,.85); }
+.obj-storm .st-led { width: 1.3cqw; height: 1.3cqw; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #a7b2ff, #3d4fd1 70%); box-shadow: 0 0 0 0.35cqw rgba(0,0,0,.06), 0 0 1.6cqw rgba(61,79,209,.55); animation: obj-storm-led 3.6s ease-in-out infinite; }
+.obj-storm .st-grip { display: flex; gap: .9cqw; }
+.obj-storm .st-grip i { width: .7cqw; height: .7cqw; border-radius: 50%; background: rgba(100,90,75,.28); box-shadow: 0 1px 0 rgba(255,255,255,.9); }
+.obj-storm .st-cam { position: absolute; top: 1.9cqw; left: 50%; width: 1.1cqw; height: 1.1cqw; margin-left: -.55cqw; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #5a5d6a, #17171c 70%); box-shadow: 0 1px 0 rgba(255,255,255,.9), inset 0 0 0 .2cqw rgba(0,0,0,.25); }
+/* the screen: matte paper under glass */
+.obj-storm .st-screen {
+  position: relative; display: block; width: 100%; aspect-ratio: 100 / 110; border-radius: 3.6cqw; overflow: hidden;
+  container-type: inline-size;
+  background:
+    radial-gradient(rgba(70,64,55,.16) 0.55px, transparent 0.9px) 0 0 / 4.2cqw 4.2cqw,
+    linear-gradient(180deg, #f3f1ea, #ebe8df);
+  box-shadow: inset 0 0 0 1px rgba(80,72,60,.18), inset 0 1.2cqw 1.8cqw -0.6cqw rgba(60,50,40,.22), 0 1px 0 rgba(255,255,255,.9);
+}
+.obj-storm .st-glass { position: absolute; inset: 0; pointer-events: none; border-radius: inherit; z-index: 5;
+  background: linear-gradient(118deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.12) 26%, rgba(255,255,255,0) 27%, rgba(255,255,255,0) 62%, rgba(255,255,255,.10) 63%, rgba(255,255,255,0) 80%);
+  mix-blend-mode: soft-light; }
+.obj-storm .st-threads { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.obj-storm .st-threads path { fill: none; stroke-linecap: round; }
+.obj-storm .st-threads .t-shadow { stroke: rgba(40,30,20,.10); stroke-width: 1.5; transform: translate(0, .9px); }
+.obj-storm .st-threads .t-line { stroke: var(--thread); stroke-width: .75; transition: stroke .5s var(--ease-out), stroke-width .5s var(--ease-out); }
+.obj-storm .st-threads .t-line.is-on { stroke: var(--thread-on); stroke-width: .95; }
+.obj-storm .st-threads .t-pin { fill: #f6f4ee; stroke: var(--thread); stroke-width: .5; transition: stroke .5s var(--ease-out); }
+.obj-storm .st-threads .t-pin.is-on { stroke: var(--thread-on); }
+.obj-storm .st-spark { fill: #7d8cff; filter: drop-shadow(0 0 1.2px rgba(61,79,209,.9)); opacity: 0; }
+/* bubbles */
+.obj-storm .st-node {
+  position: absolute; width: 25cqw; height: 12.4cqw; transform: translate(-50%, -50%);
+  border-radius: 4.2cqw; padding: 2.7cqw 3.2cqw 0; display: flex; flex-direction: column; gap: 1.5cqw;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f7f3 100%);
+  box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(70,62,50,.12), 0 0.3cqw 0.5cqw rgba(40,30,20,.10), 0 1.6cqw 2.6cqw -0.8cqw rgba(40,30,20,.22);
+  transition: box-shadow .4s var(--ease-out), translate .45s var(--ease-out);
+  z-index: 2; pointer-events: none;
+}
+.obj-storm .st-node { border-bottom-left-radius: 1.2cqw; }
+.obj-storm .st-node.is-user { background: linear-gradient(180deg, #34343b 0%, #23232a 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.16), inset 0 0 0 1px rgba(0,0,0,.4), 0 0.3cqw 0.5cqw rgba(0,0,0,.18), 0 1.6cqw 2.6cqw -0.8cqw rgba(0,0,0,.34); border-bottom-left-radius: 4.2cqw; border-bottom-right-radius: 1.2cqw; }
+.obj-storm .st-node b { display: block; height: 1.5cqw; border-radius: 1cqw; background: rgba(60,55,48,.22); transition: opacity .35s var(--ease-out); }
+.obj-storm .st-node b:nth-child(2) { width: 62%; }
+.obj-storm .st-node.is-user b { background: rgba(255,255,255,.34); }
+.obj-storm .st-node.is-on { box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(61,79,209,.45), 0 0.3cqw 0.5cqw rgba(40,30,20,.10), 0 1.6cqw 2.6cqw -0.8cqw rgba(40,30,20,.22); }
+.obj-storm .st-node.is-user.is-on { box-shadow: inset 0 1px 0 rgba(255,255,255,.16), inset 0 0 0 1px rgba(125,140,255,.8), 0 0.3cqw 0.5cqw rgba(0,0,0,.18), 0 1.6cqw 2.6cqw -0.8cqw rgba(0,0,0,.34); }
+.obj-storm .st-node.is-hover { translate: 0 -0.8cqw; }
+.obj-storm .st-node.is-leaf { animation: obj-storm-breathe 4.2s ease-in-out infinite; }
+/* typing shimmer */
+.obj-storm .st-dots { position: absolute; left: 3.4cqw; top: 50%; display: flex; gap: 1cqw; transform: translateY(-50%); opacity: 0; transition: opacity .25s; }
+.obj-storm .st-dots i { width: 1.6cqw; height: 1.6cqw; border-radius: 50%; background: rgba(60,55,48,.45); animation: obj-storm-dot 1s ease-in-out infinite; }
+.obj-storm .st-dots i:nth-child(2) { animation-delay: .15s; }
+.obj-storm .st-dots i:nth-child(3) { animation-delay: .3s; }
+.obj-storm .st-node.is-user .st-dots i { background: rgba(255,255,255,.6); }
+.obj-storm .st-node.is-typing .st-dots { opacity: 1; }
+.obj-storm .st-node.is-typing b { opacity: 0; }
+.obj-storm.is-paused *, .obj-storm.is-paused *::after { animation-play-state: paused !important; }
+@keyframes obj-storm-dot { 0%, 100% { transform: translateY(0); opacity: .45; } 40% { transform: translateY(-0.7cqw); opacity: 1; } }
+@keyframes obj-storm-breathe { 0%, 100% { scale: 1; } 50% { scale: 1.035; } }
+@keyframes obj-storm-led { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+@media (hover: hover) { .obj-storm .st-device:hover { transform: translateY(-0.6cqw); } }
+@media (prefers-reduced-motion: reduce) {
+  .obj-storm .st-led, .obj-storm .st-node.is-leaf, .obj-storm .st-dots i { animation: none; }
+  .obj-storm .st-device, .obj-storm .st-node { transition: none; }
+}
+</style>
+
+<script is:inline>
+(function () {
+  var roots = document.querySelectorAll('.obj-storm');
+  if (!roots.length) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  // Slots in a 100 x 110 map. Each has a parent; the first three are the resting map.
+  var SLOTS = [
+    { x: 50, y: 15, p: -1 },
+    { x: 27, y: 41, p: 0 },
+    { x: 73, y: 41, p: 0 },
+    { x: 45, y: 68, p: 1 },
+    { x: 79, y: 66, p: 2 },
+    { x: 18, y: 66, p: 1 },
+    { x: 33, y: 94, p: 3 },
+    { x: 68, y: 93, p: 4 }
+  ];
+  var BASE = 5, H = 12.4; // node height in map units
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function depth(i) { var d = 0; while (SLOTS[i].p >= 0) { i = SLOTS[i].p; d++; } return d; }
+  function curve(a, b) {
+    var x1 = a.x, y1 = a.y + H / 2 - 0.6, x2 = b.x, y2 = b.y - H / 2 + 0.4, k = (y2 - y1) * 0.55;
+    return 'M' + x1 + ' ' + y1 + ' C' + x1 + ' ' + (y1 + k) + ' ' + x2 + ' ' + (y2 - k) + ' ' + x2 + ' ' + y2;
+  }
+
+  roots.forEach(function (root) {
+    var btn = root.querySelector('.st-device');
+    var screen = root.querySelector('.st-screen');
+    var layer = root.querySelector('.st-nodes');
+    var gS = root.querySelector('.st-g-shadow'), gL = root.querySelector('.st-g-line'), gP = root.querySelector('.st-g-pin');
+    var spark = root.querySelector('.st-spark');
+    if (!btn || !screen || !layer) return;
+
+    var nodes = {}; // slot index -> { el, line, shadow, pin }
+    var active = 0, busy = false, visible = true, raf = 0, sparkT0 = 0, timers = [];
+
+    function later(fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; }
+
+    function makeNode(i) {
+      var s = SLOTS[i];
+      var el = document.createElement('span');
+      el.className = 'st-node' + (depth(i) % 2 === 0 ? ' is-user' : '');
+      el.style.left = s.x + '%';
+      el.style.top = (s.y / 110 * 100) + '%';
+      var w1 = 70 + ((i * 37) % 30);
+      el.innerHTML = '<b style="width:' + w1 + '%"></b><b></b><span class="st-dots"><i></i><i></i><i></i></span>';
+      layer.appendChild(el);
+      var n = { el: el };
+      if (s.p >= 0) {
+        var d = curve(SLOTS[s.p], s);
+        n.shadow = document.createElementNS(NS, 'path'); n.shadow.setAttribute('d', d); n.shadow.setAttribute('class', 't-shadow');
+        n.line = document.createElementNS(NS, 'path'); n.line.setAttribute('d', d); n.line.setAttribute('class', 't-line');
+        n.pin = document.createElementNS(NS, 'circle'); n.pin.setAttribute('class', 't-pin'); n.pin.setAttribute('r', '1.05');
+        n.pin.setAttribute('cx', SLOTS[s.p].x); n.pin.setAttribute('cy', SLOTS[s.p].y + H / 2 - 0.6);
+        [n.shadow, n.line].forEach(function (p) { p.setAttribute('pathLength', '1'); p.style.strokeDasharray = '1 1'; });
+        gS.appendChild(n.shadow); gL.appendChild(n.line); gP.appendChild(n.pin);
+      }
+      nodes[i] = n;
+      return n;
+    }
+
+    function pathTo(i) { var p = []; while (i >= 0) { p.push(i); i = SLOTS[i].p; } return p; }
+
+    function highlight() {
+      var on = pathTo(active);
+      Object.keys(nodes).forEach(function (k) {
+        var n = nodes[k], hit = on.indexOf(+k) >= 0, leaf = +k === active;
+        n.el.classList.toggle('is-on', hit);
+        n.el.classList.toggle('is-leaf', leaf && !reduce.matches);
+        if (n.line) { n.line.classList.toggle('is-on', hit); n.pin.classList.toggle('is-on', hit); }
+      });
+    }
+
+    function drawLine(n, from, to, ms) {
+      [n.shadow, n.line].forEach(function (p) {
+        if (!p) return;
+        if (reduce.matches || !ms) { p.style.strokeDashoffset = to; return; }
+        var o = from > to ? [{ opacity: 0 }, { opacity: 1, offset: .12 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 1, offset: .82 }, { opacity: 0 }];
+        p.animate([{ strokeDashoffset: from }, { strokeDashoffset: to }], { duration: ms, easing: 'cubic-bezier(.45,0,.2,1)', fill: 'forwards' });
+        p.animate(o, { duration: ms, fill: 'forwards' });
+        p.style.strokeDashoffset = to;
+      });
+    }
+
+    function reset(animate) {
+      layer.innerHTML = ''; gS.innerHTML = ''; gL.innerHTML = ''; gP.innerHTML = '';
+      nodes = {};
+      for (var i = 0; i < BASE; i++) {
+        var n = makeNode(i);
+        if (n.line) drawLine(n, 1, 0, 0);
+        if (animate && !reduce.matches) {
+          n.el.animate([{ opacity: 0, scale: .8 }, { opacity: 1, scale: 1 }], { duration: 520, delay: i * 90, easing: 'cubic-bezier(.34,1.4,.5,1)', fill: 'backwards' });
+          if (n.line) drawLine(n, 1, 0, 520);
+        }
+      }
+      active = 3;
+      highlight();
+    }
+
+    function freeChild(i) {
+      for (var j = BASE; j < SLOTS.length; j++) if (!nodes[j] && SLOTS[j].p === i) return j;
+      return -1;
+    }
+    function nextFree() { for (var j = BASE; j < SLOTS.length; j++) if (!nodes[j] && nodes[SLOTS[j].p]) return j; return -1; }
+
+    function pickFrom(ev) {
+      if (!ev || ev.detail === 0 || ev.clientX == null) return nextFree();
+      var r = screen.getBoundingClientRect();
+      var mx = (ev.clientX - r.left) / r.width * 100, my = (ev.clientY - r.top) / r.width * 100;
+      var best = -1, bd = 1e9;
+      Object.keys(nodes).forEach(function (k) {
+        if (freeChild(+k) < 0) return;
+        var s = SLOTS[k], d = (s.x - mx) * (s.x - mx) + (s.y - my) * (s.y - my);
+        if (d < bd) { bd = d; best = +k; }
+      });
+      return best >= 0 ? freeChild(best) : nextFree();
+    }
+
+    function sprout(i) {
+      var n = makeNode(i), s = SLOTS[i], ps = SLOTS[s.p];
+      active = i;
+      highlight();
+      if (reduce.matches) { drawLine(n, 1, 0, 0); return; }
+      busy = true;
+      drawLine(n, 1, 0, 460);
+      var dx = (ps.x - s.x) / 25 * 100, dy = (ps.y - s.y) / 12.4 * 100; // in % of the bubble's own size
+      n.el.animate([
+        { transform: 'translate(calc(-50% + ' + dx + '%), calc(-50% + ' + dy + '%)) scale(.25)', opacity: 0 },
+        { opacity: 1, offset: .25 },
+        { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 }
+      ], { duration: 680, delay: 120, easing: 'cubic-bezier(.3,1.45,.45,1)', fill: 'backwards' });
+      n.el.classList.add('is-typing');
+      later(function () { n.el.classList.remove('is-typing'); busy = false; startSpark(); }, 1250);
+    }
+
+    function fold() {
+      var ks = Object.keys(nodes).map(Number).filter(function (k) { return k >= BASE; }).sort(function (a, b) { return b - a; });
+      if (reduce.matches) { reset(false); return; }
+      busy = true;
+      spark.style.opacity = 0;
+      ks.forEach(function (k, idx) {
+        var n = nodes[k], s = SLOTS[k], ps = SLOTS[s.p];
+        var dx = (ps.x - s.x) / 25 * 100, dy = (ps.y - s.y) / 12.4 * 100;
+        later(function () {
+          n.el.animate([
+            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+            { transform: 'translate(calc(-50% + ' + dx + '%), calc(-50% + ' + dy + '%)) scale(.3)', opacity: 0 }
+          ], { duration: 380, easing: 'cubic-bezier(.5,0,.75,0)', fill: 'forwards' });
+          drawLine(n, 0, 1, 360);
+          n.pin.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, delay: 200, fill: 'forwards' });
+        }, idx * 90);
+      });
+      later(function () {
+        Object.keys(nodes).forEach(function (k) { if (+k >= BASE) { var n = nodes[k]; n.el.remove(); n.line.remove(); n.shadow.remove(); n.pin.remove(); delete nodes[k]; } });
+        active = 3; highlight(); busy = false; startSpark();
+      }, ks.length * 90 + 420);
+    }
+
+    btn.addEventListener('click', function (ev) {
+      if (busy) return;
+      var i = pickFrom(ev);
+      if (i < 0) fold(); else sprout(i);
+    });
+
+    // hover: lift the bubble you'd branch from
+    var hovered = null;
+    btn.addEventListener('pointermove', function (ev) {
+      if (ev.pointerType !== 'mouse') return;
+      var i = pickFrom(ev), k = i >= 0 ? SLOTS[i].p : -1;
+      var el = k >= 0 && nodes[k] ? nodes[k].el : null;
+      if (el === hovered) return;
+      if (hovered) hovered.classList.remove('is-hover');
+      hovered = el; if (el) el.classList.add('is-hover');
+    });
+    btn.addEventListener('pointerleave', function () { if (hovered) hovered.classList.remove('is-hover'); hovered = null; });
+
+    // idle: a small light runs down the active path, then rests
+    function startSpark() { sparkT0 = performance.now(); if (!raf && visible && !reduce.matches) raf = requestAnimationFrame(tick); }
+    function tick(t) {
+      raf = 0;
+      if (!visible || reduce.matches) { spark.style.opacity = 0; return; }
+      var path = pathTo(active).reverse().slice(1).map(function (k) { return nodes[k] && nodes[k].line; });
+      var segMs = 900, rest = 2600, total = path.length * segMs + rest;
+      var e = (t - sparkT0) % total, seg = Math.floor(e / segMs);
+      if (busy || seg >= path.length || !path[seg]) { spark.style.opacity = 0; }
+      else {
+        var p = path[seg], f = (e - seg * segMs) / segMs, f2 = f < .5 ? 2 * f * f : 1 - Math.pow(-2 * f + 2, 2) / 2;
+        var L = p.getTotalLength(), pt = p.getPointAtLength(L * f2);
+        spark.setAttribute('cx', pt.x); spark.setAttribute('cy', pt.y);
+        var edge = seg === 0 ? Math.min(1, f * 6) : seg === path.length - 1 ? Math.min(1, (1 - f) * 6) : 1;
+        spark.style.opacity = edge;
+      }
+      raf = requestAnimationFrame(tick);
+    }
+
+    function setVisible(v) {
+      visible = v;
+      root.classList.toggle('is-paused', !v);
+      if (v) startSpark(); else if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    }
+    var onScreen = true;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { onScreen = es[0].isIntersecting; setVisible(onScreen && !document.hidden); }).observe(root);
+    }
+    document.addEventListener('visibilitychange', function () { setVisible(onScreen && !document.hidden); });
+
+    reset(true);
+    startSpark();
+  });
+})();
+</script>

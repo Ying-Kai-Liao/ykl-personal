@@ -1,0 +1,11 @@
+# Pages from the previous template that no longer exist
+/about            /             301
+/contact          /             301
+/authors          /             301
+/authors/*        /             301
+/tags             /blog         301
+/tags/*           /blog         301
+/categories       /blog         301
+/categories/*     /blog         301
+/privacy-policy   /             301
+/blog/page/*      /blog         301

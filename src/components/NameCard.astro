@@ -1,0 +1,116 @@
+---
+// "Kai" in the intro opens a paper name card that springs out of the word; the page behind softly blurs.
+---
+<button type="button" class="nc-trigger k" aria-haspopup="dialog" aria-expanded="false" aria-controls="namecard">Kai</button>
+
+<span class="nc-layer" id="namecard" role="dialog" aria-modal="true" aria-label="Kai's name card" hidden>
+  <span class="nc-card" tabindex="-1">
+    <span class="nc-face">
+      <img class="nc-avatar" src="/images/profile/avatar-card.png" alt="" width="160" height="160">
+      <span class="nc-text">
+        <span class="nc-name">Kai Liao</span>
+        <span class="nc-role">Agent engineer</span>
+        <span class="nc-where">Sydney, Australia</span>
+      </span>
+    </span>
+    <span class="nc-foot">
+      <a href="mailto:lykevin890919@gmail.com">lykevin890919@gmail.com</a>
+      <a href="https://www.linkedin.com/in/ying-kai-liao">LinkedIn</a>
+    </span>
+    <span class="nc-site" aria-hidden="true">ykliao.com</span>
+  </span>
+</span>
+
+<style is:global>
+.nc-trigger { font: inherit; padding: 0; border: 0; background: none; cursor: pointer; color: var(--ink); font-weight: 500; text-decoration: underline; text-decoration-color: var(--ink-3); text-decoration-style: dotted; text-underline-offset: 4px; transition: text-decoration-color 150ms ease; }
+@media (hover: hover) and (pointer: fine) { .nc-trigger:hover { text-decoration-color: var(--ink); } }
+
+.nc-layer { position: fixed; inset: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 35%, transparent); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); opacity: 0; transition: opacity 220ms ease; }
+.nc-layer.is-open { opacity: 1; }
+.nc-layer[hidden] { display: none; }
+
+/* the card is a physical object: it keeps its paper colour in both themes */
+.nc-layer, .nc-card, .nc-face, .nc-foot { display: block; }
+.nc-face { display: flex; }
+.nc-foot { display: flex; }
+.nc-card {
+  --rx: 0deg; --ry: 0deg;
+  position: absolute; width: 300px; padding: 18px 18px 14px; border-radius: 10px; outline: none;
+  color: #1a1a1a; background-color: #f6f4ee;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+    linear-gradient(160deg, rgba(255,255,255,.7), rgba(255,255,255,0) 45%);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.06), 0 1px 1px rgba(0,0,0,.06), 0 6px 12px -2px rgba(0,0,0,.12), 0 22px 44px -12px rgba(0,0,0,.28);
+  transform-origin: var(--ox, 50%) 100%;
+  transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(10px) scale(.55) rotate(-4deg);
+  opacity: 0;
+  transition: transform 520ms cubic-bezier(.2, 1.4, .4, 1), opacity 180ms ease;
+}
+.nc-layer.is-open .nc-card { transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(0) scale(1) rotate(-1.2deg); opacity: 1; }
+.nc-card.is-tilting { transition: transform 120ms ease-out, opacity 180ms ease; }
+.nc-face { display: flex; gap: 14px; align-items: center; }
+.nc-avatar { flex: none; width: 76px; height: 76px; border-radius: 8px; mix-blend-mode: multiply; }
+.nc-text { min-width: 0; }
+.nc-text > span { display: block; line-height: 1.35; }
+.nc-name { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.nc-role { margin-top: 2px; font-size: 13px; color: #555; }
+.nc-where { margin-top: 8px; font-size: 12px; color: #8a8a8a; }
+.nc-foot { display: flex; justify-content: space-between; gap: 10px; margin-top: 14px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,.14); font-family: var(--f-mono); font-size: 11px; }
+.nc-foot a { color: #333; text-decoration: none; }
+@media (hover: hover) and (pointer: fine) { .nc-foot a:hover { color: #000; text-decoration: underline; text-underline-offset: 3px; } }
+.nc-site { position: absolute; top: 14px; right: 16px; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .04em; color: #b0ada4; }
+@media (max-width: 360px) { .nc-card { width: calc(100vw - 32px); } }
+</style>
+
+<script is:inline>
+(() => {
+  const trigger = document.querySelector(".nc-trigger");
+  const layer = document.getElementById("namecard");
+  if (!trigger || !layer) return;
+  const card = layer.querySelector(".nc-card");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  let closeTimer;
+
+  function place() {
+    const r = trigger.getBoundingClientRect(), w = card.offsetWidth, h = card.offsetHeight;
+    const left = Math.max(16, Math.min(innerWidth - w - 16, r.left + r.width / 2 - w * 0.3));
+    const above = r.top - h - 14 > 12;
+    const top = above ? r.top - h - 14 : r.bottom + 14;
+    card.style.left = left + "px";
+    card.style.top = top + "px";
+    card.style.setProperty("--ox", (r.left + r.width / 2 - left) + "px");
+    card.style.transformOrigin = `var(--ox) ${above ? "100%" : "0%"}`;
+  }
+  function open() {
+    clearTimeout(closeTimer);
+    layer.hidden = false;
+    place();
+    requestAnimationFrame(() => requestAnimationFrame(() => layer.classList.add("is-open")));
+    trigger.setAttribute("aria-expanded", "true");
+    card.focus({ preventScroll: true });
+  }
+  function close() {
+    if (layer.hidden) return;
+    layer.classList.remove("is-open");
+    trigger.setAttribute("aria-expanded", "false");
+    card.style.setProperty("--rx", "0deg"); card.style.setProperty("--ry", "0deg");
+    closeTimer = setTimeout(() => { layer.hidden = true; }, reduce.matches ? 0 : 230);
+    trigger.focus({ preventScroll: true });
+  }
+  trigger.addEventListener("click", open);
+  layer.addEventListener("click", e => { if (!card.contains(e.target)) close(); });
+  addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+  addEventListener("scroll", () => close(), { passive: true });
+  addEventListener("resize", () => { if (!layer.hidden) place(); });
+  // a gentle tilt toward the pointer, like holding a card
+  layer.addEventListener("pointermove", e => {
+    if (reduce.matches || e.pointerType !== "mouse") return;
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - (r.left + r.width / 2)) / innerWidth, y = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+    card.classList.add("is-tilting");
+    card.style.setProperty("--ry", (x * 16).toFixed(2) + "deg");
+    card.style.setProperty("--rx", (-y * 16).toFixed(2) + "deg");
+  });
+  card.addEventListener("transitionend", () => card.classList.remove("is-tilting"));
+})();
+</script>

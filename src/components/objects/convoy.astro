@@ -1,0 +1,285 @@
+---
+// Imported from yk-site/objects/convoy by scripts/import-object.py; edit there and re-import.
+---
+<div class="obj-convoy">
+      <button class="cv-btn" type="button" aria-label="A cork noticeboard of verified community groups with a skill tag. Tap to see where the skill fits.">
+        <span class="cv-board" aria-hidden="true">
+          <span class="cv-cork">
+            <span class="cv-card cv-a" data-group="garden">
+              <span class="cv-paper"><span class="cv-pin is-red"></span><span class="cv-title">Garden club</span><span class="cv-lines"></span><span class="cv-seal">✓</span><span class="cv-stamp">Verified</span></span>
+            </span>
+            <span class="cv-card cv-b" data-group="tutor">
+              <span class="cv-paper is-blue"><span class="cv-pin is-teal"></span><span class="cv-title">Tutoring</span><span class="cv-lines is-short"></span><span class="cv-seal">✓</span><span class="cv-stamp">Verified</span></span>
+            </span>
+            <span class="cv-card cv-c" data-group="choir">
+              <span class="cv-paper is-cream"><span class="cv-pin is-gold"></span><span class="cv-title">Choir</span><span class="cv-lines"></span><span class="cv-seal">✓</span><span class="cv-stamp">Verified</span></span>
+            </span>
+            <span class="cv-empty" data-group="none">
+              <span class="cv-holes"></span>
+              <span class="cv-note"><span class="cv-pin is-white"></span>Nothing verified yet — we’ll keep looking.</span>
+            </span>
+          </span>
+        </span>
+        <span class="cv-tag" aria-hidden="true">
+          <span class="cv-tagbody">
+            <svg class="cv-twine" viewBox="0 0 12 14"><path d="M11.4 8.6 C 8.6 7.4, 5.2 6.2, 3.2 8.4 C 1.6 10.2, 2.8 12.6, 5.6 12.2"/><path d="M11.4 8.6 C 9.4 9.8, 7.6 11.4, 7.9 13.6"/></svg>
+            <span class="cv-kraft"></span>
+            <span class="cv-eyelet"></span>
+            <span class="cv-taglabel">I can offer</span>
+            <span class="cv-word">Gardening</span>
+            <span class="cv-rule"></span>
+          </span>
+        </span>
+        <span class="cv-sr" aria-live="polite"></span>
+      </button>
+    </div>
+
+<style is:inline>
+.obj-convoy { position: relative; width: 100%; height: 100%; container-type: inline-size; }
+.obj-convoy .cv-btn { all: unset; position: absolute; inset: 0; display: block; cursor: pointer; -webkit-tap-highlight-color: transparent; border-radius: inherit; }
+.obj-convoy .cv-btn:focus-visible { outline: 2px solid var(--ink-3); outline-offset: -6px; border-radius: 20px; }
+.obj-convoy .cv-btn span { display: block; }
+.obj-convoy .cv-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* board: oak frame + cork */
+.obj-convoy .cv-board { position: absolute; left: 18cqw; top: 17cqw; width: 64cqw; height: 52cqw; border-radius: 1.6cqw; padding: 2.4cqw;
+  background:
+    repeating-linear-gradient(92deg, rgba(120,78,40,0) 0 .9cqw, rgba(120,78,40,.06) .9cqw 1.05cqw, rgba(120,78,40,0) 1.05cqw 2.3cqw),
+    repeating-linear-gradient(88deg, rgba(255,240,210,.0) 0 1.7cqw, rgba(255,240,210,.09) 1.7cqw 1.9cqw, rgba(255,240,210,0) 1.9cqw 3.1cqw),
+    linear-gradient(180deg, #d8b386 0%, #c99e6c 55%, #b98c5b 100%);
+  box-shadow: inset 0 .25cqw 0 rgba(255,236,205,.55), inset 0 -.3cqw 0 rgba(90,55,25,.35), 0 .5cqw .9cqw rgba(0,0,0,.16), 0 2.6cqw 4.4cqw -1cqw rgba(0,0,0,.28); }
+.obj-convoy .cv-cork { position: relative; width: 100%; height: 100%; border-radius: .6cqw; overflow: hidden;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='1.3' numOctaves='1' seed='9'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 .9  0 0 0 0 .72  0 2.6 0 0 -1.5'/></filter><rect width='100%25' height='100%25' filter='url(%23m)'/></svg>") 0 0 / 34cqw 34cqw,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 .30  0 0 0 0 .16  0 0 0 0 .05  2.4 0 0 0 -1.15'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") 0 0 / 30cqw 30cqw,
+    radial-gradient(ellipse at 50% 45%, #c8935f 0%, #bb8451 60%, #a8713f 100%);
+  box-shadow: inset 0 .5cqw .9cqw rgba(60,30,10,.45), inset 0 0 0 .15cqw rgba(60,30,10,.25); }
+
+/* pinned papers */
+.obj-convoy .cv-card { position: absolute; transform-origin: 50% 1.4cqw; }
+.obj-convoy .cv-paper { position: relative; width: 100%; height: 100%; padding: 2.9cqw 2cqw 1.6cqw; border-radius: .35cqw;
+  background: linear-gradient(170deg, #fffdf8 0%, #f6f1e6 100%);
+  box-shadow: 0 .15cqw .2cqw rgba(50,25,5,.25), .6cqw 1.1cqw 1.4cqw -.6cqw rgba(40,18,4,.45); }
+.obj-convoy .cv-paper.is-blue { background: linear-gradient(170deg, #f3f7fb 0%, #e3ebf2 100%); }
+.obj-convoy .cv-paper.is-cream { background: linear-gradient(170deg, #fff7e2 0%, #f3e6c4 100%); }
+.obj-convoy .cv-title { font: 600 2.75cqw/1.1 var(--f-sans); color: #2b2620; letter-spacing: -.01em; }
+.obj-convoy .cv-lines { margin-top: 1.3cqw; height: 4.4cqw;
+  background: repeating-linear-gradient(180deg, rgba(60,50,40,.16) 0 .22cqw, transparent .22cqw 1.45cqw); width: 82%; }
+.obj-convoy .cv-lines.is-short { width: 64%; }
+.obj-convoy .cv-seal { position: absolute; right: 1.3cqw; bottom: 1.2cqw; width: 3.6cqw; height: 3.6cqw; border-radius: 50%;
+  border: .28cqw solid rgba(46,125,74,.78); color: rgba(46,125,74,.85); font: 600 2.1cqw/3.1cqw var(--f-sans); text-align: center; transform: rotate(-12deg); }
+.obj-convoy .cv-stamp { position: absolute; left: 46%; top: 48%; padding: .5cqw 1.2cqw .45cqw; border: .38cqw solid rgba(38,120,68,.9); border-radius: .7cqw;
+  box-shadow: inset 0 0 0 .22cqw rgba(255,255,255,.0), inset 0 0 0 .5cqw rgba(38,120,68,.0);
+  font: 600 2.05cqw/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: rgba(38,120,68,.92); white-space: nowrap;
+  transform: translate(-50%,-50%) rotate(-9deg); opacity: 0; mix-blend-mode: multiply; pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle at 30% 40%, #000 0 60%, rgba(0,0,0,.6) 80%), repeating-radial-gradient(circle at 70% 30%, #000 0 .4cqw, rgba(0,0,0,.75) .5cqw .7cqw);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
+
+/* push pins */
+.obj-convoy .cv-pin { position: absolute; left: 50%; top: -.5cqw; width: 2.7cqw; height: 2.7cqw; margin-left: -1.35cqw; border-radius: 50%; z-index: 3;
+  background: radial-gradient(circle at 34% 30%, rgba(255,255,255,.85) 0 12%, rgba(255,255,255,0) 30%), radial-gradient(circle at 50% 50%, var(--pin) 0 55%, var(--pin-d) 100%);
+  box-shadow: .45cqw .7cqw .5cqw -.1cqw rgba(40,15,0,.45), inset -.2cqw -.3cqw .3cqw rgba(0,0,0,.18); }
+.obj-convoy .cv-pin.is-red { --pin: #d2553f; --pin-d: #9c3423; }
+.obj-convoy .cv-pin.is-teal { --pin: #3f8f8a; --pin-d: #255d59; }
+.obj-convoy .cv-pin.is-gold { --pin: #e2b23f; --pin-d: #a87b16; }
+.obj-convoy .cv-pin.is-white { --pin: #f1ede4; --pin-d: #bdb6a6; }
+
+.obj-convoy .cv-a { left: 4cqw; top: 3.6cqw; width: 24cqw; height: 18cqw; transform: rotate(-3deg); }
+.obj-convoy .cv-b { left: 31.4cqw; top: 2.6cqw; width: 22.5cqw; height: 19.5cqw; transform: rotate(2deg); animation: obj-convoy-sway 5.2s ease-in-out infinite; }
+.obj-convoy .cv-c { left: 7cqw; top: 25.4cqw; width: 22cqw; height: 18cqw; transform: rotate(2.4deg); }
+.obj-convoy .cv-empty { position: absolute; left: 34cqw; top: 25cqw; width: 21cqw; height: 18cqw; }
+.obj-convoy .cv-empty > .cv-pin { top: 2.2cqw; }
+.obj-convoy .cv-holes { position: absolute; left: 38%; top: 1.4cqw; width: 1cqw; height: 1cqw; border-radius: 50%; background: rgba(50,25,8,.55); box-shadow: 4cqw 1.2cqw 0 -.15cqw rgba(50,25,8,.45); }
+.obj-convoy .cv-note { position: absolute; left: 1cqw; top: 1.4cqw; width: 19.5cqw; padding: 2.8cqw 1.7cqw 1.7cqw; border-radius: .3cqw;
+  background: linear-gradient(175deg, #fbf3c9 0%, #f1e3a6 100%); color: #4a4232; font: italic 500 2.15cqw/1.3 Georgia, "Times New Roman", serif;
+  box-shadow: 0 .15cqw .2cqw rgba(50,25,5,.22), .5cqw 1cqw 1.3cqw -.6cqw rgba(40,18,4,.45);
+  transform-origin: 50% .8cqw; transform: rotate(-4deg); opacity: 0; }
+.obj-convoy .cv-note .cv-pin { top: -.6cqw; }
+@keyframes obj-convoy-sway { 0%,100% { transform: rotate(2deg); } 50% { transform: rotate(-1.4deg); } }
+
+/* skill tag (kraft paper, twine) */
+.obj-convoy .cv-tag { position: absolute; left: 40cqw; top: 77cqw; width: 26cqw; height: 10.4cqw; z-index: 5; will-change: transform;
+  filter: drop-shadow(0 .35cqw .35cqw rgba(0,0,0,.18)) drop-shadow(0 1.2cqw 1.4cqw rgba(0,0,0,.16)); }
+.obj-convoy .cv-tagbody { position: relative; width: 100%; height: 100%; transform: rotate(-5deg); transition: transform .35s var(--ease-out); }
+.obj-convoy .cv-kraft { position: absolute; inset: 0; clip-path: polygon(15% 0, 100% 0, 100% 100%, 15% 100%, 0 72%, 0 28%);
+  background:
+    radial-gradient(circle at 20% 30%, rgba(90,55,20,.18) 0 .12cqw, transparent .2cqw) 0 0 / 1.3cqw 1.1cqw,
+    radial-gradient(circle at 60% 70%, rgba(255,240,210,.25) 0 .1cqw, transparent .2cqw) .4cqw .3cqw / 1.7cqw 1.5cqw,
+    linear-gradient(170deg, #d9b98b 0%, #c9a473 100%);
+  box-shadow: inset 0 0 0 .15cqw rgba(110,70,30,.2); }
+.obj-convoy .cv-eyelet { position: absolute; left: 4.6%; top: 50%; width: 2.7cqw; height: 2.7cqw; margin-top: -1.35cqw; border-radius: 50%;
+  background: radial-gradient(circle, var(--card) 0 34%, #e8e2d6 36%, #b9b0a0 58%, #8f8676 66%, rgba(0,0,0,0) 70%); }
+.obj-convoy .cv-twine { position: absolute; left: -10cqw; top: -3cqw; width: 12cqw; height: 14cqw; overflow: visible; pointer-events: none; }
+.obj-convoy .cv-twine path { fill: none; stroke: #a98d63; stroke-width: .55; stroke-linecap: round; }
+.obj-convoy .cv-taglabel { position: absolute; left: 21%; top: 1.7cqw; font: 400 1.65cqw/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: rgba(70,45,18,.62); }
+.obj-convoy .cv-word { position: absolute; left: 21%; top: 4.3cqw; font: 600 3.5cqw/1 var(--f-sans); color: #3a2814; letter-spacing: -.01em; transition: opacity .18s ease; }
+.obj-convoy .cv-rule { position: absolute; left: 21%; right: 8%; bottom: 1.7cqw; height: .2cqw; background: rgba(70,45,18,.22); }
+@media (hover: hover) {
+  .obj-convoy .cv-btn:hover .cv-tagbody { transform: rotate(-2deg) translateY(-1cqw); }
+  .obj-convoy.is-busy .cv-btn:hover .cv-tagbody { transform: rotate(-5deg); }
+}
+.obj-convoy.is-paused .cv-b { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .obj-convoy .cv-b { animation: none; }
+  .obj-convoy .cv-tagbody, .obj-convoy .cv-word { transition: none; }
+}
+</style>
+
+<script is:inline>
+(function () {
+  var roots = document.querySelectorAll('.obj-convoy');
+  if (!roots.length) return;
+  var reduceMq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var SEQ = [
+    { skill: 'Gardening', to: 'garden', say: 'Gardening fits the Garden club, a verified group.' },
+    { skill: 'Mandarin', to: 'tutor', say: 'Mandarin fits Tutoring, a verified group.' },
+    { skill: 'Sailing', to: 'none', say: 'Nothing verified yet for sailing. We will keep looking.' },
+    { skill: 'Singing', to: 'choir', say: 'Singing fits the Choir, a verified group.' }
+  ];
+
+  Array.prototype.forEach.call(roots, function (root) {
+    var btn = root.querySelector('.cv-btn');
+    var tag = root.querySelector('.cv-tag');
+    var word = root.querySelector('.cv-word');
+    var live = root.querySelector('.cv-sr');
+    var note = root.querySelector('.cv-note');
+    if (!btn || !tag || !word || !tag.animate) return;
+    var spots = {};
+    Array.prototype.forEach.call(root.querySelectorAll('[data-group]'), function (el) { spots[el.getAttribute('data-group')] = el; });
+
+    var idx = 0, busy = false, placed = null, timer = 0, running = [], holding = null;
+
+    function reduced() { return reduceMq.matches; }
+    function cq() { return root.clientWidth / 100; }
+    function track(a) { running.push(a); return a; }
+    function clearAll() {
+      running.forEach(function (a) { try { a.cancel(); } catch (e) {} });
+      running = [];
+    }
+
+    // Where the tag should land on a spot, as an offset from its resting place.
+    function target(spot, isNone) {
+      var r = root.getBoundingClientRect();
+      var s = spot.getBoundingClientRect();
+      var u = cq();
+      var tx = s.left - r.left + s.width * (isNone ? 0.56 : 0.66);
+      var ty = s.top - r.top + s.height * (isNone ? 1.06 : 0.96);
+      var cx = tag.offsetLeft + tag.offsetWidth / 2;
+      var cy = tag.offsetTop + tag.offsetHeight / 2;
+      return { x: tx - cx, y: ty - cy, u: u };
+    }
+
+    function fly(t, rot, scale, dur) {
+      var u = t.u;
+      return track(tag.animate([
+        { transform: 'translate(0px,0px) rotate(0deg) scale(1)' },
+        { transform: 'translate(' + (t.x * 0.45) + 'px,' + (t.y * 0.45 - 9 * u) + 'px) rotate(7deg) scale(1.1)', offset: 0.5 },
+        { transform: 'translate(' + t.x + 'px,' + t.y + 'px) rotate(' + rot + 'deg) scale(' + scale + ')' }
+      ], { duration: dur, easing: 'cubic-bezier(.5,0,.2,1)', fill: 'forwards' }));
+    }
+
+    function goHome(t, rot, scale, dur, next) {
+      var u = t.u;
+      var a = track(tag.animate([
+        { transform: 'translate(' + t.x + 'px,' + t.y + 'px) rotate(' + rot + 'deg) scale(' + scale + ')' },
+        { transform: 'translate(' + (t.x * 0.5) + 'px,' + (t.y * 0.5 - 6 * u) + 'px) rotate(-6deg) scale(1.06)', offset: 0.5 },
+        { transform: 'translate(0px,0px) rotate(0deg) scale(1)' }
+      ], { duration: dur, easing: 'cubic-bezier(.45,0,.25,1)', fill: 'forwards' }));
+      if (dur) {
+        word.style.opacity = '0';
+        setTimeout(function () { word.textContent = next; word.style.opacity = ''; }, dur * 0.45);
+      } else {
+        word.textContent = next;
+      }
+      return a;
+    }
+
+    function stampOn(spot, dur) {
+      var stamp = spot.querySelector('.cv-stamp');
+      var paper = spot.querySelector('.cv-paper');
+      if (paper) track(paper.animate([{ transform: 'scale(1)' }, { transform: 'scale(.965)' }, { transform: 'scale(1)' }], { duration: dur ? 260 : 0, easing: 'ease-out' }));
+      if (stamp) track(stamp.animate([
+        { opacity: 0, transform: 'translate(-50%,-50%) rotate(-14deg) scale(1.7)' },
+        { opacity: 0.95, transform: 'translate(-50%,-50%) rotate(-9deg) scale(.94)', offset: 0.7 },
+        { opacity: 0.88, transform: 'translate(-50%,-50%) rotate(-9deg) scale(1)' }
+      ], { duration: dur ? 300 : 0, easing: 'cubic-bezier(.3,0,.2,1)', fill: 'forwards' }));
+    }
+
+    function noteOn(dur) {
+      track(note.animate([
+        { opacity: 0, transform: 'translateY(-1.6cqw) rotate(-10deg)' },
+        { opacity: 1, transform: 'translateY(0) rotate(-2deg)', offset: 0.65 },
+        { opacity: 1, transform: 'translateY(0) rotate(-4deg)' }
+      ], { duration: dur ? 520 : 0, easing: 'cubic-bezier(.3,0,.2,1)', fill: 'forwards' }));
+    }
+
+    function fadeMarks(dur) {
+      var els = root.querySelectorAll('.cv-stamp, .cv-note');
+      Array.prototype.forEach.call(els, function (el) {
+        var o = getComputedStyle(el).opacity;
+        if (+o > 0) track(el.animate([{ opacity: o }, { opacity: 0 }], { duration: dur ? 360 : 0, fill: 'forwards' }));
+      });
+    }
+
+    function run() {
+      var step = SEQ[idx];
+      var next = SEQ[(idx + 1) % SEQ.length].skill;
+      var spot = spots[step.to];
+      var isNone = step.to === 'none';
+      var t = target(spot, isNone);
+      var rot = isNone ? -10 : 8, scale = isNone ? 0.7 : 0.72;
+
+      if (reduced()) {
+        // Jump to end states: first tap shows the result, second tap moves to the next skill.
+        clearAll();
+        if (placed) { word.textContent = next; placed = null; idx = (idx + 1) % SEQ.length; live.textContent = ''; return; }
+        fly(t, rot, scale, 0);
+        if (isNone) noteOn(0); else stampOn(spot, 0);
+        live.textContent = step.say;
+        placed = step;
+        return;
+      }
+
+      busy = true; root.classList.add('is-busy');
+      clearAll();
+      var a = fly(t, rot, scale, 780);
+      a.finished.then(function () {
+        if (isNone) {
+          // a small look around before admitting there is no fit
+          var u = t.u;
+          track(tag.animate([
+            { transform: 'translate(' + t.x + 'px,' + t.y + 'px) rotate(-10deg) scale(.7)' },
+            { transform: 'translate(' + (t.x - 1.2 * u) + 'px,' + t.y + 'px) rotate(-16deg) scale(.7)' },
+            { transform: 'translate(' + (t.x + 1.2 * u) + 'px,' + t.y + 'px) rotate(-4deg) scale(.7)' },
+            { transform: 'translate(' + t.x + 'px,' + t.y + 'px) rotate(-10deg) scale(.7)' }
+          ], { duration: 560, easing: 'ease-in-out', fill: 'forwards' })).finished.then(function () { noteOn(1); }, function () {});
+        } else {
+          stampOn(spot, 1);
+        }
+        live.textContent = step.say;
+        holding = function () { clearTimeout(timer); back(); };
+        timer = setTimeout(back, isNone ? 2600 : 2000);
+        function back() {
+          holding = null;
+          fadeMarks(1);
+          goHome(t, rot, scale, 720, next).finished.then(function () {
+            clearAll();
+            idx = (idx + 1) % SEQ.length;
+            busy = false; root.classList.remove('is-busy');
+          }, function () {});
+        }
+      }, function () {});
+    }
+
+    btn.addEventListener('click', function () { if (holding) holding(); else if (!busy) run(); });
+
+    // Pause the idle sway when offscreen or when the tab is hidden.
+    var onScreen = true;
+    function sync() { root.classList.toggle('is-paused', !onScreen || document.hidden); }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { onScreen = es[0].isIntersecting; sync(); }).observe(root);
+    }
+    document.addEventListener('visibilitychange', sync);
+  });
+})();
+</script>

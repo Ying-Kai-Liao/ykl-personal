@@ -1,6 +1,13 @@
 ---
+import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import { projects, earlier } from "../data/projects";
+
+const postIds = new Set((await getCollection("blog", ({ data }) => !data.draft)).map((p) => p.id));
+const linksFor = (p: (typeof projects)[number]) => [
+  ...(p.post && postIds.has(p.post) ? [{ label: "Read the write-up", href: `/blog/${p.post}` }] : []),
+  ...p.links,
+];
 ---
 <Base title="Projects" description="What Kai Liao is building: AI agents, the tools that run them, and products people use.">
   <main class="col page">
@@ -11,8 +18,8 @@ import { projects, earlier } from "../data/projects";
       <article class="proj" id={p.slug}>
         <h2><span class="k">{p.name}</span> <span class="mono">{p.status}</span></h2>
         {p.story.map((s) => <p>{s}</p>)}
-        {p.links.length > 0 && (
-          <p class="proj-links">{p.links.map((l) => <a class="ink-link" href={l.href}>{l.label} ↗</a>)}</p>
+        {linksFor(p).length > 0 && (
+          <p class="proj-links">{linksFor(p).map((l) => <a class="ink-link" href={l.href}>{l.label}{l.href.startsWith("http") ? " ↗" : " →"}</a>)}</p>
         )}
       </article>
     ))}

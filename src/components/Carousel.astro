@@ -7,7 +7,7 @@ const objectFor = (slug: string) => modules[`./objects/${slug}.astro`]?.default;
 ---
 <section class="carousel" aria-label="Projects">
   <div class="car-track" id="car-track">
-    {projects.map((p) => {
+    {projects.filter((p) => p.carousel !== false).map((p) => {
       const Obj = objectFor(p.slug);
       return (
         <figure class="car-card">

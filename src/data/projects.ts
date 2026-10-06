@@ -6,6 +6,10 @@ export interface Project {
   status: string;
   links: { label: string; href: string }[];
   story: string[];
+  /** false keeps it off the home carousel (no crafted object yet) */
+  carousel?: boolean;
+  /** slug of a post in src/content/blog; linked from /projects once the post exists */
+  post?: string;
 }
 
 export const projects: Project[] = [
@@ -40,6 +44,18 @@ export const projects: Project[] = [
     story: [
       "An AI staff member for small service businesses like salons, studios and clinics. It answers customers on WhatsApp, LINE, Instagram, SMS, email and voice.",
       "Owners coach it the way they would coach a new hire, and every change it makes to itself is visible and can be undone.",
+    ],
+  },
+  {
+    slug: "eap",
+    name: "AI EAP for enterprises",
+    line: "An AI employee assistance program, with a counsellor always behind it.",
+    status: "Client work, in production",
+    links: [],
+    carousel: false,
+    story: [
+      "An Employee Assistance Program for companies: staff can talk to an AI about how they're doing at any hour, with a human counsellor behind it.",
+      "Before any reply, each message is checked for risk, and anything serious goes to a counsellor. If that check is ever unsure or offline, the message is treated as serious. Employers only ever see anonymous totals.",
     ],
   },
   {

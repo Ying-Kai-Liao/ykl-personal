@@ -8,6 +8,7 @@ Contact: lykevin890919@gmail.com · https://www.linkedin.com/in/ying-kai-liao ·
 - jev-browser (open source): a browser agent that does the clicking and asks before anything it can't undo. https://github.com/Ying-Kai-Liao/jev-browser
 - orca-flow (open source): runs a crew of coding agents on one codebase, each in its own copy, with one queue that merges and ships. https://github.com/Ying-Kai-Liao/orca-flow
 - Behalve (in progress): an AI staff member for small service businesses across WhatsApp, LINE, Instagram, SMS, email and voice.
+- AI EAP for enterprises (client work, in production): an AI employee assistance program with a human counsellor behind it; every message is risk-checked before a reply, serious ones go to a counsellor, and employers see only anonymous totals.
 - Storm (live product): AI chat as a mind map; conversations branch instead of scrolling. https://www.stormai.dev
 - Outer Convoy (research pilot): helps people who moved to Australia after 60 find verified community groups that want their skills.
 

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/about",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/authors",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/authors/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/tags",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tags/:path*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/categories",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/categories/:path*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/page/:path*",
+      "destination": "/blog",
+      "permanent": true
+    }
+  ]
+}

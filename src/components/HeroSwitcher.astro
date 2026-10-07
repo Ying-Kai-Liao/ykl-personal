@@ -5,10 +5,12 @@ const heroes = [
   { id: "galton", label: "Galton board", hint: "click to drop a ball, hold to pour" },
   { id: "window", label: "Sydney window", hint: "drag to wipe the glass, tap for rain" },
 ];
+// a new value every build, so phones never reuse a stale copy of a hero inside the frame
+const build = Date.now().toString(36);
 ---
 <section class="hero-wrap" aria-label="Interactive scene">
-  <div class="hero-frame" id="hero-frame" data-heroes={JSON.stringify(heroes)}>
-    <noscript><iframe src={`/heroes/${heroes[0].id}.html`} title={heroes[0].label}></iframe></noscript>
+  <div class="hero-frame" id="hero-frame" data-heroes={JSON.stringify(heroes)} data-build={build}>
+    <noscript><iframe src={`/heroes/${heroes[0].id}.html?v=${build}`} title={heroes[0].label}></iframe></noscript>
   </div>
   <div class="hero-ctl">
     <button type="button" class="hero-arrow" data-dir="-1" aria-label="Previous scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -51,7 +53,7 @@ const heroes = [
     try { localStorage.setItem(KEY, h.id); } catch (e) {}
     const theme = document.documentElement.dataset.theme;
     const next = document.createElement("iframe");
-    next.src = `/heroes/${h.id}.html${theme ? `?theme=${theme}` : ""}`;
+    next.src = `/heroes/${h.id}.html?v=${frame.dataset.build}${theme ? `&theme=${theme}` : ""}`;
     next.title = `${h.label}, an interactive scene: ${h.hint}`;
     next.className = "is-entering";
     const old = [...frame.querySelectorAll("iframe")];

@@ -746,10 +746,10 @@ void main(){
       const nb = ac.createBuffer(1, ac.sampleRate, ac.sampleRate), nd = nb.getChannelData(0);
       for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
       noise = nb;
-      const base = new URL("cello/", location.href);
+      const base = new URL("cello/", location.href), v = new URLSearchParams(location.search).get("v") || "";
       samplesState = "loading";
       samplesReady = Promise.all(SAMPLE_NOTES.map((m) =>
-        fetch(new URL(m + ".m4a", base)).then((r) => r.arrayBuffer()).then((b) => new Promise((res, rej) => ac.decodeAudioData(b, res, rej))).then((buf) => samples.set(m, buf))
+        fetch(new URL(m + ".m4a" + (v ? "?v=" + v : ""), base)).then((r) => r.arrayBuffer()).then((b) => new Promise((res, rej) => ac.decodeAudioData(b, res, rej))).then((buf) => samples.set(m, buf))
       )).then(() => { samplesState = "ok"; }, () => { samples.clear(); samplesState = "failed"; }); // failed: use the synthesised cello
       return true;
     }

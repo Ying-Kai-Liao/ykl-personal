@@ -40,6 +40,10 @@ body { font-family: var(--f-sans); -webkit-font-smoothing: antialiased; }
 .mt-music[hidden] { display: none; }
 .mt-music:active { transform: scale(.92); }
 .mt-music .off { display: none; }
+.mt-music .ring { position: absolute; inset: -3px; width: calc(100% + 6px); height: calc(100% + 6px); transform: rotate(-90deg); pointer-events: none; }
+.mt-music .ring circle { fill: none; stroke: rgba(91, 83, 70, .16); stroke-width: 2; }
+.mt-music .ring .fill { stroke: #6f8f3a; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 400ms cubic-bezier(.23,1,.32,1), stroke 300ms ease; }
+.mt-music.is-full .ring .fill { stroke: #7da43c; }
 .mt-music.is-off .on { display: none; }
 .mt-music.is-off .off { display: inline; }
 @keyframes mt-music-in { from { opacity: 0; transform: scale(.6); } }
@@ -703,105 +707,133 @@ void main(){
     }
   }
 
-  /* ---------- music: a quiet tea-house piece, generated live ---------- */
-  // Koto-like plucks in the Japanese yo scale over a soft drone, with a little room reverb.
-  // The first tap in the bowl starts it; whisk strokes add notes in key. A speaker button stops it,
-  // and it bows out on its own after a long idle stretch or when the tab is hidden.
+  /* ---------- music: Kai's cello loop, played by whisking ---------- */
+  // Eight three-note groups. Each whisk plays the next group; stirring plays the next note.
+  // Once the whole loop has been whisked through, the cello carries on by itself, with a bowed bass under it.
   const music = (() => {
-    const SCALE = [146.83, 164.81, 196.0, 220.0, 246.94, 293.66, 329.63, 392.0, 440.0, 493.88, 587.33]; // D yo: D E G A B
-    let ac = null, out = null, wet = null, drone = null, on = false, nextT = 0, timer = 0, lastTouch = 0, step = 0, lastStroke = 0, prevVx = 0;
+    const SONG = [[55, 59, 66], [55, 59, 62], [52, 59, 66], [52, 59, 62], [48, 55, 64], [48, 55, 59], [62, 64, 62], [66, 64, 62]];
+    const BASS = [43, 43, 40, 40, 36, 36, 38, 38];
+    const NOTE = .48, TOTAL = SONG.length * 3;
+    const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+    let ac = null, out = null, wet = null, noise = null, on = true, auto = false, nextT = 0, timer = 0;
+    let pos = 0, played = 0, lastStroke = 0, prevVx = 0, busyUntil = 0;
+
     const btn = document.createElement("button");
     btn.type = "button"; btn.className = "mt-music"; btn.hidden = true;
-    btn.setAttribute("aria-label", "Stop music"); btn.setAttribute("aria-pressed", "true");
-    btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 9.5h3.2L12 5.6v12.8l-4.8-3.9H4z"/><path class="on" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.6a7.6 7.6 0 0 1 0 10.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path class="off" d="M15.5 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+    btn.setAttribute("aria-label", "Mute music"); btn.setAttribute("aria-pressed", "false");
+    btn.innerHTML = '<svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16.5"/><circle class="fill" cx="18" cy="18" r="16.5" pathLength="1"/></svg>'
+      + '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4 9.5h3.2L12 5.6v12.8l-4.8-3.9H4z"/><path class="on" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.6a7.6 7.6 0 0 1 0 10.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path class="off" d="M15.5 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
     // outside #hero: that element is role=img, which would hide the button from screen readers
     document.body.appendChild(btn);
+    const ring = btn.querySelector(".fill");
+    const showProgress = () => { ring.style.strokeDashoffset = String(1 - Math.min(1, played / TOTAL)); btn.classList.toggle("is-full", auto); };
 
     function build() {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return false;
       ac = new AC();
-      out = ac.createGain(); out.gain.value = 0; out.connect(ac.destination);
-      // small room: decaying noise impulse
-      const len = Math.round(ac.sampleRate * 2.8), ir = ac.createBuffer(2, len, ac.sampleRate);
-      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3.2); }
+      out = ac.createGain(); out.gain.value = .55;
+      const comp = ac.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3;
+      out.connect(comp); comp.connect(ac.destination);
+      // a warm room
+      const len = Math.round(ac.sampleRate * 3.2), ir = ac.createBuffer(2, len, ac.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
       const verb = ac.createConvolver(); verb.buffer = ir;
-      wet = ac.createGain(); wet.gain.value = .32; wet.connect(verb); verb.connect(out);
-      // drone: D and A, breathing slowly
-      drone = ac.createGain(); drone.gain.value = 0; drone.connect(out); drone.connect(wet);
-      for (const [f, g] of [[73.42, .5], [110.0, .32], [146.83, .12]]) {
-        const o = ac.createOscillator(), og = ac.createGain(), lfo = ac.createOscillator(), lg = ac.createGain();
-        o.type = "sine"; o.frequency.value = f; og.gain.value = g;
-        lfo.frequency.value = .07 + Math.random() * .06; lg.gain.value = g * .35; lfo.connect(lg); lg.connect(og.gain);
-        o.connect(og); og.connect(drone); o.start(); lfo.start();
-      }
+      wet = ac.createGain(); wet.gain.value = .38; wet.connect(verb); verb.connect(out);
+      const nb = ac.createBuffer(1, ac.sampleRate, ac.sampleRate), nd = nb.getChannelData(0);
+      for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+      noise = nb;
       return true;
     }
-    // a plucked string: bright attack, quick settle, slight pitch lean like a pressed koto string
-    function pluck(f, t, vel) {
-      const o = ac.createOscillator(), o2 = ac.createOscillator(), g = ac.createGain(), lp = ac.createBiquadFilter();
-      o.type = "triangle"; o2.type = "sine";
-      o.frequency.setValueAtTime(f * 1.012, t); o.frequency.exponentialRampToValueAtTime(f, t + .09);
-      o2.frequency.setValueAtTime(f * 2, t);
-      lp.type = "lowpass"; lp.frequency.setValueAtTime(f * 9, t); lp.frequency.exponentialRampToValueAtTime(f * 2.2, t + .5);
-      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.16 * vel, t + .004); g.gain.exponentialRampToValueAtTime(.0001, t + 2.4);
-      const g2 = ac.createGain(); g2.gain.setValueAtTime(.05 * vel, t); g2.gain.exponentialRampToValueAtTime(.0001, t + .6);
-      o.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(out); g.connect(wet);
-      o.start(t); o2.start(t); o.stop(t + 2.5); o2.stop(t + 2.5);
-    }
-    // phrases wander up and down the scale with rests, like someone playing slowly
-    let idx = 5;
-    function schedule() {
-      if (!on) return;
-      const now = ac.currentTime;
-      while (nextT < now + .3) {
-        const beat = .62;
-        if (Math.random() < .72) {
-          idx = Math.max(0, Math.min(SCALE.length - 1, idx + [-2, -1, -1, 1, 1, 2, 0][Math.floor(Math.random() * 7)]));
-          pluck(SCALE[idx], nextT, .55 + Math.random() * .35);
-          if (step % 8 === 0) pluck(SCALE[Math.max(0, idx - 5)], nextT + .01, .35);
-        }
-        step++;
-        nextT += beat * (Math.random() < .2 ? 2 : 1);
+    // a bowed cello note: two slightly detuned saws, body resonances, late vibrato, a breath of bow noise
+    function cello(m, t, dur, vel) {
+      const f = hz(m), g = ac.createGain(), lp = ac.createBiquadFilter(), b1 = ac.createBiquadFilter(), b2 = ac.createBiquadFilter(), hs = ac.createBiquadFilter();
+      lp.type = "lowpass"; lp.frequency.value = Math.min(3200, f * 7); lp.Q.value = .6;
+      b1.type = "peaking"; b1.frequency.value = 230; b1.Q.value = 1.2; b1.gain.value = 5;
+      b2.type = "peaking"; b2.frequency.value = 820; b2.Q.value = 1.6; b2.gain.value = 3;
+      hs.type = "highshelf"; hs.frequency.value = 2600; hs.gain.value = -12;
+      const vib = ac.createOscillator(), vg = ac.createGain();
+      vib.frequency.value = 5 + Math.random() * .6;
+      vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(f * .0045, t + .45);
+      vib.connect(vg);
+      for (const det of [1, 1.0035]) {
+        const o = ac.createOscillator(); o.type = "sawtooth"; o.frequency.value = f * det;
+        vg.connect(o.frequency); o.connect(lp); o.start(t); o.stop(t + dur + 1.2);
       }
-      if (now - lastTouch > 75) stop(); else timer = setTimeout(schedule, 120);
+      const n = ac.createBufferSource(), nf = ac.createBiquadFilter(), ng = ac.createGain();
+      n.buffer = noise; nf.type = "bandpass"; nf.frequency.value = f * 4; nf.Q.value = 1.5;
+      ng.gain.setValueAtTime(0, t); ng.gain.linearRampToValueAtTime(.05 * vel, t + .05); ng.gain.exponentialRampToValueAtTime(.002, t + .35);
+      n.connect(nf); nf.connect(ng); ng.connect(lp); n.start(t); n.stop(t + .5);
+      lp.connect(b1); b1.connect(b2); b2.connect(hs); hs.connect(g);
+      const peak = .11 * vel;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(peak * .8, t + .1);
+      g.gain.linearRampToValueAtTime(peak, t + .35);
+      g.gain.setValueAtTime(peak, t + dur);
+      g.gain.exponentialRampToValueAtTime(.0001, t + dur + 1.0);
+      g.connect(out); g.connect(wet);
+      vib.start(t); vib.stop(t + dur + 1.2);
     }
-    function start() {
-      try { if (!ac && !build()) return; if (ac.state !== "running") ac.resume(); } catch (_) { return; }
-      lastTouch = ac.currentTime;
-      if (on) return;
-      on = true; btn.hidden = false; btn.classList.remove("is-off");
-      const t = ac.currentTime;
-      out.gain.cancelScheduledValues(t); out.gain.setTargetAtTime(.5, t, .6);
-      drone.gain.setTargetAtTime(.09, t, 2.5);
-      // schedule only once the context is actually running, or the first notes land in the past
-      const go = () => { if (!on) return; nextT = ac.currentTime + .15; step = 0; schedule(); };
-      if (ac.state === "running") go(); else ac.resume().then(go, go);
+    function playNote(t, withBass) {
+      const gi = Math.floor(pos / 3), ni = pos % 3;
+      cello(SONG[gi][ni], t, NOTE * 2.2, ni === 0 ? .95 : .8);
+      if (withBass && ni === 0) cello(BASS[gi], t, NOTE * 3.1, .7);
+      pos = (pos + 1) % TOTAL;
+      if (!auto) { played++; showProgress(); }
     }
-    function stop() {
-      if (!ac || !on) return;
-      on = false; clearTimeout(timer);
-      const t = ac.currentTime;
-      out.gain.setTargetAtTime(0, t, .5); drone.gain.setTargetAtTime(0, t, .5);
-      btn.classList.add("is-off"); btn.setAttribute("aria-label", "Play music");
-      setTimeout(() => { if (!on && ac) ac.suspend(); }, 2500);
+    // the cello carries on by itself once the loop has been whisked through
+    function loop() {
+      if (!auto || !on) return;
+      const now = ac.currentTime;
+      while (nextT < now + .35) { playNote(nextT, true); nextT += NOTE; }
+      timer = setTimeout(loop, 120);
     }
+    function startAuto(at) {
+      auto = true; showProgress();
+      pos = 0; nextT = Math.max(at, ac.currentTime + .05);
+      clearTimeout(timer); loop();
+    }
+    function ready() {
+      try { if (!ac && !build()) return false; if (ac.state !== "running") ac.resume(); } catch (_) { return false; }
+      btn.hidden = false;
+      return on && ac.state !== "closed";
+    }
+    function maybeComplete(endT) { if (!auto && played >= TOTAL) startAuto(endT); }
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
-      if (on) { stop(); btn.setAttribute("aria-pressed", "false"); }
-      else { start(); btn.setAttribute("aria-label", "Stop music"); btn.setAttribute("aria-pressed", "true"); }
+      on = !on;
+      btn.classList.toggle("is-off", !on);
+      btn.setAttribute("aria-pressed", String(!on));
+      btn.setAttribute("aria-label", on ? "Mute music" : "Play music");
+      if (!ac) return;
+      if (on) { ac.resume(); out.gain.setTargetAtTime(.55, ac.currentTime, .15); if (auto) startAuto(ac.currentTime + .1); }
+      else { clearTimeout(timer); out.gain.setTargetAtTime(0, ac.currentTime, .15); }
     });
     btn.addEventListener("pointerdown", (e) => e.stopPropagation());
-    document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); });
+    document.addEventListener("visibilitychange", () => {
+      if (!ac) return;
+      if (document.hidden) { clearTimeout(timer); ac.suspend(); }
+      else if (on) { ac.resume().then(() => { if (auto) startAuto(ac.currentTime + .1); }); }
+    });
     return {
-      touch() { start(); },
-      // each change of whisk direction is a stroke; strokes add a soft note in key
+      unlock() { ready(); },
+      // a tap-whisk plays the next group of three, spread across the strokes
+      whisk() {
+        if (!ready() || auto) return;
+        if (busyUntil - ac.currentTime > 2.5) return; // don't stack up a backlog from frantic tapping
+        const t = Math.max(ac.currentTime + .05, busyUntil);
+        if (pos % 3 !== 0) pos = (pos + 3 - (pos % 3)) % TOTAL; // a stir left us mid-group: start the next group cleanly
+        for (let i = 0; i < 3; i++) playNote(t + .35 + i * NOTE, false);
+        busyUntil = t + .35 + 3 * NOTE;
+        maybeComplete(busyUntil);
+      },
+      // while stirring, each change of direction plays the next note
       update() {
-        if (!on || !G || wk.dip < .5) return;
+        if (!ac || auto || !on || !G || wk.mode !== "drag" || wk.dip < .5) { prevVx = G ? wk.vx / G.Rl : 0; return; }
         const vx = wk.vx / G.Rl, now = ac.currentTime;
-        if (Math.sign(vx) !== Math.sign(prevVx) && Math.abs(vx) > 1.2 && now - lastStroke > .16) {
-          lastStroke = now; lastTouch = now;
-          pluck(SCALE[5 + Math.floor(Math.random() * 6)], now + .01, .28);
+        if (Math.sign(vx) !== Math.sign(prevVx) && Math.abs(vx) > 1 && now - lastStroke > .3 && now >= busyUntil - .1) {
+          lastStroke = now; playNote(now + .02, false); busyUntil = now + NOTE;
+          maybeComplete(now + NOTE);
         }
         prevVx = vx;
       },
@@ -844,6 +876,7 @@ void main(){
   }
   function clickBowl(x, y) {
     [x, y] = bowlClamp(x, y, .6);
+    music.whisk();
     if (RM) { swirl((x - G.cx) / G.Rl, (y - G.cy) / G.Rl, .35, .5); kick(); return; }
     wk.px = x; wk.py = y;
     if (wk.mode === "whisk") wk.t = Math.min(wk.t, .4);
@@ -979,7 +1012,7 @@ void main(){
   let press = null;
   bowlEl.addEventListener("pointerdown", (e) => {
     if (e.button > 0 || !G) return;
-    music.touch();
+    music.unlock();
     e.preventDefault();
     try { bowlEl.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
     const p = loc(e); press = { id: e.pointerId, x: p.x, y: p.y, moved: false, lx: p.x, ly: p.y }; drag.x = p.x; drag.y = p.y;
@@ -1000,7 +1033,7 @@ void main(){
   });
   const endPress = (e, cancel) => {
     if (!press || e.pointerId !== press.id) return;
-    if (!cancel) music.touch();
+    if (!cancel) music.unlock();
     if (!press.moved && !cancel) clickBowl(press.x, press.y);
     else if (wk.mode === "drag") { wk.mode = "lift"; wk.t = 0; }
     press = null; bowlEl.classList.remove("drag"); kick();
@@ -1009,7 +1042,7 @@ void main(){
   bowlEl.addEventListener("pointercancel", (e) => endPress(e, true));
   hero.addEventListener("click", (e) => {
     if (e.target === bowlEl || !G) return;
-    if (Math.hypot(loc(e).x - G.cx, loc(e).y - G.cy) < G.Ro) music.touch();
+    music.unlock();
     const p = loc(e);
     if (Math.hypot(p.x - G.cx, p.y - G.cy) < G.Ro) clickBowl(p.x, p.y); else puff(p.x, p.y);
     kick();

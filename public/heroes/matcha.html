@@ -717,6 +717,9 @@ void main(){
     const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
     let ac = null, out = null, wet = null, noise = null, on = true, auto = false, nextT = 0, timer = 0;
     let pos = 0, played = 0, lastStroke = 0, prevVx = 0, busyUntil = 0;
+    // recorded cello (VSCO 2 CE, CC0), one sample every third or fourth note; loaded on the first tap
+    const SAMPLE_NOTES = [36, 40, 43, 47, 50, 53, 57, 60, 64, 67], samples = new Map();
+    let samplesReady = null, samplesState = "idle", waiting = false; // idle | loading | ok | failed
 
     const btn = document.createElement("button");
     btn.type = "button"; btn.className = "mt-music"; btn.hidden = true;
@@ -736,17 +739,35 @@ void main(){
       const comp = ac.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3;
       out.connect(comp); comp.connect(ac.destination);
       // a warm room
-      const len = Math.round(ac.sampleRate * 3.2), ir = ac.createBuffer(2, len, ac.sampleRate);
-      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
+      const len = Math.round(ac.sampleRate * 2.2), ir = ac.createBuffer(2, len, ac.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3); }
       const verb = ac.createConvolver(); verb.buffer = ir;
-      wet = ac.createGain(); wet.gain.value = .38; wet.connect(verb); verb.connect(out);
+      wet = ac.createGain(); wet.gain.value = .2; wet.connect(verb); verb.connect(out);
       const nb = ac.createBuffer(1, ac.sampleRate, ac.sampleRate), nd = nb.getChannelData(0);
       for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
       noise = nb;
+      const base = new URL("cello/", location.href);
+      samplesState = "loading";
+      samplesReady = Promise.all(SAMPLE_NOTES.map((m) =>
+        fetch(new URL(m + ".m4a", base)).then((r) => r.arrayBuffer()).then((b) => new Promise((res, rej) => ac.decodeAudioData(b, res, rej))).then((buf) => samples.set(m, buf))
+      )).then(() => { samplesState = "ok"; }, () => { samples.clear(); samplesState = "failed"; }); // failed: use the synthesised cello
       return true;
+    }
+    // recorded cello: nearest sample, pitched at most two semitones, with a clean release
+    function sampled(m, t, dur, vel) {
+      let near = SAMPLE_NOTES[0];
+      for (const n of SAMPLE_NOTES) if (Math.abs(n - m) < Math.abs(near - m)) near = n;
+      const src = ac.createBufferSource(), g = ac.createGain();
+      src.buffer = samples.get(near); src.playbackRate.value = Math.pow(2, (m - near) / 12);
+      const peak = .5 * vel, rel = dur > 1 ? .55 : .3;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + .03);
+      g.gain.setValueAtTime(peak, t + dur); g.gain.exponentialRampToValueAtTime(.0001, t + dur + rel);
+      src.connect(g); g.connect(out); g.connect(wet);
+      src.start(t, .02); src.stop(t + dur + rel + .05);
     }
     // a bowed cello note: two slightly detuned saws, body resonances, late vibrato, a breath of bow noise
     function cello(m, t, dur, vel) {
+      if (samples.size === SAMPLE_NOTES.length) return sampled(m, t, dur, vel);
       const f = hz(m), g = ac.createGain(), lp = ac.createBiquadFilter(), b1 = ac.createBiquadFilter(), b2 = ac.createBiquadFilter(), hs = ac.createBiquadFilter();
       lp.type = "lowpass"; lp.frequency.value = Math.min(3200, f * 7); lp.Q.value = .6;
       b1.type = "peaking"; b1.frequency.value = 230; b1.Q.value = 1.2; b1.gain.value = 5;
@@ -776,8 +797,8 @@ void main(){
     }
     function playNote(t, withBass) {
       const gi = Math.floor(pos / 3), ni = pos % 3;
-      cello(SONG[gi][ni], t, NOTE * 2.2, ni === 0 ? .95 : .8);
-      if (withBass && ni === 0) cello(BASS[gi], t, NOTE * 3.1, .7);
+      cello(SONG[gi][ni], t, NOTE * 1.08, ni === 0 ? .95 : .8);
+      if (withBass && ni === 0) cello(BASS[gi], t, NOTE * 2.7, .62);
       pos = (pos + 1) % TOTAL;
       if (!auto) { played++; showProgress(); }
     }
@@ -820,6 +841,11 @@ void main(){
       // a tap-whisk plays the next group of three, spread across the strokes
       whisk() {
         if (!ready() || auto) return;
+        // the first whisk waits for the recordings rather than starting on the synth
+        if (samplesState === "loading") {
+          if (!waiting) { waiting = true; samplesReady.then(() => { waiting = false; this.whisk(); }); }
+          return;
+        }
         if (busyUntil - ac.currentTime > 2.5) return; // don't stack up a backlog from frantic tapping
         const t = Math.max(ac.currentTime + .05, busyUntil);
         if (pos % 3 !== 0) pos = (pos + 3 - (pos % 3)) % TOTAL; // a stir left us mid-group: start the next group cleanly
@@ -829,7 +855,7 @@ void main(){
       },
       // while stirring, each change of direction plays the next note
       update() {
-        if (!ac || auto || !on || !G || wk.mode !== "drag" || wk.dip < .5) { prevVx = G ? wk.vx / G.Rl : 0; return; }
+        if (!ac || auto || !on || !G || samplesState === "loading" || wk.mode !== "drag" || wk.dip < .5) { prevVx = G ? wk.vx / G.Rl : 0; return; }
         const vx = wk.vx / G.Rl, now = ac.currentTime;
         if (Math.sign(vx) !== Math.sign(prevVx) && Math.abs(vx) > 1 && now - lastStroke > .3 && now >= busyUntil - .1) {
           lastStroke = now; playNote(now + .02, false); busyUntil = now + NOTE;

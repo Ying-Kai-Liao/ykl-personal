@@ -53,21 +53,5 @@ const section = path === "/" ? "home" : path.startsWith("/projects") ? "projects
   </nav>
 
   <slot />
-
-  <footer class="foot col">
-    <span>Kai Liao, Sydney</span>
-    <time id="clock" title="Sydney time">--:--:--</time>
-  </footer>
-
-  <script is:inline>
-    (() => {
-      const el = document.getElementById("clock");
-      if (!el) return;
-      const fmt = new Intl.DateTimeFormat("en-AU", { timeZone: "Australia/Sydney", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
-      const tick = () => { el.textContent = fmt.format(new Date()); };
-      tick();
-      setInterval(tick, 1000);
-    })();
-  </script>
 </body>
 </html>

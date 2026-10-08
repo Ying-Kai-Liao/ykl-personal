@@ -8,27 +8,58 @@ const linksFor = (p: (typeof projects)[number]) => [
   ...(p.post && postIds.has(p.post) ? [{ label: "Read the write-up", href: `/blog/${p.post}` }] : []),
   ...p.links,
 ];
+
+// Same lookup as the home carousel, so each project shows the object built for it.
+const modules = import.meta.glob("../components/objects/*.astro", { eager: true }) as Record<string, { default: any }>;
+const objectFor = (slug: string) => modules[`../components/objects/${slug}.astro`]?.default;
 ---
 <Base title="Projects" description="What Kai Liao is building: AI agents, the tools that run them, and products people use.">
   <main class="col page">
     <h1 class="section-title">Projects</h1>
     <p class="lede">Agents, the setup that runs them, and a few products people use. The numbers are on <a class="ink-link" href="https://github.com/Ying-Kai-Liao">GitHub</a>.</p>
 
-    {projects.map((p) => (
-      <article class="proj" id={p.slug}>
-        <h2><span class="k">{p.name}</span> <span class="mono">{p.status}</span></h2>
-        {p.story.map((s) => <p>{s}</p>)}
-        {linksFor(p).length > 0 && (
-          <p class="proj-links">{linksFor(p).map((l) => <a class="ink-link" href={l.href}>{l.label}{l.href.startsWith("http") ? " ↗" : " →"}</a>)}</p>
-        )}
-      </article>
-    ))}
+    <!-- Hidden state for the settle-in is only applied once this runs, so without JS everything is simply visible. -->
+    <script is:inline>document.documentElement.classList.add("settle");</script>
+
+    <div class="proj-list">
+      {projects.map((p, i) => {
+        const Obj = objectFor(p.slug);
+        const links = linksFor(p);
+        return (
+          <article class="proj" id={p.slug} style={`--tilt:${i % 2 ? -0.6 : 0.6}deg`}>
+            <div class:list={["proj-stage", { "is-quiet": !Obj }]}>
+              {Obj ? <Obj /> : <span class="proj-quiet" aria-hidden="true">{p.name}</span>}
+            </div>
+            <button type="button" class="proj-open" aria-haspopup="dialog" aria-controls={`pd-${p.slug}`}>
+              <span class="proj-head"><span class="k proj-name">{p.name}</span><span class="mono">{p.status}</span></span>
+              <span class="proj-line">{p.line}</span>
+            </button>
+
+            <dialog class="pd" id={`pd-${p.slug}`} aria-labelledby={`pd-${p.slug}-title`}>
+              <div class="pd-in">
+                <header class="pd-head">
+                  <div>
+                    <h2 id={`pd-${p.slug}-title`} class="k" tabindex="-1" autofocus>{p.name}</h2>
+                    <p class="mono">{p.status}</p>
+                  </div>
+                  <button type="button" class="pd-close" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+                </header>
+                {p.story.map((s) => <p>{s}</p>)}
+                {links.length > 0 && (
+                  <p class="proj-links">{links.map((l) => <a class="ink-link" href={l.href}>{l.label}{l.href.startsWith("http") ? " ↗" : " →"}</a>)}</p>
+                )}
+              </div>
+            </dialog>
+          </article>
+        );
+      })}
+    </div>
 
     <section class="earlier" aria-labelledby="earlier-title">
       <h2 class="section-title" id="earlier-title">Earlier</h2>
       <ul>
         {earlier.map((e) => (
-          <li>{e.href ? <a class="ink-link" href={e.href}>{e.name}</a> : <span class="k">{e.name}</span>}<span>{e.line}</span></li>
+          <li class="settle-item">{e.href ? <a class="ink-link" href={e.href}>{e.name}</a> : <span class="k">{e.name}</span>}<span>{e.line}</span></li>
         ))}
       </ul>
     </section>
@@ -38,12 +69,194 @@ const linksFor = (p: (typeof projects)[number]) => [
 <style>
   .page { padding-top: 40px; }
   .lede { margin: 0 0 40px; }
-  .proj { padding: 22px 0; border-top: 1px solid var(--rule); scroll-margin-top: 90px; }
-  .proj h2 { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 0 0 8px; font-size: 14.5px; font-weight: 400; }
-  .proj p { margin: 0 0 10px; }
-  .proj-links { display: flex; gap: 16px; }
-  .proj:target .k { background: linear-gradient(transparent 60%, color-mix(in srgb, var(--focus) 22%, transparent) 0); }
-  .earlier { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--rule); }
+  .proj-list { display: grid; gap: 56px; }
+  .proj { scroll-margin-top: 90px; }
+
+  /* the stage is the same card the home carousel uses, so objects sit at the size they were built for */
+  .proj-stage { position: relative; aspect-ratio: 340 / 380; border-radius: 24px; background: var(--card); overflow: hidden; display: grid; place-items: center; transition: transform 200ms var(--ease-out), box-shadow 200ms ease; }
+  /* no object yet: a shorter card that sets the name quietly instead of pretending to be a missing image */
+  .proj-stage.is-quiet { aspect-ratio: 340 / 190; }
+  .proj-quiet { padding: 0 24px; font-size: 19px; font-weight: 500; line-height: 1.35; letter-spacing: -.01em; text-align: center; text-wrap: balance; color: var(--ink-2); }
+
+  /* the whole caption opens the detail; the object above keeps its own taps */
+  .proj-open { all: unset; box-sizing: border-box; display: grid; width: 100%; padding: 12px 2px 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 160ms var(--ease-out); }
+  .proj-open:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 8px; }
+  .proj-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .proj-name { width: fit-content; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 250ms var(--ease-out); }
+  .proj-head .mono { flex: none; }
+  @media (hover: hover) and (pointer: fine) {
+    .proj-open:hover .proj-name { background-size: 100% 1px; }
+    .proj:has(.proj-open:hover) .proj-stage { transform: translateY(-3px); box-shadow: 0 10px 30px -14px rgba(0, 0, 0, .18); }
+  }
+  /* press: the card the dialog grows out of gives a little first */
+  .proj-open:active { transform: scale(.985); }
+  .proj:has(.proj-open:active) .proj-stage { transform: scale(.985); }
+
+  /* settle-in: arrives soft and slightly tilted, then sits down sharp. Transitions, not keyframes, so a fast scroll can retarget them. */
+  :global(.settle) .proj > .proj-stage, :global(.settle) .proj > .proj-open, :global(.settle) .settle-item {
+    transition-property: opacity, transform, filter;
+    transition-duration: 450ms, 650ms, 450ms;
+    transition-timing-function: ease-out, var(--ease-out), ease-out;
+    transition-delay: var(--d, 0ms);
+  }
+  :global(.settle) .proj:not(.is-in) > .proj-stage { opacity: 0; transform: translateY(18px) scale(1.03) rotate(var(--tilt)); filter: blur(8px); }
+  :global(.settle) .proj:not(.is-in) > .proj-open { opacity: 0; transform: translateY(10px); filter: blur(4px); }
+  :global(.settle) .proj > .proj-open { --d: calc(var(--d0, 0ms) + 70ms); }
+  :global(.settle) .proj > .proj-stage { --d: var(--d0, 0ms); }
+  /* once settled, hover and press go back to their own quick timing */
+  .proj.is-done > .proj-stage { transition: transform 200ms var(--ease-out), box-shadow 200ms ease; }
+  .proj.is-done > .proj-open { transition: transform 160ms var(--ease-out); }
+  :global(.settle) .settle-item:not(.is-in) { opacity: 0; transform: translateY(8px); filter: blur(3px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.settle) .proj:not(.is-in) > .proj-stage, :global(.settle) .proj:not(.is-in) > .proj-open, :global(.settle) .settle-item:not(.is-in) { transform: none; filter: none; }
+    .proj-stage, .proj-open, .proj:has(.proj-open:active) .proj-stage { transform: none !important; }
+  }
+
+  /* detail dialog: same card colour as the stage it grows from */
+  .pd { width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 48px); margin: auto; padding: 0; border: 0; border-radius: 24px; background: var(--card); color: var(--ink-2); box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .35); overflow: auto; overscroll-behavior: contain; }
+  .pd::backdrop { background: color-mix(in srgb, var(--bg) 70%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .pd-in { padding: 22px 24px 24px; }
+  .pd-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 12px; }
+  /* the title takes focus on open so a mouse open doesn't light up the close button; it isn't a control, so no ring */
+  .pd-head h2 { margin: 0; font-size: 16px; line-height: 1.4; outline: none; }
+  .pd-head .mono { margin: 2px 0 0; }
+  .pd p { margin: 0 0 10px; }
+  .pd-close { flex: none; display: grid; place-items: center; width: 30px; height: 30px; margin: -3px -6px 0 0; padding: 0; border: 0; border-radius: 9px; background: var(--chip); color: var(--ink-2); cursor: pointer; transition: color 150ms ease, transform 160ms var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) { .pd-close:hover { color: var(--ink); } }
+  .pd-close:active { transform: scale(.92); }
+  .proj-links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 16px !important; }
+  :global(html:has(.pd[open])) { overflow: hidden; }
+
+  .earlier { margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--rule); }
   .earlier ul { list-style: none; margin: 0; padding: 0; }
   .earlier li { display: grid; gap: 0; padding: 6px 0; }
 </style>
+
+<script is:inline>
+(() => {
+  const root = document.documentElement;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  const EASE = "cubic-bezier(.23, 1, .32, 1)";
+
+  // Settle-in. Items that enter together get a short stagger; each settles once and then stays.
+  const items = [...document.querySelectorAll(".proj, .settle-item")];
+  const settle = (el, delay) => {
+    el.style.setProperty("--d0", delay + "ms");
+    el.classList.add("is-in");
+    // hover/press shouldn't inherit the long settle timing, so swap to it once the arrival is over
+    if (el.classList.contains("proj")) setTimeout(() => el.classList.add("is-done"), delay + 750);
+  };
+  if (!("IntersectionObserver" in window)) items.forEach((el) => settle(el, 0));
+  else {
+    const io = new IntersectionObserver((entries) => {
+      let n = 0;
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        settle(e.target, Math.min(n++, 4) * (e.target.classList.contains("proj") ? 80 : 45));
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    items.forEach((el) => io.observe(el));
+  }
+
+  // Detail dialog. It opens out of the card that was clicked (FLIP from the card's box to the dialog's)
+  // and folds back into it on close, so you can see where it came from and where it went.
+  let current = null; // { dialog, trigger, panelAnim }
+  const stageOf = (dialog) => dialog.closest(".proj").querySelector(".proj-stage");
+  const fromCard = (dialog) => {
+    const a = stageOf(dialog).getBoundingClientRect();
+    const b = dialog.getBoundingClientRect();
+    // a card scrolled out of view is no anchor, so fall back to a plain centred scale
+    if (a.bottom < 0 || a.top > innerHeight || !b.width) return "translateY(8px) scale(.96)";
+    return `translate(${a.left - b.left}px, ${a.top - b.top}px) scale(${a.width / b.width}, ${a.height / b.height})`;
+  };
+  const backdrop = (dialog, from, to, duration) => {
+    try { dialog.animate({ opacity: [from, to] }, { duration, easing: "ease", fill: "forwards", pseudoElement: "::backdrop" }); } catch (_) {}
+  };
+
+  const open = (dialog, trigger) => {
+    if (current?.dialog === dialog) return;
+    if (current) finish(current);
+    dialog.showModal();
+    dialog.scrollTop = 0;
+    const panel = reduce.matches
+      ? dialog.animate({ opacity: [0, 1] }, { duration: 150, easing: "ease" })
+      : dialog.animate([
+          { transform: fromCard(dialog), transformOrigin: "0 0", borderRadius: "24px", opacity: 0.6 },
+          { transform: "none", transformOrigin: "0 0", borderRadius: "24px", opacity: 1 },
+        ], { duration: 340, easing: EASE });
+    if (!reduce.matches) {
+      // the text arrives just behind the panel so it never shows stretched
+      dialog.querySelector(".pd-in").animate(
+        { opacity: [0, 1], filter: ["blur(4px)", "blur(0)"], transform: ["translateY(6px)", "none"] },
+        { duration: 280, delay: 90, easing: EASE, fill: "backwards" });
+    }
+    backdrop(dialog, 0, 1, 240);
+    current = { dialog, trigger, panel };
+    history.replaceState(null, "", "#" + dialog.closest(".proj").id);
+  };
+
+  const finish = (c) => {
+    c.panel.cancel();
+    if (c.dialog.open) c.dialog.close();
+    // focus can only go back once the dialog is gone; the rest of the page is inert while it's modal
+    if (c.closing) c.trigger?.focus({ preventScroll: true });
+    c.dialog.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+    try { c.dialog.getAnimations().forEach((a) => a.cancel()); } catch (_) {}
+    if (current === c) current = null;
+  };
+
+  const close = () => {
+    const c = current;
+    if (!c || c.closing) return;
+    c.closing = true;
+    history.replaceState(null, "", location.pathname + location.search);
+    let ended = false;
+    const done = () => { if (!ended) { ended = true; finish(c); } };
+    // finish events ride on rendered frames; if the page stops producing them the dialog must still close
+    setTimeout(done, 400);
+    // closed mid-open: run the open backwards from where it is instead of jumping
+    if (c.panel.playState === "running") {
+      c.panel.reverse();
+      c.panel.onfinish = done;
+      backdrop(c.dialog, 1, 0, 160);
+      return;
+    }
+    // exit is quicker than the entrance; the system is responding, not presenting
+    c.panel = reduce.matches
+      ? c.dialog.animate({ opacity: [1, 0] }, { duration: 120, easing: "ease", fill: "forwards" })
+      : c.dialog.animate([
+          { transform: "none", transformOrigin: "0 0", borderRadius: "24px", opacity: 1 },
+          { opacity: 1, offset: 0.55 },
+          { transform: fromCard(c.dialog), transformOrigin: "0 0", borderRadius: "24px", opacity: 0 },
+        ], { duration: 240, easing: EASE, fill: "forwards" });
+    if (!reduce.matches) c.dialog.querySelector(".pd-in").animate({ opacity: [1, 0] }, { duration: 100, easing: "ease", fill: "forwards" });
+    backdrop(c.dialog, 1, 0, 200);
+    c.panel.onfinish = done;
+  };
+
+  document.querySelectorAll(".proj").forEach((proj) => {
+    const trigger = proj.querySelector(".proj-open");
+    const dialog = proj.querySelector(".pd");
+    trigger.addEventListener("click", () => open(dialog, trigger));
+    dialog.querySelector(".pd-close").addEventListener("click", close);
+    // Escape: animate out instead of the browser's instant close
+    dialog.addEventListener("cancel", (e) => { e.preventDefault(); close(); });
+    // a click that lands on the dialog element itself is on the backdrop (.pd-in fills the panel)
+    dialog.addEventListener("click", (e) => { if (e.target === dialog) close(); });
+    // if the browser closes it anyway (a second Escape in some browsers), still restore focus and the URL
+    dialog.addEventListener("close", () => { if (current?.dialog === dialog && !current.closing) close(); });
+  });
+
+  // /projects#slug (the home carousel links here): bring the card into view, let it settle, then open it.
+  const fromHash = () => {
+    const proj = location.hash.length > 1 && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (!proj || !proj.classList.contains("proj")) return;
+    proj.scrollIntoView({ block: "start" });
+    setTimeout(() => open(proj.querySelector(".pd"), proj.querySelector(".proj-open")), reduce.matches ? 0 : 450);
+  };
+  addEventListener("hashchange", fromHash);
+  fromHash();
+})();
+</script>

@@ -1,9 +1,7 @@
 ---
-// Each hero is a standalone page in /public/heroes, loaded into a frame so switching fully tears the old one down.
+// Each hero is a standalone page in /public/heroes, loaded into a frame. Add more to the list and the arrows appear.
 const heroes = [
   { id: "matcha", label: "Matcha", hint: "whisk to play a song" },
-  { id: "galton", label: "Galton board", hint: "click to drop a ball, hold to pour" },
-  { id: "window", label: "Sydney window", hint: "drag to wipe the glass, tap for rain" },
 ];
 // a new value every build, so phones never reuse a stale copy of a hero inside the frame
 const build = Date.now().toString(36);
@@ -13,9 +11,9 @@ const build = Date.now().toString(36);
     <noscript><iframe src={`/heroes/${heroes[0].id}.html?v=${build}`} title={heroes[0].label}></iframe></noscript>
   </div>
   <div class="hero-ctl">
-    <button type="button" class="hero-arrow" data-dir="-1" aria-label="Previous scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    {heroes.length > 1 && <button type="button" class="hero-arrow" data-dir="-1" aria-label="Previous scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>}
     <p class="hero-name" aria-live="polite"><span class="hero-label">{heroes[0].label}</span><span class="hero-hint"> · {heroes[0].hint}</span></p>
-    <button type="button" class="hero-arrow" data-dir="1" aria-label="Next scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    {heroes.length > 1 && <button type="button" class="hero-arrow" data-dir="1" aria-label="Next scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>}
   </div>
 </section>
 

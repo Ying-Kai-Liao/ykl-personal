@@ -1,5 +1,5 @@
 ---
-// Each hero is a standalone page in /public/heroes, loaded into a frame. Add more to the list and the arrows appear.
+// Each hero is a standalone page in /public/heroes, loaded into a frame. Add more to the list and the name and arrows appear.
 const heroes = [
   { id: "matcha", label: "Matcha", hint: "whisk to play a song" },
 ];
@@ -10,11 +10,13 @@ const build = Date.now().toString(36);
   <div class="hero-frame" id="hero-frame" data-heroes={JSON.stringify(heroes)} data-build={build}>
     <noscript><iframe src={`/heroes/${heroes[0].id}.html?v=${build}`} title={heroes[0].label}></iframe></noscript>
   </div>
-  <div class="hero-ctl">
-    {heroes.length > 1 && <button type="button" class="hero-arrow" data-dir="-1" aria-label="Previous scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>}
-    <p class="hero-name" aria-live="polite"><span class="hero-label">{heroes[0].label}</span><span class="hero-hint"> · {heroes[0].hint}</span></p>
-    {heroes.length > 1 && <button type="button" class="hero-arrow" data-dir="1" aria-label="Next scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>}
-  </div>
+  {heroes.length > 1 && (
+    <div class="hero-ctl">
+      <button type="button" class="hero-arrow" data-dir="-1" aria-label="Previous scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <p class="hero-name" aria-live="polite"><span class="hero-label">{heroes[0].label}</span><span class="hero-hint"> · {heroes[0].hint}</span></p>
+      <button type="button" class="hero-arrow" data-dir="1" aria-label="Next scene"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+  )}
 </section>
 
 <style is:global>
@@ -46,8 +48,7 @@ const build = Date.now().toString(36);
   function show(i) {
     idx = (i + heroes.length) % heroes.length;
     const h = heroes[idx];
-    label.textContent = h.label;
-    hint.textContent = " · " + h.hint;
+    if (label) { label.textContent = h.label; hint.textContent = " · " + h.hint; }
     try { localStorage.setItem(KEY, h.id); } catch (e) {}
     const theme = document.documentElement.dataset.theme;
     const next = document.createElement("iframe");

@@ -6,7 +6,7 @@
 <span class="nc-layer" id="namecard" role="dialog" aria-modal="true" aria-label="Kai's name card" hidden>
   <span class="nc-card" tabindex="-1">
     <span class="nc-face">
-      <img class="nc-avatar" src="/images/profile/avatar-card.png" alt="" width="160" height="160">
+      <img class="nc-avatar" src="/images/profile/avatar-photo.jpg" alt="" width="160" height="160">
       <span class="nc-text">
         <span class="nc-name">Kai Liao</span>
         <span class="nc-role">Agent engineer</span>
@@ -49,7 +49,7 @@
 .nc-layer.is-open .nc-card { transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(0) scale(1) rotate(-1.2deg); opacity: 1; }
 .nc-card.is-tilting { transition: transform 120ms ease-out, opacity 180ms ease; }
 .nc-face { display: flex; gap: 14px; align-items: center; }
-.nc-avatar { flex: none; width: 76px; height: 76px; border-radius: 8px; mix-blend-mode: multiply; }
+.nc-avatar { flex: none; width: 76px; height: 76px; border-radius: 8px; object-fit: cover; }
 .nc-text { min-width: 0; }
 .nc-text > span { display: block; line-height: 1.35; }
 .nc-name { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }

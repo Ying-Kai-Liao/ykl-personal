@@ -51,10 +51,28 @@ img { max-width: 100%; height: auto; }
 .nav { position: sticky; top: 0; z-index: 20; display: flex; justify-content: center; padding: 22px 0 18px; }
 .nav::before { content: ""; position: absolute; inset: 0 0 -24px; z-index: -1; background: linear-gradient(var(--bg) 40%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); -webkit-mask-image: linear-gradient(#000 50%, transparent); mask-image: linear-gradient(#000 50%, transparent); }
 .pill { display: flex; align-items: center; gap: 4px; padding: 3px; border-radius: 999px; background: var(--chip); }
-.pill a { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: var(--ink-3); transition: color 150ms ease, transform 160ms var(--ease-out); }
-.pill a[aria-current="page"] { width: 42px; height: 42px; margin: -4px 0; color: var(--ink); background: var(--bg); box-shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 4px 14px rgba(0, 0, 0, .06); }
-@media (hover: hover) and (pointer: fine) { .pill a:not([aria-current="page"]):hover { color: var(--ink-2); } }
+.pill a { position: relative; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: var(--ink-3); -webkit-tap-highlight-color: transparent; transition: color 150ms ease, background-color 150ms ease, transform 160ms var(--ease-out); }
+.pill a[aria-current="page"] { width: 42px; height: 42px; margin: -4px 0; color: var(--ink); }
+/* The raised circle is its own element so it can travel between tabs on navigation (below) without carrying an icon along.
+   z-index keeps every icon painted above it, which is also the order the view transition stacks them in. */
+.pill-dot { position: absolute; inset: 0; z-index: 0; border-radius: 50%; background: var(--bg); box-shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 4px 14px rgba(0, 0, 0, .06); view-transition-name: pill-dot; }
+.pill svg { position: relative; z-index: 1; }
+.pill a:nth-child(1) svg { view-transition-name: pill-home; }
+.pill a:nth-child(2) svg { view-transition-name: pill-projects; }
+.pill a:nth-child(3) svg { view-transition-name: pill-writing; }
+@media (hover: hover) and (pointer: fine) { .pill a:not([aria-current="page"]):hover { color: var(--ink-2); background-color: color-mix(in srgb, var(--ink) 6%, transparent); } }
 .pill a:active { transform: scale(.94); }
+
+/* Moving tab indicator. Every page is a full load, so the circle glides from the old tab to the new one with a
+   cross-document view transition; browsers without it just show the new page, as before. Only the pill takes part:
+   the root is opted out so the page itself swaps instantly instead of crossfading on every click. The nav is tapped
+   constantly, so it's quick and settles hard (ease-out) rather than drifting. Off entirely under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+:root { view-transition-name: none; }
+::view-transition-group(pill-dot), ::view-transition-group(pill-home), ::view-transition-group(pill-projects), ::view-transition-group(pill-writing) { animation-duration: 200ms; animation-timing-function: var(--ease-out); }
+::view-transition-old(pill-home), ::view-transition-new(pill-home), ::view-transition-old(pill-projects), ::view-transition-new(pill-projects), ::view-transition-old(pill-writing), ::view-transition-new(pill-writing) { animation-duration: 150ms; }
 
 /* footer */
 /* room at the end of every page, where the footer used to be */

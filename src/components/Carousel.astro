@@ -6,11 +6,13 @@ const modules = import.meta.glob("./objects/*.astro", { eager: true }) as Record
 const objectFor = (slug: string) => modules[`./objects/${slug}.astro`]?.default;
 ---
 <section class="carousel" aria-label="Projects">
+  <!-- Same settle-in switch as /projects: the hidden state only exists once this runs, so without JS the cards are simply there. -->
+  <script is:inline>document.documentElement.classList.add("settle");</script>
   <div class="car-track" id="car-track">
-    {projects.filter((p) => p.carousel !== false).map((p) => {
+    {projects.filter((p) => p.carousel !== false).map((p, i) => {
       const Obj = objectFor(p.slug);
       return (
-        <figure class="car-card">
+        <figure class="car-card" style={`--tilt:${i % 2 ? -0.6 : 0.6}deg`}>
           <div class="car-stage">
             {Obj ? <Obj /> : <span class="car-placeholder" aria-hidden="true">{p.name}</span>}
           </div>
@@ -34,11 +36,39 @@ const objectFor = (slug: string) => modules[`./objects/${slug}.astro`]?.default;
 .car-track { display: flex; gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding: 4px var(--gutter) 6px; scrollbar-width: none; }
 .car-track::-webkit-scrollbar { display: none; }
 .car-card { flex: none; width: min(340px, 82vw); margin: 0; scroll-snap-align: start; }
-.car-stage { position: relative; aspect-ratio: 340 / 380; border-radius: 24px; background: var(--card); overflow: hidden; display: grid; place-items: center; }
+.car-stage { position: relative; aspect-ratio: 340 / 380; border-radius: 24px; background: var(--card); overflow: hidden; display: grid; place-items: center; transition: transform 200ms var(--ease-out), box-shadow 200ms ease; }
 .car-placeholder { font-size: 13px; color: var(--ink-3); }
-.car-label { padding: 12px 2px 0; font-size: 13.5px; line-height: 1.55; }
-.car-name { display: block; width: fit-content; color: var(--ink); font-weight: 500; text-decoration: none; }
-@media (hover: hover) and (pointer: fine) { .car-name:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-3); } }
+.car-label { position: relative; padding: 12px 2px 0; font-size: 13.5px; line-height: 1.55; transition: transform 160ms var(--ease-out); }
+.car-name { display: block; width: fit-content; color: var(--ink); font-weight: 500; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+/* the whole caption is the link's hit area, like the caption button on /projects; the object above keeps its own pointer events */
+.car-name::after { content: ""; position: absolute; inset: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .car-name:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-3); }
+  /* lift only when the caption (the thing that navigates) is hovered, so playing with an object doesn't make its card bob */
+  .car-card:has(.car-name:hover) > .car-stage { transform: translateY(-3px); box-shadow: 0 10px 30px -14px rgba(0, 0, 0, .18); }
+}
+.car-label:has(.car-name:active) { transform: scale(.985); }
+.car-card:has(.car-name:active) > .car-stage { transform: scale(.985); }
+
+/* settle-in, same values as /projects: arrives soft and slightly tilted, then sits down sharp. Transitions, so a fast swipe can retarget them. */
+.settle .car-card > .car-stage, .settle .car-card > .car-label {
+  transition-property: opacity, transform, filter;
+  transition-duration: 450ms, 650ms, 450ms;
+  transition-timing-function: ease-out, var(--ease-out), ease-out;
+  transition-delay: var(--d, 0ms);
+}
+.settle .car-card:not(.is-in) > .car-stage { opacity: 0; transform: translateY(18px) scale(1.03) rotate(var(--tilt)); filter: blur(8px); }
+.settle .car-card:not(.is-in) > .car-label { opacity: 0; transform: translateY(10px); filter: blur(4px); }
+.settle .car-card > .car-stage { --d: var(--d0, 0ms); }
+.settle .car-card > .car-label { --d: calc(var(--d0, 0ms) + 70ms); }
+/* once settled, hover and press go back to their own quick timing */
+.car-card.is-done > .car-stage { transition: transform 200ms var(--ease-out), box-shadow 200ms ease; }
+.car-card.is-done > .car-label { transition: transform 160ms var(--ease-out); }
+
+@media (prefers-reduced-motion: reduce) {
+  .settle .car-card:not(.is-in) > .car-stage, .settle .car-card:not(.is-in) > .car-label { transform: none; filter: none; }
+  .car-stage, .car-label { transform: none !important; }
+}
 .car-ctl { display: flex; gap: 8px; margin-top: 14px; }
 .car-arrow { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 9px; background: var(--chip); color: var(--ink-2); cursor: pointer; transition: color 150ms ease, opacity 150ms ease, transform 160ms var(--ease-out); }
 .car-arrow:disabled { opacity: .45; cursor: default; }
@@ -51,14 +81,60 @@ const objectFor = (slug: string) => modules[`./objects/${slug}.astro`]?.default;
   const track = document.getElementById("car-track");
   if (!track) return;
   const [prev, next] = document.querySelectorAll(".car-arrow");
-  const step = () => (track.querySelector(".car-card")?.offsetWidth || 340) + 16;
+  const cards = [...track.querySelectorAll(".car-card")];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+
+  // Settle-in. The viewport observer also sees the track's clipping, so this one observer catches cards
+  // arriving vertically (page scroll) and horizontally (track scroll). Each card settles once, then stays.
+  const settle = (card, delay) => {
+    card.style.setProperty("--d0", delay + "ms");
+    card.classList.add("is-in");
+    setTimeout(() => card.classList.add("is-done"), delay + 750);
+  };
+  if (!("IntersectionObserver" in window)) cards.forEach((c) => settle(c, 0));
+  else {
+    const io = new IntersectionObserver((entries) => {
+      let n = 0;
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        settle(e.target, Math.min(n++, 4) * 80);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.15 });
+    cards.forEach((c) => io.observe(c));
+  }
+
+  // Arrows go card to card. scrollBy() during a smooth scroll measures from wherever the scroll happens to be,
+  // so quick double clicks undershot and left snap to finish the job; aiming at the next snap point from the
+  // pending target instead moves exactly one card per click.
+  const stops = () => {
+    const max = track.scrollWidth - track.clientWidth;
+    const out = [];
+    cards.forEach((c) => {
+      const x = Math.min(c.offsetLeft - cards[0].offsetLeft, max);
+      if (!out.length || x - out[out.length - 1] > 4) out.push(x);
+    });
+    return out;
+  };
+  let goal = null, idle;
+  const go = (dir) => {
+    const s = stops();
+    const from = goal ?? s.reduce((best, x, i) => (Math.abs(x - track.scrollLeft) < Math.abs(s[best] - track.scrollLeft) ? i : best), 0);
+    goal = Math.max(0, Math.min(s.length - 1, from + dir));
+    track.scrollTo({ left: s[goal], behavior: reduce.matches ? "auto" : "smooth" });
+  };
   const update = () => {
     prev.disabled = track.scrollLeft < 4;
     next.disabled = track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
   };
-  prev.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
-  next.addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
-  track.addEventListener("scroll", update, { passive: true });
+  prev.addEventListener("click", () => go(-1));
+  next.addEventListener("click", () => go(1));
+  track.addEventListener("scroll", () => {
+    update();
+    // the scroll has come to rest (scrollend isn't in every Safari yet), so the next click measures from here
+    clearTimeout(idle);
+    idle = setTimeout(() => (goal = null), 150);
+  }, { passive: true });
   addEventListener("resize", update);
   update();
 })();

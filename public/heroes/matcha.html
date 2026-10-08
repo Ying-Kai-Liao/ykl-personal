@@ -707,13 +707,64 @@ void main(){
     }
   }
 
-  /* ---------- music: Kai's cello loop, played by whisking ---------- */
-  // Eight three-note groups. Each whisk plays the next group; stirring plays the next note.
-  // Once the whole loop has been whisked through, the cello carries on by itself, with a bowed bass under it.
+  /* ---------- music: a cello song, played by whisking ---------- */
+  // The song is made of three-beat groups. Each whisk plays the next group; stirring plays the next beat.
+  // Once the whole song has been whisked through, the cello carries on by itself.
+  // ?song=kai on the hero URL picks Kai's own loop; anything else plays the default, Gymnopédie No. 1.
+  const SONGS = {
+    // Kai's cello loop, kept exactly as composed: eight three-note groups, with a bowed bass under them once it plays itself
+    kai: (() => {
+      const SONG = [[55, 59, 66], [55, 59, 62], [52, 59, 66], [52, 59, 62], [48, 55, 64], [48, 55, 63], [62, 64, 62], [66, 64, 62]]; // chord groups climb; the last two are the melody
+      const BASS = [43, 43, 40, 40, 36, 36, 38, 38];
+      const NOTE = .48;
+      return {
+        note: NOTE, total: SONG.length * 3,
+        beat(pos, withBass) {
+          const gi = Math.floor(pos / 3), ni = pos % 3, notes = [[SONG[gi][ni], NOTE * 1.08, ni === 0 ? .95 : .8]];
+          if (withBass && ni === 0) notes.push([BASS[gi], NOTE * 2.7, .62]);
+          return notes;
+        },
+      };
+    })(),
+    // Erik Satie, Gymnopédie No. 1 (1888, public domain), bars 5-20: the two opening phrases.
+    // Notes checked against the Mutopia Project edition (Dover reprint of the original), Mutopia-2014/12/14-37.
+    // Each bar is [bass, chord on beats 2-3, melody as [beat, note, beats, velocity?]], at written pitch.
+    // Bar 20 (E minor over E) leads back into bar 5 (G major 7) through their common tones, so the loop closes smoothly.
+    gymnopedie: (() => {
+      const GM7 = [59, 62, 66], DM7 = [57, 61, 66]; // Gmaj7 and Dmaj7 without their roots, as Satie voices them
+      const PHRASE = [
+        [43, GM7, [[1, 78, 1], [2, 81, 1]]], [38, DM7, [[0, 79, 1], [1, 78, 1], [2, 73, 1]]],
+        [43, GM7, [[0, 71, 1], [1, 73, 1], [2, 74, 1]]], [38, DM7, [[0, 69, 3]]],
+      ];
+      // a tied note is bowed again, softer, each bar: the samples last three seconds, and a cello changes bow anyway
+      const BARS = [
+        ...PHRASE,
+        [43, GM7, [[0, 66, 3]]], [38, DM7, [[0, 66, 3, .55]]], [43, GM7, [[0, 66, 3, .45]]], [38, DM7, [[0, 66, 3, .38]]],
+        ...PHRASE,
+        [42, DM7, [[0, 73, 3]]], [35, [59, 62, 66], [[0, 78, 3]]], [40, [55, 59], [[0, 64, 3]]], [40, [59, 62, 67], [[0, 64, 3, .55]]],
+      ];
+      // Lent: about 69 crotchets a minute
+      const NOTE = .87;
+      // The melody climbs to A5, past the highest cello sample (F5) and its two-semitone reach, while the bass
+      // goes down to B1, at the bottom of it, so no single transposition fits. A cello plays the melody an octave
+      // lower anyway: melody and chords drop an octave and the bass stays put, which keeps every note sampled.
+      const DOWN = 12;
+      return {
+        note: NOTE, total: BARS.length * 3,
+        beat(pos) {
+          const [bass, chord, mel] = BARS[Math.floor(pos / 3)], b = pos % 3, notes = [];
+          if (b === 0) notes.push([bass, NOTE * 3, .6]);
+          if (b === 1) for (const m of chord) notes.push([m - DOWN, NOTE * 2, .3]);
+          for (const [at, m, len, vel] of mel) if (at === b) notes.push([m - DOWN, NOTE * len * 1.02, vel || .9]);
+          return notes;
+        },
+      };
+    })(),
+  };
   const music = (() => {
-    const SONG = [[55, 59, 66], [55, 59, 62], [52, 59, 66], [52, 59, 62], [48, 55, 64], [48, 55, 63], [62, 64, 62], [66, 64, 62]]; // chord groups climb; the last two are the melody
-    const BASS = [43, 43, 40, 40, 36, 36, 38, 38];
-    const NOTE = .48, TOTAL = SONG.length * 3;
+    const songName = new URLSearchParams(location.search).get("song");
+    const song = Object.prototype.hasOwnProperty.call(SONGS, songName) ? SONGS[songName] : SONGS.gymnopedie;
+    const NOTE = song.note, TOTAL = song.total;
     const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
     let ac = null, out = null, wet = null, noise = null, on = true, auto = false, nextT = 0, timer = 0;
     let pos = 0, played = 0, lastStroke = 0, prevVx = 0, busyUntil = 0;
@@ -759,6 +810,8 @@ void main(){
       for (const n of SAMPLE_NOTES) if (Math.abs(n - m) < Math.abs(near - m)) near = n;
       const src = ac.createBufferSource(), g = ac.createGain();
       src.buffer = samples.get(near); src.playbackRate.value = Math.pow(2, (m - near) / 12);
+      // the recordings last three seconds: a longer note fades out before it runs off the end
+      dur = Math.min(dur, 2.3);
       const peak = .5 * vel, rel = dur > 1 ? .55 : .3;
       g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + .03);
       g.gain.setValueAtTime(peak, t + dur); g.gain.exponentialRampToValueAtTime(.0001, t + dur + rel);
@@ -795,12 +848,13 @@ void main(){
       g.connect(out); g.connect(wet);
       vib.start(t); vib.stop(t + dur + 1.2);
     }
+    // plays one beat of the song; returns how many notes it sounded (a held beat sounds none)
     function playNote(t, withBass) {
-      const gi = Math.floor(pos / 3), ni = pos % 3;
-      cello(SONG[gi][ni], t, NOTE * 1.08, ni === 0 ? .95 : .8);
-      if (withBass && ni === 0) cello(BASS[gi], t, NOTE * 2.7, .62);
+      const notes = song.beat(pos, withBass);
+      for (const [m, dur, vel] of notes) cello(m, t, dur, vel);
       pos = (pos + 1) % TOTAL;
       if (!auto) { played++; showProgress(); }
+      return notes.length;
     }
     // the cello carries on by itself once the loop has been whisked through
     function loop() {
@@ -858,7 +912,8 @@ void main(){
         if (!ac || auto || !on || !G || samplesState === "loading" || wk.mode !== "drag" || wk.dip < .5) { prevVx = G ? wk.vx / G.Rl : 0; return; }
         const vx = wk.vx / G.Rl, now = ac.currentTime;
         if (Math.sign(vx) !== Math.sign(prevVx) && Math.abs(vx) > 1 && now - lastStroke > .3 && now >= busyUntil - .1) {
-          lastStroke = now; playNote(now + .02, false); busyUntil = now + NOTE;
+          lastStroke = now; busyUntil = now + NOTE;
+          if (!playNote(now + .02, false)) playNote(now + .02, false); // a stroke on a held beat would be silent: play the next one
           maybeComplete(now + NOTE);
         }
         prevVx = vx;

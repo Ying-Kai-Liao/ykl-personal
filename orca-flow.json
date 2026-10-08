@@ -1,0 +1,13 @@
+{
+  "language": "English",
+  "base_branch": "origin/main",
+  "worker": {
+    "model": "opus",
+    "test_command": "npm run build",
+    "full_check_command": "npm run build"
+  },
+  "merge_queue": {
+    "enabled": false,
+    "merge_method": "squash"
+  }
+}

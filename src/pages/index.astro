@@ -4,6 +4,7 @@ import Base from "../layouts/Base.astro";
 import HeroSwitcher from "../components/HeroSwitcher.astro";
 import NameCard from "../components/NameCard.astro";
 import Carousel from "../components/Carousel.astro";
+import SocialLinks from "../components/SocialLinks.astro";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -19,10 +20,7 @@ const fmt = (d: Date) => d.toLocaleDateString("en-AU", { month: "short", year: "
       <p>I'm <NameCard />, an <span class="k">agent engineer</span> in Sydney.</p>
       <p>I build AI agents that do real work and know when to <span class="k">stop and ask</span>, and I study how to make them reliable.</p>
       <p>Reach me at <a class="ink-link" href="mailto:lykevin890919@gmail.com">lykevin890919@gmail.com</a>. I'm open to work.</p>
-      <p class="links">
-        <a class="quiet-link" href="https://www.linkedin.com/in/ying-kai-liao">LinkedIn</a>
-        <a class="quiet-link" href="https://github.com/Ying-Kai-Liao">GitHub</a>
-      </p>
+      <SocialLinks />
     </div>
 
     <Carousel />
@@ -44,7 +42,6 @@ const fmt = (d: Date) => d.toLocaleDateString("en-AU", { month: "short", year: "
   .intro { padding-top: 32px; }
   @media (max-height: 760px) and (min-width: 600px) { .intro { padding-top: 20px; } }
   .intro p { margin: 0 0 18px; }
-  .links { display: flex; flex-wrap: wrap; gap: 4px 16px; }
   .writing { margin-top: 72px; }
 </style>
 <style is:global>

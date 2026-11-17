@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs grep:*)",
+      "Bash(grep -r \"sitemap\\\\|rss\\\\|feed\" /c/Users/lykev/Documents/Blog --include=*.mjs --include=*.ts --include=*.json)",
+      "Bash(grep -r \"client:load\\\\|client:idle\\\\|client:\" /c/Users/lykev/Documents/Blog/src --include=*.astro)",
+      "Bash(bun add:*)",
+      "Bash(npx astro:*)"
+    ]
+  }
+}

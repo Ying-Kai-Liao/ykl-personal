@@ -3,6 +3,7 @@ import ImageMod from "@/components/ImageMod.astro";
 import Base from "@/layouts/Base.astro";
 import Social from "@/components/Social.astro";
 import BlogCard from "@/components/BlogCard.astro";
+import ThreadsFeed from "@/components/ThreadsFeed.astro";
 import { getListPage, getSinglePage } from "@/lib/contentParser.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import { sortByDate } from "@/lib/utils/sortFunctions";
@@ -474,6 +475,10 @@ const projectI18nKeys = [
     </div>
   </section>
   <!-- /Projects -->
+
+  <!-- Threads Feed -->
+  <ThreadsFeed limit={6} />
+  <!-- /Threads Feed -->
 
   <!-- Recent Posts -->
   {

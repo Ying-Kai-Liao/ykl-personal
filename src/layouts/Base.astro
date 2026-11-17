@@ -39,10 +39,14 @@ export interface Props {
   image?: string;
   noindex?: boolean;
   canonical?: string;
+  og_type?: string;
+  published_time?: string;
+  og_author?: string;
+  og_tags?: string[];
 }
 
 // destructure frontmatter
-const { title, meta_title, description, image, noindex, canonical } =
+const { title, meta_title, description, image, noindex, canonical, og_type, published_time, og_author, og_tags } =
   Astro.props;
 ---
 
@@ -142,11 +146,20 @@ const { title, meta_title, description, image, noindex, canonical } =
         description ? description : config.metadata.meta_description
       )}
     />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={og_type || "website"} />
     <meta
       property="og:url"
       content={`${config.site.base_url}/${Astro.url.pathname.replace("/", "")}`}
     />
+    {og_type === "article" && published_time && (
+      <meta property="article:published_time" content={published_time} />
+    )}
+    {og_type === "article" && og_author && (
+      <meta property="article:author" content={og_author} />
+    )}
+    {og_type === "article" && og_tags?.map((tag) => (
+      <meta property="article:tag" content={tag} />
+    ))}
 
     <!-- twitter-title -->
     <meta
@@ -180,6 +193,9 @@ const { title, meta_title, description, image, noindex, canonical } =
       }`}
     />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- RSS autodiscovery -->
+    <link rel="alternate" type="application/rss+xml" title={config.site.title} href="/rss.xml" />
   </head>
   <body>
     {/* google tag manager noscript */}

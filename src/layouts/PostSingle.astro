@@ -1,9 +1,14 @@
 ---
 import BlogCard from "@/components/BlogCard.astro";
 import Share from "@/components/Share.astro";
+import AuthorCard from "@/components/AuthorCard.astro";
+import ReadingProgressBar from "@/components/ReadingProgressBar";
+import ScrollToTop from "@/components/ScrollToTop";
+import ReactionButton from "@/components/ReactionButton";
 import Disqus from "@/helpers/Disqus";
 import { getSinglePage } from "@/lib/contentParser.astro";
 import dateFormat from "@/lib/utils/dateFormat";
+import readingTime from "@/lib/utils/readingTime";
 import similarItems from "@/lib/utils/similarItems";
 import { humanize, markdownify, slugify } from "@/lib/utils/textConverter";
 import { render } from "astro:content";
@@ -17,7 +22,18 @@ const posts = await getSinglePage(COLLECTION_FOLDER);
 const similarPosts = similarItems(post, posts);
 const { Content } = await render(post);
 const { title, description, author, categories, image, date, tags } = post.data;
+
+// Reading time
+const readTime = readingTime(post.body || "");
+
+// Author data
+const authors = await getSinglePage("authors");
+const authorData = authors.find(
+  (a) => a.data.title?.toLowerCase() === author?.toLowerCase(),
+);
 ---
+
+<ReadingProgressBar client:load />
 
 <section class="section pt-7">
   <div class="container">
@@ -37,53 +53,62 @@ const { title, description, author, categories, image, date, tags } = post.data;
             </div>
           )
         }
-        <h1 set:html={markdownify(title)} class="h2 mb-4" />
-        <ul class="mb-4">
-          <li class="mr-4 inline-block">
-            <a href={`/authors/${slugify(author)}`}>
-              <FaRegUserCircle className={"mr-2 -mt-1 inline-block"} />
-              {humanize(author)}
-            </a>
-          </li>
-          <li class="mr-4 inline-block">
-            <FaRegFolder className={"mr-2 -mt-1 inline-block"} />
-            {
-              categories.map((category: string, index: number) => (
-                <a href={`/categories/${slugify(category)}`}>
-                  {humanize(category)}
-                  {index !== categories.length - 1 && ","}
-                </a>
-              ))
-            }
-          </li>
-          <li class="mr-4 inline-block">
-            <FaRegClock className={"mr-2 -mt-1 inline-block"} />
-            {dateFormat(date)}
-          </li>
-        </ul>
-        <div class="content mb-10">
-          <Content />
-        </div>
-        <div class="row items-start justify-between">
-          <div class="mb-10 flex items-center lg:col-5 lg:mb-0">
-            <h5 class="mr-3">Tags :</h5>
-            <ul>
+
+        <!-- Narrow Substack-style column -->
+        <div class="content-article">
+          <h1 set:html={markdownify(title)} class="h2 mb-4" />
+          <ul class="mb-8 text-text-light dark:text-darkmode-text-light">
+            <li class="mr-4 inline-block">
+              <a href={`/authors/${slugify(author)}`}>
+                <FaRegUserCircle className={"mr-2 -mt-1 inline-block"} />
+                {humanize(author)}
+              </a>
+            </li>
+            <li class="mr-4 inline-block">
+              <FaRegFolder className={"mr-2 -mt-1 inline-block"} />
               {
-                tags.map((tag: string) => (
-                  <li class="inline-block">
-                    <a
-                      class="m-1 block rounded bg-light px-3 py-1 hover:bg-primary hover:text-white dark:bg-darkmode-light dark:hover:bg-darkmode-primary dark:hover:text-text-dark"
-                      href={`/tags/${slugify(tag)}`}
-                    >
-                      {humanize(tag)}
-                    </a>
-                  </li>
+                categories.map((category: string, index: number) => (
+                  <a href={`/categories/${slugify(category)}`}>
+                    {humanize(category)}
+                    {index !== categories.length - 1 && ","}
+                  </a>
                 ))
               }
-            </ul>
+            </li>
+            <li class="mr-4 inline-block">
+              <FaRegClock className={"mr-2 -mt-1 inline-block"} />
+              {dateFormat(date)}
+            </li>
+            <li class="inline-block text-text-light dark:text-darkmode-text-light">
+              &middot;&nbsp; {readTime}
+            </li>
+          </ul>
+
+          <div class="content mb-10">
+            <Content />
           </div>
-          <div class="flex items-center lg:col-4">
-            <h5 class="mr-3">Share :</h5>
+
+          <!-- Reaction -->
+          <div class="mb-8 flex justify-center">
+            <ReactionButton slug={post.id} client:load />
+          </div>
+
+          <hr class="mb-8 border-border dark:border-darkmode-border" />
+
+          <!-- Tags & Share -->
+          <div class="mb-10 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex flex-wrap items-center gap-2">
+              {
+                tags.map((tag: string) => (
+                  <a
+                    class="rounded-full bg-light px-3 py-1 text-sm hover:bg-primary hover:text-white dark:bg-darkmode-light dark:hover:bg-darkmode-primary dark:hover:text-text-dark"
+                    href={`/tags/${slugify(tag)}`}
+                  >
+                    {humanize(tag)}
+                  </a>
+                ))
+              }
+            </div>
             <Share
               className="social-icons"
               title={title}
@@ -91,8 +116,18 @@ const { title, description, author, categories, image, date, tags } = post.data;
               slug={post.id}
             />
           </div>
+
+          <!-- Author Card -->
+          {
+            authorData && (
+              <div class="mb-10">
+                <AuthorCard data={authorData} />
+              </div>
+            )
+          }
+
+          <Disqus className="mt-10" client:load />
         </div>
-        <Disqus className="mt-20" client:load />
       </article>
     </div>
 
@@ -111,3 +146,5 @@ const { title, description, author, categories, image, date, tags } = post.data;
     </div>
   </div>
 </section>
+
+<ScrollToTop client:load />
